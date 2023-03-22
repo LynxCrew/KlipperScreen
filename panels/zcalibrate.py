@@ -149,10 +149,7 @@ class ZCalibratePanel(ScreenPanel):
 
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
         elif method == "endstop":
-            if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
-                self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
-
-            self._screen._ws.klippy.gcode_script(KlippyGcodes.Z_ENDSTOP_CALIBRATE)
+            self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
 
     def _move_to_position(self):
         x_position = y_position = None
