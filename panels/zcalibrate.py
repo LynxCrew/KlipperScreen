@@ -134,7 +134,6 @@ class ZCalibratePanel(ScreenPanel):
         self.labels['popover'].popdown()
 
         if method == "probe":
-            self._move_to_position()
             self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
         elif method == "mesh":
             self._screen._ws.klippy.gcode_script("LEVEL_AUTO")
