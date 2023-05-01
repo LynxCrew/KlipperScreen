@@ -7,6 +7,8 @@
 
 window {
     background-color: #121212;
+    background-image: url("./styles/custom/background.svg");
+    background-size: cover;
 }
 
 .active_device {
@@ -14,7 +16,7 @@ window {
 }
 
 button {
-    background-color: #121212;
+    background-color: rgba(0,0,0,0);
 }
 
 button:active {
@@ -24,23 +26,22 @@ button:active {
 .button_active {
     border-color: #424242;
     border-style: solid;
-    background-color: #424242;
+    background-color: rgba(0,0,0,0);
 }
 
 button.color1, button.color2, button.color3, button.color4 {
-    background-color: #252525;
+    background-color: rgba(0,0,0,0.5);
     border-color: #252525;
     border-radius: .25em;
 }
 
 button.color1:active, button.color2:active, button.color3:active, button.color4:active, button.update:active, button.invalid:active, .dialog button:active {
     border-style: none;
-    background-color: #424242;
 }
 
 button.update {
     color: #2196f3;
-    background-color: #121212;
+    background-color: rgba(0,0,0,0.5);
     border-color: #2196f3;
     border-radius: .5em;
     border-width: .1em;
@@ -48,7 +49,7 @@ button.update {
 
 button.invalid {
     color: #fb8c00;
-    background-color: #121212;
+    background-color: rgba(0,0,0,0.5);
     border-color: #fb8c00;
     border-radius: .5em;
     border-width: .1em;
@@ -96,7 +97,7 @@ scale-mark {
 }
 
 scrollbar, scrollbar button, scrollbar trough {
-    background-color: #121212;
+    background-color: rgba(0,0,0,0);
 }
 
 scrollbar slider {
@@ -117,7 +118,7 @@ textview .time {
 }
 
 .dialog button {
-    background-color: #252525;
+    background-color: rgba(0,0,0,0.5);
     border-bottom-color: #252525;
     border-radius: .25em;
 }
@@ -133,7 +134,7 @@ textview .time {
 .tempbutton_top, .tempbutton, .tempbutton_bottom, .distbutton_top, .distbutton, .distbutton_bottom  {
     border-color: #545454;
     border-width: .1em;
-    background-color: #252525;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .distbutton_active {
@@ -162,7 +163,7 @@ textview .time {
 
 .numpad_tleft, .numpad_top, .numpad_tright, .numpad_left, .numpad_button, .numpad_right, .numpad_bleft, .numpad_bottom, .numpad_bright {
     border-color: #545454;
-    background-color: #252525;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .printing-status {
