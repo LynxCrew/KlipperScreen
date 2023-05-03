@@ -33,7 +33,7 @@ class OutputPinPanel(ScreenPanel):
         for pin in output_pins:
             # Support for hiding devices by name
             name = pin.split()[1]
-            if name != 'LED_BARS':
+            if name != 'Led_Bars':
                 continue
             self.add_pin(pin)
 
