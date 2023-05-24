@@ -132,20 +132,21 @@ class ZCalibratePanel(ScreenPanel):
 
     def start_calibration(self, widget, method):
         self.labels['popover'].popdown()
-        if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
-            self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
 
         if method == "probe":
-            self._move_to_position()
-            self._screen._ws.klippy.gcode_script(KlippyGcodes.PROBE_CALIBRATE)
+            self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
         elif method == "mesh":
-            self._screen._ws.klippy.gcode_script("BED_MESH_CALIBRATE")
+            self._screen._ws.klippy.gcode_script("LEVEL_AUTO")
         elif method == "delta":
+            if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
+                self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
         elif method == "delta_manual":
+            if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
+                self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
         elif method == "endstop":
-            self._screen._ws.klippy.gcode_script(KlippyGcodes.Z_ENDSTOP_CALIBRATE)
+            self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
 
     def _move_to_position(self):
         x_position = y_position = None
