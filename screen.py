@@ -348,7 +348,8 @@ class KlipperScreen(Gtk.Window):
         if self.popup_message is None:
             return
         self.popup_message.popdown()
-        GLib.source_remove(self.popup_timeout)
+        if self.popup_timeout is not None:
+            GLib.source_remove(self.popup_timeout)
         self.popup_message = self.popup_timeout = None
 
     def show_error_modal(self, err, e=""):
@@ -786,7 +787,6 @@ class KlipperScreen(Gtk.Window):
         self._ws.send_method(method, params)
 
     def printer_initializing(self, msg, remove=False):
-        self.close_popup_message()
         if 'splash_screen' not in self.panels or remove:
             self.show_panel('splash_screen', "splash_screen", None, 2)
         self.panels['splash_screen'].update_text(msg)
@@ -894,13 +894,11 @@ class KlipperScreen(Gtk.Window):
         self.base_panel.show_estop(True)
 
     def printer_ready(self):
-        self.close_popup_message()
         self.show_panel('main_panel', "main_menu", None, 2, items=self._config.get_menu_items("__main"))
         self.base_panel_show_all()
 
     def printer_printing(self):
         self.close_screensaver()
-        self.close_popup_message()
         self.base_panel_show_all()
         for dialog in self.dialogs:
             self.gtk.remove_dialog(dialog)
