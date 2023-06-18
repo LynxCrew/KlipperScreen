@@ -106,10 +106,8 @@ class ZCalibratePanel(ScreenPanel):
         pobox.pack_start(popover_button, True, True, 5)
 
     def start_calibration(self, widget, method):
-        if self._screen.vertical_mode:
-            self.grid.attach(self.buttons['continue'], 0, 0, 1, 1)
-        else:
-            self.grid.attach(self.buttons['continue'], 1, 0, 1, 1)
+        self.buttons['start'].set_label('Continue')
+        self.buttons['start'].connect("clicked", self.continue_)
         self._screen._ws.klippy.gcode_script("AXIS_TWIST_COMPENSATION_CALIBRATE")
 
     def _move_to_position(self):
