@@ -21,6 +21,7 @@ class ZCalibratePanel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.z_offset = None
+        self.running = False
         self.twist_compensate_running = False
         self.probe = self._printer.get_probe()
         if self.probe:
@@ -49,8 +50,8 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
-        self.continue_handler = None
         self.start_handler = None
+        self.continue_handler = None
 
         self.twist_compensate = "axis_twist_compensation" in self._printer.get_config_section_list()
         self.wait_for_continue = False
@@ -150,6 +151,7 @@ class ZCalibratePanel(ScreenPanel):
 
     def start_calibration(self, widget, method):
         self.labels['popover'].popdown()
+        self.running = True
 
         if method == "probe":
             self.disable_start_button()
@@ -262,9 +264,10 @@ class ZCalibratePanel(ScreenPanel):
         self._screen._ws.klippy.gcode_script(f'G0 X{x_position} Y{y_position} F3000')
 
     def process_busy(self, busy):
-        for button in self.buttons:
-            if button != 'start':
-                self.buttons[button].set_sensitive(not busy)
+        if self.running:
+            for button in self.buttons:
+                if button != 'start':
+                    self.buttons[button].set_sensitive(not busy)
 
     def process_update(self, action, data):
         if action == "notify_busy":
@@ -276,17 +279,17 @@ class ZCalibratePanel(ScreenPanel):
                 self.update_position(data['gcode_move']['gcode_position'])
         elif action == "notify_gcode_response":
             data = data.lower()
-            if "unknown" in data:
+            if "unknown command:\"testz\"" in data:
                 self.buttons_not_calibrating()
-                self.reset_start_button()
+                self.reset_states()
                 logging.info(data)
             elif "save_config" in data:
                 self.buttons_not_calibrating()
-                self.reset_start_button()
+                self.reset_states()
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
-                self.reset_start_button()
+                self.reset_states()
                 logging.info(data)
             elif "continue" in data:
                 self.buttons_not_calibrating()
@@ -294,7 +297,7 @@ class ZCalibratePanel(ScreenPanel):
                   or ("fail" in data and "use testz" in data)):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
-                self.reset_start_button()
+                self.reset_states()
                 logging.info(data)
             elif "use testz" in data or "use abort" in data or "z position" in data:
                 self.buttons_calibrating()
@@ -323,7 +326,7 @@ class ZCalibratePanel(ScreenPanel):
         logging.info("Aborting calibration")
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
         self.buttons_not_calibrating()
-        self.reset_start_button()
+        self.reset_states()
         self._screen._menu_go_back()
 
     def accept(self, widget):
@@ -356,7 +359,8 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['cancel'].set_sensitive(False)
         self.buttons['cancel'].get_style_context().remove_class('color2')
 
-    def reset_start_button(self):
+    def reset_states(self):
+        self.running = False
         self.twist_compensate_running = False
         self.buttons['start'].set_label('Start')
         self.buttons['start'].disconnect(self.continue_handler)
@@ -373,3 +377,4 @@ class ZCalibratePanel(ScreenPanel):
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
         self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move("+0.001"))
+        self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move("-0.001"))
