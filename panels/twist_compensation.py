@@ -203,7 +203,7 @@ class ZCalibratePanel(ScreenPanel):
 
     def process_busy(self, busy):
         for button in self.buttons:
-            if button is not self.buttons['start']:
+            if button != self.buttons['start']:
                 self.buttons[button].set_sensitive(not busy)
 
     def process_update(self, action, data):
