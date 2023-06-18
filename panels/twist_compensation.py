@@ -142,7 +142,8 @@ class ZCalibratePanel(ScreenPanel):
                 logging.info(data)
             elif "continue" in data:
                 self.buttons_not_calibrating()
-            elif "probe cancelled" in data and "calibration aborted" in data:
+            elif (("probe cancelled" in data and "calibration aborted" in data)
+                  or ("fail" in data and "use testz" in data)):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
                 self.reset_start_button()

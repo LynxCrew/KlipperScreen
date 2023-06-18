@@ -21,6 +21,14 @@ class ZCalibratePanel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.z_offset = None
+        self.wait_for_continue = False
+        if "axis_twist_compensation" in self._printer.get_config_section_list():
+            twist_compensation = self._printer.get_config_section(
+                "axis_twist_compensation"
+            )
+            if ('wait_for_continue' in twist_compensation
+                    and twist_compensation['wait_for_continue'] == 'true'):
+                self.wait_for_continue = True
         self.probe = self._printer.get_probe()
         if self.probe:
             self.z_offset = float(self.probe['z_offset'])
@@ -48,6 +56,11 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
+        self.start_handler = self.buttons['start'].connect("clicked",
+                                                           self.
+                                                           start_calibration)
+        self.continue_handler = None
+
         functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         if self._printer.config_section_exists("stepper_z") \
@@ -68,6 +81,8 @@ class ZCalibratePanel(ScreenPanel):
             # Since probes may not be accturate enough for deltas, always show the manual method
             self._add_button("Delta Manual", "delta_manual", pobox)
             functions.append("delta_manual")
+        if "axis_twist_compensation" in self._printer.get_config_section_list():
+            self._add_button("Twist Compensation", "twist_compensation", pobox)
 
         logging.info(f"Available functions for calibration: {functions}")
 
@@ -131,24 +146,39 @@ class ZCalibratePanel(ScreenPanel):
         self.labels['popover'].show_all()
 
     def start_calibration(self, widget, method):
-        self.buttons['start'].set_sensitive(False)
-        self.buttons['start'].get_style_context().remove_class('color3')
         self.labels['popover'].popdown()
 
         if method == "probe":
+            self.disable_start_button()
             self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
         elif method == "mesh":
+            self.disable_start_button()
             self._screen._ws.klippy.gcode_script("LEVEL_AUTO")
         elif method == "delta":
+            self.disable_start_button()
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
         elif method == "delta_manual":
+            self.disable_start_button()
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
         elif method == "endstop":
+            self.disable_start_button()
             self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
+        elif method == "twist_compensation":
+            if self.wait_for_continue:
+                self.buttons['start'].set_label('Continue')
+                self.buttons['start'].disconnect(self.start_handler)
+                self.continue_handler = self.buttons['start'].connect("clicked",
+                                                                      self
+                                                                      .continue_
+                                                                      )
+            self.disable_start_button()
+            self._screen._ws.klippy.gcode_script(
+                "AXIS_TWIST_COMPENSATION_CALIBRATE"
+            )
 
     def _move_to_position(self):
         x_position = y_position = None
@@ -229,7 +259,8 @@ class ZCalibratePanel(ScreenPanel):
 
     def process_busy(self, busy):
         for button in self.buttons:
-            self.buttons[button].set_sensitive(not busy)
+            if button != 'start':
+                self.buttons[button].set_sensitive(not busy)
 
     def process_update(self, action, data):
         if action == "notify_busy":
@@ -246,11 +277,15 @@ class ZCalibratePanel(ScreenPanel):
                 logging.info(data)
             elif "save_config" in data:
                 self.buttons_not_calibrating()
+                self.reset_start_button()
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif "fail" in data and "use testz" in data:
+            elif "continue" in data:
+                self.buttons_not_calibrating()
+            elif (("probe cancelled" in data and "calibration aborted" in data)
+                  or ("fail" in data and "use testz" in data)):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
                 logging.info(data)
@@ -272,10 +307,16 @@ class ZCalibratePanel(ScreenPanel):
     def move(self, widget, direction):
         self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move(f"{direction}{self.distance}"))
 
+    def continue_(self, widget):
+        logging.info("Continuing calibration")
+        self.disable_start_button()
+        self._screen._ws.klippy.gcode_script(KlippyGcodes.CONTINUE)
+
     def abort(self, widget):
         logging.info("Aborting calibration")
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
         self.buttons_not_calibrating()
+        self.reset_start_button()
         self._screen._menu_go_back()
 
     def accept(self, widget):
@@ -307,6 +348,18 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().remove_class('color3')
         self.buttons['cancel'].set_sensitive(False)
         self.buttons['cancel'].get_style_context().remove_class('color2')
+
+    def reset_start_button(self):
+        self.buttons['start'].set_label('Start')
+        self.buttons['start'].disconnect(self.continue_handler)
+        self.start_handler = self.buttons['start'].connect("clicked",
+                                                           self.
+                                                           start_calibration)
+
+    def disable_start_button(self):
+        self.buttons['start'].set_sensitive(False)
+        self.buttons['start'].get_style_context().remove_class('color3')
+
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
