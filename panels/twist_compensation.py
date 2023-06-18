@@ -198,6 +198,7 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().add_class('color3')
         self.buttons['cancel'].set_sensitive(True)
         self.buttons['cancel'].get_style_context().add_class('color2')
+
     def buttons_not_calibrating(self):
         self.buttons['start'].get_style_context().add_class('color3')
         self.buttons['start'].set_sensitive(True)
@@ -210,6 +211,7 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().remove_class('color3')
         self.buttons['cancel'].set_sensitive(False)
         self.buttons['cancel'].get_style_context().remove_class('color2')
+
     def reset_start_button(self):
         self.buttons['start'].set_label('Start')
         self.buttons['start'].disconnect(self.continue_handler)
@@ -218,6 +220,7 @@ class ZCalibratePanel(ScreenPanel):
                                                            start_calibration,
                                                            self.functions[
                                                                0])
+        
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
         self.buttons['start'].get_style_context().remove_class('color3')
