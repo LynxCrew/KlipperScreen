@@ -21,6 +21,14 @@ class ZCalibratePanel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.z_offset = None
+        self.wait_for_continue = False
+        if "axis_twist_compensation" in self._printer.get_config_section_list():
+            twist_compensation = self._printer.get_config_section(
+                "axis_twist_compensation"
+            )
+            if ('wait_for_continue' in twist_compensation
+                    and twist_compensation['wait_for_continue'] == 'true'):
+                self.wait_for_continue = True
         self.probe = self._printer.get_probe()
         if self.probe:
             self.z_offset = float(self.probe['z_offset'])
@@ -107,17 +115,13 @@ class ZCalibratePanel(ScreenPanel):
         pobox.pack_start(popover_button, True, True, 5)
 
     def start_calibration(self, widget, method):
-        if "axis_twist_compensation" in self._printer.get_config_section_list():
-            twist_compensation = self._printer.get_config_section(
-                "axis_twist_compensation"
-            )
-            if twist_compensation['wait_for_continue'] == 'true':
-                self.buttons['start'].set_label('Continue')
-                self.buttons['start'].disconnect(self.start_handler)
-                self.continue_handler = self.buttons['start'].connect("clicked",
-                                                                      self
-                                                                      .continue_
-                                                                      )
+        if self.wait_for_continue:
+            self.buttons['start'].set_label('Continue')
+            self.buttons['start'].disconnect(self.start_handler)
+            self.continue_handler = self.buttons['start'].connect("clicked",
+                                                                  self
+                                                                  .continue_
+                                                                  )
         self.disable_start_button()
         self._screen._ws.klippy.gcode_script(
             "AXIS_TWIST_COMPENSATION_CALIBRATE"
@@ -267,7 +271,8 @@ class ZCalibratePanel(ScreenPanel):
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ACCEPT)
 
     def buttons_calibrating(self):
-        self.buttons['start'].get_style_context().remove_class('color3')
+        if not self.wait_for_continue:
+            self.buttons['start'].get_style_context().remove_class('color3')
         self.buttons['start'].set_sensitive(False)
 
         self.buttons['zpos'].set_sensitive(True)
@@ -278,7 +283,6 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().add_class('color3')
         self.buttons['cancel'].set_sensitive(True)
         self.buttons['cancel'].get_style_context().add_class('color2')
-
     def reset_start_button(self):
         self.buttons['start'].set_label('Start')
         self.buttons['start'].disconnect(self.continue_handler)
@@ -287,9 +291,8 @@ class ZCalibratePanel(ScreenPanel):
                                                            start_calibration,
                                                            self.functions[
                                                                0])
-
     def disable_start_button(self):
-        self.buttons['start'].get_style_context().remove_class('color3')
+        # self.buttons['start'].get_style_context().remove_class('color3')
         self.buttons['start'].set_sensitive(False)
     def buttons_not_calibrating(self):
         self.buttons['start'].get_style_context().add_class('color3')
