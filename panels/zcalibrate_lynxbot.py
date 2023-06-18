@@ -84,6 +84,7 @@ class ZCalibratePanel(ScreenPanel):
             self.functions.append("delta_manual")
         if self.twist_compensate:
             self._add_button("Twist Compensation", "twist_compensation", pobox)
+            self.functions.append("twist_compensation")
 
         logging.info(f"Available functions for calibration: {self.functions}")
 
@@ -369,8 +370,9 @@ class ZCalibratePanel(ScreenPanel):
     def reset_states(self):
         self.running = False
         self.twist_compensate_running = False
-        self.buttons['start'].set_label('Start')
-        self.buttons['start'].disconnect(self.continue_handler)
+        if self.continue_handler is not None:
+            self.buttons['start'].set_label('Start')
+            self.buttons['start'].disconnect(self.continue_handler)
         if len(self.functions) > 1:
             self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
         else:
