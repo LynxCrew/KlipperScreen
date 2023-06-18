@@ -107,10 +107,17 @@ class ZCalibratePanel(ScreenPanel):
         pobox.pack_start(popover_button, True, True, 5)
 
     def start_calibration(self, widget, method):
-        self.buttons['start'].set_label('Continue')
-        self.buttons['start'].disconnect(self.start_handler)
-        self.continue_handler = self.buttons['start'].connect("clicked",
-                                                              self.continue_)
+        if "axis_twist_compensation" in self._printer.get_config_section_list():
+            twist_compensation = self._printer.get_config_section(
+                "axis_twist_compensation"
+            )
+            if twist_compensation['wait_for_continue'] == 'true':
+                self.buttons['start'].set_label('Continue')
+                self.buttons['start'].disconnect(self.start_handler)
+                self.continue_handler = self.buttons['start'].connect("clicked",
+                                                                      self
+                                                                      .continue_
+                                                                      )
         self._screen._ws.klippy.gcode_script(
             "AXIS_TWIST_COMPENSATION_CALIBRATE"
         )
@@ -217,6 +224,8 @@ class ZCalibratePanel(ScreenPanel):
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
                 logging.info(data)
+            elif "CONTINUE" in data:
+                self.buttons_not_calibrating()
             elif "probe cancelled" in data and "calibration aborted" in data:
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
