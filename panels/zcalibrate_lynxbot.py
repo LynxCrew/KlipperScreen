@@ -287,24 +287,24 @@ class ZCalibratePanel(ScreenPanel):
         elif action == "notify_gcode_response":
             data = data.lower()
             if "unknown command:\"testz\"" in data:
-                self.buttons_not_calibrating()
                 self.reset_states()
+                self.buttons_not_calibrating()
                 logging.info(data)
             elif "save_config" in data:
-                self.buttons_not_calibrating()
                 self.reset_states()
+                self.buttons_not_calibrating()
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
-                self.buttons_not_calibrating()
                 self.reset_states()
+                self.buttons_not_calibrating()
                 logging.info(data)
             elif "continue" in data:
                 self.buttons_not_calibrating()
             elif (("probe cancelled" in data and "calibration aborted" in data)
                   or ("fail" in data and "use testz" in data)):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
-                self.buttons_not_calibrating()
                 self.reset_states()
+                self.buttons_not_calibrating()
                 logging.info(data)
             elif "use testz" in data or "use abort" in data or "z position" in data:
                 self.buttons_calibrating()
