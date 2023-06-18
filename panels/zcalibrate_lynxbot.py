@@ -277,6 +277,8 @@ class ZCalibratePanel(ScreenPanel):
             data = data.lower()
             if "unknown" in data:
                 self.buttons_not_calibrating()
+                self.reset_start_button()
+                self.twist_compensate = False
                 logging.info(data)
             elif "save_config" in data:
                 self.buttons_not_calibrating()
@@ -285,6 +287,8 @@ class ZCalibratePanel(ScreenPanel):
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
+                self.reset_start_button()
+                self.twist_compensate = False
                 logging.info(data)
             elif "continue" in data:
                 self.buttons_not_calibrating()
@@ -292,6 +296,8 @@ class ZCalibratePanel(ScreenPanel):
                   or ("fail" in data and "use testz" in data)):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
+                self.reset_start_button()
+                self.twist_compensate = False
                 logging.info(data)
             elif "use testz" in data or "use abort" in data or "z position" in data:
                 self.buttons_calibrating()
@@ -359,7 +365,7 @@ class ZCalibratePanel(ScreenPanel):
         if len(self.functions) > 1:
             self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
         else:
-            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, functions[0])
+            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
 
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
