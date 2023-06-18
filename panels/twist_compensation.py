@@ -50,14 +50,17 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
-        functions = []
+        self.functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        functions.append("twist_compensation")
+        self.functions.append("twist_compensation")
 
-        logging.info(f"Available functions for calibration: {functions}")
+        logging.info(f"Available functions for calibration: {self.functions}")
 
-        self.buttons['start'].connect("clicked", self.start_calibration,
-                                      functions[0])
+        self.start_handler = self.buttons['start'].connect("clicked",
+                                                           self.
+                                                           start_calibration,
+                                                           self.functions[0])
+        self.continue_handler = None
 
         distgrid = Gtk.Grid()
         for j, i in enumerate(self.distances):
@@ -107,7 +110,8 @@ class ZCalibratePanel(ScreenPanel):
 
     def start_calibration(self, widget, method):
         self.buttons['start'].set_label('Continue')
-        self.buttons['start'].connect("clicked", self.continue_)
+        self.buttons['start'].disconnect(self.start_handler)
+        self.continue_handler = self.buttons['start'].connect("clicked", self.continue_)
         self._screen._ws.klippy.gcode_script("AXIS_TWIST_COMPENSATION_CALIBRATE")
 
     def _move_to_position(self):
@@ -240,6 +244,12 @@ class ZCalibratePanel(ScreenPanel):
         logging.info("Aborting calibration")
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
         self.buttons_not_calibrating()
+        self.buttons['start'].set_label('Start')
+        self.buttons['start'].disconnect(self.continue_handler)
+        self.start_handler = self.buttons['start'].connect("clicked",
+                                                           self.
+                                                           start_calibration,
+                                                           self.functions[0])
         self._screen._menu_go_back()
 
     def accept(self, widget):
