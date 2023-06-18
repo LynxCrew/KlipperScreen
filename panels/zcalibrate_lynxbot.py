@@ -118,7 +118,6 @@ class ZCalibratePanel(ScreenPanel):
         distances.pack_start(distgrid, True, True, 0)
 
         self.buttons_not_calibrating()
-        self.disable_start_button()
 
         grid = Gtk.Grid()
         grid.set_column_homogeneous(True)
@@ -334,6 +333,7 @@ class ZCalibratePanel(ScreenPanel):
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
         self.buttons_not_calibrating()
         self.reset_states()
+        self.disable_start_button()
         self._screen._menu_go_back()
 
     def accept(self, widget):
