@@ -21,15 +21,7 @@ class ZCalibratePanel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.z_offset = None
-        self.twist_compensate = False
-        self.wait_for_continue = False
-        if "axis_twist_compensation" in self._printer.get_config_section_list():
-            twist_compensation = self._printer.get_config_section(
-                "axis_twist_compensation"
-            )
-            if ('wait_for_continue' in twist_compensation
-                    and twist_compensation['wait_for_continue'] == 'true'):
-                self.wait_for_continue = True
+        self.twist_compensate_running = False
         self.probe = self._printer.get_probe()
         if self.probe:
             self.z_offset = float(self.probe['z_offset'])
@@ -60,6 +52,15 @@ class ZCalibratePanel(ScreenPanel):
         self.continue_handler = None
         self.start_handler = None
 
+        self.twist_compensate = "axis_twist_compensation" in self._printer.get_config_section_list()
+        self.wait_for_continue = False
+        if self.twist_compensate:
+            twist_compensation = self._printer.get_config_section(
+                "axis_twist_compensation"
+            )
+            if ('wait_for_continue' in twist_compensation
+                    and twist_compensation['wait_for_continue'] == 'true'):
+                self.wait_for_continue = True
         self.functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         if self._printer.config_section_exists("stepper_z") \
@@ -80,7 +81,7 @@ class ZCalibratePanel(ScreenPanel):
             # Since probes may not be accturate enough for deltas, always show the manual method
             self._add_button("Delta Manual", "delta_manual", pobox)
             self.functions.append("delta_manual")
-        if "axis_twist_compensation" in self._printer.get_config_section_list():
+        if self.twist_compensate:
             self._add_button("Twist Compensation", "twist_compensation", pobox)
 
         logging.info(f"Available functions for calibration: {self.functions}")
@@ -92,7 +93,7 @@ class ZCalibratePanel(ScreenPanel):
         if len(self.functions) > 1:
             self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
         else:
-            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, functions[0])
+            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
 
         distgrid = Gtk.Grid()
         for j, i in enumerate(self.distances):
@@ -141,7 +142,7 @@ class ZCalibratePanel(ScreenPanel):
         pobox.pack_start(popover_button, True, True, 5)
 
     def on_popover_clicked(self, widget):
-        if self.twist_compensate:
+        if self.twist_compensate_running:
             self.continue_(None)
         else:
             self.labels['popover'].set_relative_to(widget)
@@ -177,7 +178,7 @@ class ZCalibratePanel(ScreenPanel):
                                                                       self
                                                                       .continue_
                                                                       )
-            self.twist_compensate = True
+            self.twist_compensate_running = True
             self.disable_start_button()
             self._screen._ws.klippy.gcode_script(
                 "AXIS_TWIST_COMPENSATION_CALIBRATE"
@@ -278,17 +279,14 @@ class ZCalibratePanel(ScreenPanel):
             if "unknown" in data:
                 self.buttons_not_calibrating()
                 self.reset_start_button()
-                self.twist_compensate = False
                 logging.info(data)
             elif "save_config" in data:
                 self.buttons_not_calibrating()
                 self.reset_start_button()
-                self.twist_compensate = False
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
                 self.reset_start_button()
-                self.twist_compensate = False
                 logging.info(data)
             elif "continue" in data:
                 self.buttons_not_calibrating()
@@ -297,7 +295,6 @@ class ZCalibratePanel(ScreenPanel):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
                 self.reset_start_button()
-                self.twist_compensate = False
                 logging.info(data)
             elif "use testz" in data or "use abort" in data or "z position" in data:
                 self.buttons_calibrating()
@@ -360,6 +357,7 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['cancel'].get_style_context().remove_class('color2')
 
     def reset_start_button(self):
+        self.twist_compensate_running = False
         self.buttons['start'].set_label('Start')
         self.buttons['start'].disconnect(self.continue_handler)
         if len(self.functions) > 1:
