@@ -272,8 +272,7 @@ class ZCalibratePanel(ScreenPanel):
 
     def buttons_calibrating(self):
         self.buttons['start'].set_sensitive(False)
-        if not self.wait_for_continue:
-            self.buttons['start'].get_style_context().remove_class('color3')
+        self.buttons['start'].get_style_context().remove_class('color3')
 
         self.buttons['zpos'].set_sensitive(True)
         self.buttons['zpos'].get_style_context().add_class('color4')
@@ -305,8 +304,7 @@ class ZCalibratePanel(ScreenPanel):
                                                                0])
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
-        if not self.wait_for_continue:
-            self.buttons['start'].get_style_context().remove_class('color3')
+        self.buttons['start'].get_style_context().remove_class('color3')
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
