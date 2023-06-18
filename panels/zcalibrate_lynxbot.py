@@ -380,7 +380,6 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['start'].set_sensitive(False)
         self.buttons['start'].get_style_context().remove_class('color3')
 
-
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
         self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move("+0.001"))
