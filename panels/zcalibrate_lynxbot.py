@@ -289,6 +289,7 @@ class ZCalibratePanel(ScreenPanel):
             if "unknown command:\"query_calibration\"" in data:
                 self.reset_states()
                 self.buttons_not_calibrating()
+                logging.info("HELLO")
                 logging.info(data)
             elif "save_config" in data:
                 self.reset_states()
