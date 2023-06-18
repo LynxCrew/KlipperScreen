@@ -131,6 +131,8 @@ class ZCalibratePanel(ScreenPanel):
         self.labels['popover'].show_all()
 
     def start_calibration(self, widget, method):
+        self.buttons['start'].set_sensitive(False)
+        self.buttons['start'].get_style_context().remove_class('color3')
         self.labels['popover'].popdown()
 
         if method == "probe":
