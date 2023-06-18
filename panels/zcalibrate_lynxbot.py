@@ -21,6 +21,7 @@ class ZCalibratePanel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.z_offset = None
+        self.twist_compensate = False
         self.wait_for_continue = False
         if "axis_twist_compensation" in self._printer.get_config_section_list():
             twist_compensation = self._printer.get_config_section(
@@ -142,8 +143,11 @@ class ZCalibratePanel(ScreenPanel):
         pobox.pack_start(popover_button, True, True, 5)
 
     def on_popover_clicked(self, widget):
-        self.labels['popover'].set_relative_to(widget)
-        self.labels['popover'].show_all()
+        if self.twist_compensate:
+            self.continue_(None)
+        else:
+            self.labels['popover'].set_relative_to(widget)
+            self.labels['popover'].show_all()
 
     def start_calibration(self, widget, method):
         self.labels['popover'].popdown()
@@ -175,6 +179,7 @@ class ZCalibratePanel(ScreenPanel):
                                                                       self
                                                                       .continue_
                                                                       )
+            self.twist_compensate = True
             self.disable_start_button()
             self._screen._ws.klippy.gcode_script(
                 "AXIS_TWIST_COMPENSATION_CALIBRATE"
@@ -278,6 +283,7 @@ class ZCalibratePanel(ScreenPanel):
             elif "save_config" in data:
                 self.buttons_not_calibrating()
                 self.reset_start_button()
+                self.twist_compensate = False
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
