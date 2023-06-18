@@ -57,44 +57,42 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
-        self.start_handler = self.buttons['start'].connect("clicked",
-                                                           self.
-                                                           start_calibration)
         self.continue_handler = None
+        self.start_handler = None
 
-        functions = []
+        self.functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         if self._printer.config_section_exists("stepper_z") \
                 and not self._printer.get_config_section("stepper_z")['endstop_pin'].startswith("probe"):
             self._add_button("Endstop", "endstop", pobox)
-            functions.append("endstop")
+            self.functions.append("endstop")
         if self.probe:
             self._add_button("Probe", "probe", pobox)
-            functions.append("probe")
-        if self._printer.config_section_exists("bed_mesh") and "probe" not in functions:
+            self.functions.append("probe")
+        if self._printer.config_section_exists("bed_mesh") and "probe" not in self.functions:
             # This is used to do a manual bed mesh if there is no probe
             self._add_button("Bed mesh", "mesh", pobox)
-            functions.append("mesh")
+            self.functions.append("mesh")
         if "delta" in self._printer.get_config_section("printer")['kinematics']:
-            if "probe" in functions:
+            if "probe" in self.functions:
                 self._add_button("Delta Automatic", "delta", pobox)
-                functions.append("delta")
+                self.functions.append("delta")
             # Since probes may not be accturate enough for deltas, always show the manual method
             self._add_button("Delta Manual", "delta_manual", pobox)
-            functions.append("delta_manual")
+            self.functions.append("delta_manual")
         if "axis_twist_compensation" in self._printer.get_config_section_list():
             self._add_button("Twist Compensation", "twist_compensation", pobox)
 
-        logging.info(f"Available functions for calibration: {functions}")
+        logging.info(f"Available functions for calibration: {self.functions}")
 
         self.labels['popover'] = Gtk.Popover()
         self.labels['popover'].add(pobox)
         self.labels['popover'].set_position(Gtk.PositionType.BOTTOM)
 
-        if len(functions) > 1:
-            self.buttons['start'].connect("clicked", self.on_popover_clicked)
+        if len(self.functions) > 1:
+            self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
         else:
-            self.buttons['start'].connect("clicked", self.start_calibration, functions[0])
+            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, functions[0])
 
         distgrid = Gtk.Grid()
         for j, i in enumerate(self.distances):
@@ -358,9 +356,10 @@ class ZCalibratePanel(ScreenPanel):
     def reset_start_button(self):
         self.buttons['start'].set_label('Start')
         self.buttons['start'].disconnect(self.continue_handler)
-        self.start_handler = self.buttons['start'].connect("clicked",
-                                                           self.
-                                                           start_calibration)
+        if len(self.functions) > 1:
+            self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
+        else:
+            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, functions[0])
 
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
