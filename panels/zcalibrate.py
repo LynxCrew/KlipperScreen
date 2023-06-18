@@ -21,6 +21,7 @@ class ZCalibratePanel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.z_offset = None
+        self.running = False
         self.probe = self._printer.get_probe()
         if self.probe:
             self.z_offset = float(self.probe['z_offset'])
@@ -131,9 +132,12 @@ class ZCalibratePanel(ScreenPanel):
         self.labels['popover'].show_all()
 
     def start_calibration(self, widget, method):
+        self.labels['popover'].popdown()
+
         self.buttons['start'].set_sensitive(False)
         self.buttons['start'].get_style_context().remove_class('color3')
-        self.labels['popover'].popdown()
+
+        self.running = True
         if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
             self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
 
@@ -227,8 +231,9 @@ class ZCalibratePanel(ScreenPanel):
         self._screen._ws.klippy.gcode_script(f'G0 X{x_position} Y{y_position} F3000')
 
     def process_busy(self, busy):
-        for button in self.buttons:
-            self.buttons[button].set_sensitive(not busy)
+        if self.running:
+            for button in self.buttons:
+                self.buttons[button].set_sensitive(not busy)
 
     def process_update(self, action, data):
         if action == "notify_busy":
@@ -240,18 +245,22 @@ class ZCalibratePanel(ScreenPanel):
                 self.update_position(data['gcode_move']['gcode_position'])
         elif action == "notify_gcode_response":
             data = data.lower()
-            if "unknown" in data:
+            if "unknown command:\"testz\"" in data:
                 self.buttons_not_calibrating()
+                self.running = False
                 logging.info(data)
             elif "save_config" in data:
                 self.buttons_not_calibrating()
+                self.running = False
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
+                self.running = False
                 logging.info(data)
             elif "fail" in data and "use testz" in data:
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
+                self.running = False
                 logging.info(data)
             elif "use testz" in data or "use abort" in data or "z position" in data:
                 self.buttons_calibrating()

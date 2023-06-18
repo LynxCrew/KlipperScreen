@@ -151,26 +151,24 @@ class ZCalibratePanel(ScreenPanel):
 
     def start_calibration(self, widget, method):
         self.labels['popover'].popdown()
+
+        self.disable_start_button()
+
         self.running = True
 
         if method == "probe":
-            self.disable_start_button()
             self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
         elif method == "mesh":
-            self.disable_start_button()
             self._screen._ws.klippy.gcode_script("LEVEL_AUTO")
         elif method == "delta":
-            self.disable_start_button()
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
         elif method == "delta_manual":
-            self.disable_start_button()
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
         elif method == "endstop":
-            self.disable_start_button()
             self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
         elif method == "twist_compensation":
             if self.wait_for_continue:
@@ -181,7 +179,6 @@ class ZCalibratePanel(ScreenPanel):
                                                                       .continue_
                                                                       )
             self.twist_compensate_running = True
-            self.disable_start_button()
             self._screen._ws.klippy.gcode_script(
                 "AXIS_TWIST_COMPENSATION_CALIBRATE"
             )
