@@ -271,9 +271,9 @@ class ZCalibratePanel(ScreenPanel):
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ACCEPT)
 
     def buttons_calibrating(self):
+        self.buttons['start'].set_sensitive(False)
         if not self.wait_for_continue:
             self.buttons['start'].get_style_context().remove_class('color3')
-        self.buttons['start'].set_sensitive(False)
 
         self.buttons['zpos'].set_sensitive(True)
         self.buttons['zpos'].get_style_context().add_class('color4')
@@ -283,17 +283,6 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().add_class('color3')
         self.buttons['cancel'].set_sensitive(True)
         self.buttons['cancel'].get_style_context().add_class('color2')
-    def reset_start_button(self):
-        self.buttons['start'].set_label('Start')
-        self.buttons['start'].disconnect(self.continue_handler)
-        self.start_handler = self.buttons['start'].connect("clicked",
-                                                           self.
-                                                           start_calibration,
-                                                           self.functions[
-                                                               0])
-    def disable_start_button(self):
-        # self.buttons['start'].get_style_context().remove_class('color3')
-        self.buttons['start'].set_sensitive(False)
     def buttons_not_calibrating(self):
         self.buttons['start'].get_style_context().add_class('color3')
         self.buttons['start'].set_sensitive(True)
@@ -306,6 +295,18 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().remove_class('color3')
         self.buttons['cancel'].set_sensitive(False)
         self.buttons['cancel'].get_style_context().remove_class('color2')
+    def reset_start_button(self):
+        self.buttons['start'].set_label('Start')
+        self.buttons['start'].disconnect(self.continue_handler)
+        self.start_handler = self.buttons['start'].connect("clicked",
+                                                           self.
+                                                           start_calibration,
+                                                           self.functions[
+                                                               0])
+    def disable_start_button(self):
+        self.buttons['start'].set_sensitive(False)
+        if not self.wait_for_continue:
+            self.buttons['start'].get_style_context().remove_class('color3')
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
