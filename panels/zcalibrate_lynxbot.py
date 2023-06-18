@@ -285,7 +285,7 @@ class ZCalibratePanel(ScreenPanel):
                 self.update_position(data['gcode_move']['gcode_position'])
         elif action == "notify_gcode_response":
             data = data.lower()
-            if "unknown command:\"testz\"" in data:
+            if "unknown command:\"query\"" in data:
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
@@ -382,4 +382,4 @@ class ZCalibratePanel(ScreenPanel):
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
-        self._screen._ws.klippy.gcode_script("TESTZ")
+        self._screen._ws.klippy.gcode_script("QUERY")
