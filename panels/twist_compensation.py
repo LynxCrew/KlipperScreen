@@ -211,13 +211,15 @@ class ZCalibratePanel(ScreenPanel):
                 logging.info(data)
             elif "save_config" in data:
                 self.buttons_not_calibrating()
+                self.reset_start_button()
             elif "out of range" in data:
                 self._screen.show_popup_message(data)
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif "fail" in data and "use testz" in data:
+            elif "probe cancelled" in data and "calibration aborted" in data:
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.buttons_not_calibrating()
+                self.reset_start_button()
                 logging.info(data)
             elif "use testz" in data or "use abort" in data or "z position" in data:
                 self.buttons_calibrating()
@@ -244,12 +246,7 @@ class ZCalibratePanel(ScreenPanel):
         logging.info("Aborting calibration")
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
         self.buttons_not_calibrating()
-        self.buttons['start'].set_label('Start')
-        self.buttons['start'].disconnect(self.continue_handler)
-        self.start_handler = self.buttons['start'].connect("clicked",
-                                                           self.
-                                                           start_calibration,
-                                                           self.functions[0])
+        self.reset_start_button()
         self._screen._menu_go_back()
 
     def accept(self, widget):
@@ -268,6 +265,15 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].get_style_context().add_class('color3')
         self.buttons['cancel'].set_sensitive(True)
         self.buttons['cancel'].get_style_context().add_class('color2')
+
+    def reset_start_button(self):
+        self.buttons['start'].set_label('Start')
+        self.buttons['start'].disconnect(self.continue_handler)
+        self.start_handler = self.buttons['start'].connect("clicked",
+                                                           self.
+                                                           start_calibration,
+                                                           self.functions[
+                                                               0])
 
     def buttons_not_calibrating(self):
         if self._screen.vertical_mode:
