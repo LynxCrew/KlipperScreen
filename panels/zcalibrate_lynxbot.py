@@ -269,7 +269,12 @@ class ZCalibratePanel(ScreenPanel):
                 if button != 'start':
                     self.buttons[button].set_sensitive(not busy)
         else:
-            self.buttons['start'].set_sensitive(not busy)
+            if not busy:
+                self.buttons['start'].get_style_context().add_class('color3')
+                self.buttons['start'].set_sensitive(True)
+            else:
+                self.buttons['start'].get_style_context().remove_class('color3')
+                self.buttons['start'].set_sensitive(False)
 
     def process_update(self, action, data):
         if action == "notify_busy":
@@ -379,4 +384,3 @@ class ZCalibratePanel(ScreenPanel):
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
         self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move("+0.001"))
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move("-0.001"))
