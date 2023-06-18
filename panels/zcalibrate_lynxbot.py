@@ -285,7 +285,7 @@ class ZCalibratePanel(ScreenPanel):
                 self.update_position(data['gcode_move']['gcode_position'])
         elif action == "notify_gcode_response":
             data = data.lower()
-            if "unknown command:\"query\"" in data:
+            if "unknown command:\"query_calibration\"" in data:
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
