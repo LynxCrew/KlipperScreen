@@ -52,24 +52,7 @@ class ZCalibratePanel(ScreenPanel):
 
         functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if self._printer.config_section_exists("stepper_z") \
-                and not self._printer.get_config_section("stepper_z")['endstop_pin'].startswith("probe"):
-            self._add_button("Endstop", "endstop", pobox)
-            functions.append("endstop")
-        if self.probe:
-            self._add_button("Probe", "probe", pobox)
-            functions.append("probe")
-        if self._printer.config_section_exists("bed_mesh") and "probe" not in functions:
-            # This is used to do a manual bed mesh if there is no probe
-            self._add_button("Bed mesh", "mesh", pobox)
-            functions.append("mesh")
-        if "delta" in self._printer.get_config_section("printer")['kinematics']:
-            if "probe" in functions:
-                self._add_button("Delta Automatic", "delta", pobox)
-                functions.append("delta")
-            # Since probes may not be accturate enough for deltas, always show the manual method
-            self._add_button("Delta Manual", "delta_manual", pobox)
-            functions.append("delta_manual")
+        functions.append("twist_compensation")
 
         logging.info(f"Available functions for calibration: {functions}")
 
@@ -122,7 +105,7 @@ class ZCalibratePanel(ScreenPanel):
         popover_button.connect("clicked", self.start_calibration, method)
         pobox.pack_start(popover_button, True, True, 5)
 
-    def start_calibration(self, widget):
+    def start_calibration(self, widget, method):
         if self._screen.vertical_mode:
             self.grid.attach(self.buttons['continue'], 0, 0, 1, 1)
         else:
