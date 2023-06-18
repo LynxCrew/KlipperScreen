@@ -118,6 +118,8 @@ class ZCalibratePanel(ScreenPanel):
                                                                       self
                                                                       .continue_
                                                                       )
+        self.buttons['start'].get_style_context().remove_class('color3')
+        self.buttons['start'].set_sensitive(False)
         self._screen._ws.klippy.gcode_script(
             "AXIS_TWIST_COMPENSATION_CALIBRATE"
         )
