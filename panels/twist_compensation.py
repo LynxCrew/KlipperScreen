@@ -40,13 +40,11 @@ class ZCalibratePanel(ScreenPanel):
             'zpos': self._gtk.Button('z-farther', _("Raise Nozzle"), 'color4'),
             'zneg': self._gtk.Button('z-closer', _("Lower Nozzle"), 'color1'),
             'start': self._gtk.Button('resume', _("Start"), 'color3'),
-            'continue': self._gtk.Button('resume', _('Continue'), 'color3'),
             'complete': self._gtk.Button('complete', _('Accept'), 'color3'),
             'cancel': self._gtk.Button('cancel', _('Abort'), 'color2'),
         }
         self.buttons['zpos'].connect("clicked", self.move, "+")
         self.buttons['zneg'].connect("clicked", self.move, "-")
-        self.buttons['continue'].connect("clicked", self.continue_)
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
@@ -111,8 +109,11 @@ class ZCalibratePanel(ScreenPanel):
     def start_calibration(self, widget, method):
         self.buttons['start'].set_label('Continue')
         self.buttons['start'].disconnect(self.start_handler)
-        self.continue_handler = self.buttons['start'].connect("clicked", self.continue_)
-        self._screen._ws.klippy.gcode_script("AXIS_TWIST_COMPENSATION_CALIBRATE")
+        self.continue_handler = self.buttons['start'].connect("clicked",
+                                                              self.continue_)
+        self._screen._ws.klippy.gcode_script(
+            "AXIS_TWIST_COMPENSATION_CALIBRATE"
+        )
 
     def _move_to_position(self):
         x_position = y_position = None
@@ -276,10 +277,6 @@ class ZCalibratePanel(ScreenPanel):
                                                                0])
 
     def buttons_not_calibrating(self):
-        if self._screen.vertical_mode:
-            self.grid.attach(self.buttons['start'], 0, 0, 1, 1)
-        else:
-            self.grid.attach(self.buttons['start'], 1, 0, 1, 1)
         self.buttons['start'].get_style_context().add_class('color3')
         self.buttons['start'].set_sensitive(True)
 
