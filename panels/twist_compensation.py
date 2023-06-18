@@ -118,8 +118,7 @@ class ZCalibratePanel(ScreenPanel):
                                                                       self
                                                                       .continue_
                                                                       )
-        self.buttons['start'].get_style_context().remove_class('color3')
-        self.buttons['start'].set_sensitive(False)
+        self.disable_start_button()
         self._screen._ws.klippy.gcode_script(
             "AXIS_TWIST_COMPENSATION_CALIBRATE"
         )
@@ -203,12 +202,12 @@ class ZCalibratePanel(ScreenPanel):
 
     def process_busy(self, busy):
         for button in self.buttons:
-            if button != self.buttons['start']:
+            if button != 'start':
                 self.buttons[button].set_sensitive(not busy)
 
     def process_update(self, action, data):
         if action == "notify_busy":
-            # self.process_busy(data)
+            self.process_busy(data)
             return
         if action == "notify_status_update":
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
@@ -254,6 +253,7 @@ class ZCalibratePanel(ScreenPanel):
 
     def continue_(self, widget):
         logging.info("Continuing calibration")
+        self.disable_start_button()
         self._screen._ws.klippy.gcode_script(KlippyGcodes.CONTINUE)
     def abort(self, widget):
         logging.info("Aborting calibration")
@@ -288,6 +288,9 @@ class ZCalibratePanel(ScreenPanel):
                                                            self.functions[
                                                                0])
 
+    def disable_start_button(self):
+        self.buttons['start'].get_style_context().remove_class('color3')
+        self.buttons['start'].set_sensitive(False)
     def buttons_not_calibrating(self):
         self.buttons['start'].get_style_context().add_class('color3')
         self.buttons['start'].set_sensitive(True)
