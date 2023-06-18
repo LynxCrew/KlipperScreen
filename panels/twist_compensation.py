@@ -56,11 +56,6 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
-        self.functions = []
-        self.functions.append("twist_compensation")
-
-        logging.info(f"Available functions for calibration: {self.functions}")
-
         self.start_handler = self.buttons['start'].connect("clicked",
                                                            self.
                                                            start_calibration)
@@ -217,10 +212,8 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['start'].disconnect(self.continue_handler)
         self.start_handler = self.buttons['start'].connect("clicked",
                                                            self.
-                                                           start_calibration,
-                                                           self.functions[
-                                                               0])
-        
+                                                           start_calibration)
+
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
         self.buttons['start'].get_style_context().remove_class('color3')
