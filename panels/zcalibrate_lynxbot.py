@@ -267,8 +267,9 @@ class ZCalibratePanel(ScreenPanel):
     def process_busy(self, busy):
         if self.running:
             for button in self.buttons:
-                if button != 'start':
-                    self.buttons[button].set_sensitive((not busy) and self.calibrating)
+                if button != 'start' and button != 'cancel':
+                    self.buttons[button].set_sensitive(
+                        (not busy) and self.calibrating)
         else:
             if not busy:
                 self.buttons['start'].get_style_context().add_class('color3')
