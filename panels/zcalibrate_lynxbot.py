@@ -282,6 +282,7 @@ class ZCalibratePanel(ScreenPanel):
             self.process_busy(data)
         elif action == "notify_status_update":
             if "is_active" in data:
+                logging.info("WE ARE PROBING HOORAY")
                 logging.info(data["is_active"])
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self.widgets['zposition'].set_text("Z: ?")
