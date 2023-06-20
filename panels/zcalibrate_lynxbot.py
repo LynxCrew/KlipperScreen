@@ -293,11 +293,8 @@ class ZCalibratePanel(ScreenPanel):
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif "already running a twist compensation." in data and "use abort_twist_compensation" in data:
-                logging.info("meow")
-                self.buttons['cancel'].disconnect(self.cancel_handler)
-                self.cancel_handler = self.buttons['cancel'].connect("clicked",
-                                                                     self.abort_twist_compensation)
+            elif (("already running a twist compensation." in data and "use abort" in data)
+                  or ("probe triggered prior to movement" in data)):
                 self.enable_cancel_button()
             elif "save_config" in data:
                 self.reset_states()
@@ -374,8 +371,9 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['zneg'].get_style_context().remove_class('color1')
         self.buttons['complete'].set_sensitive(False)
         self.buttons['complete'].get_style_context().remove_class('color3')
-        self.buttons['cancel'].set_sensitive(False)
-        self.buttons['cancel'].get_style_context().remove_class('color2')
+        if not self.twist_compensate_running:
+            self.buttons['cancel'].set_sensitive(False)
+            self.buttons['cancel'].get_style_context().remove_class('color2')
 
     def reset_states(self):
         self.running = False
@@ -397,12 +395,6 @@ class ZCalibratePanel(ScreenPanel):
     def enable_cancel_button(self):
         self.buttons['cancel'].set_sensitive(True)
         self.buttons['cancel'].get_style_context().add_class('color2')
-
-    def abort_twist_compensation(self, widge):
-        self._screen._ws.klippy.gcode_script("ABORT_TWIST_COMPENSATION")
-        self.buttons['cancel'].disconnect(self.cancel_handler)
-        self.cancel_handler = self.buttons['cancel'].connect("clicked", self.abort)
-        self.buttons_not_calibrating()
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
