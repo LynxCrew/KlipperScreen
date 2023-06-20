@@ -398,9 +398,8 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['cancel'].set_sensitive(True)
         self.buttons['cancel'].get_style_context().add_class('color2')
 
-    def abort_twist_compensation(self):
-        self._screen._ws.klippy.gcode_script(
-            "ABORT_TWIST_COMPENSATION")
+    def abort_twist_compensation(self, widge):
+        self._screen._ws.klippy.gcode_script("ABORT_TWIST_COMPENSATION")
         self.buttons['cancel'].disconnect(self.cancel_handler)
         self.cancel_handler = self.buttons['cancel'].connect("clicked", self.abort)
         self.buttons_not_calibrating()
