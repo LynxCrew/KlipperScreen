@@ -281,9 +281,6 @@ class ZCalibratePanel(ScreenPanel):
         if action == "notify_busy":
             self.process_busy(data)
         elif action == "notify_status_update":
-            if "is_active" in data:
-                logging.info("WE ARE PROBING HOORAY")
-                logging.info(data["is_active"])
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self.widgets['zposition'].set_text("Z: ?")
             elif "gcode_move" in data and "gcode_position" in data['gcode_move']:
@@ -295,7 +292,9 @@ class ZCalibratePanel(ScreenPanel):
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif "Already running a twist compensation. Use ABORT_TWIST_COMPENSATION" in data:
+            elif "Already running a twist compensation." in data and "Use ABORT_TWIST_COMPENSATION" in data:
+                logging.info("meow")
+                self.buttons['cancel'].set_label('Test')
                 self.buttons['cancel'].disconnect(self.cancel_handler)
                 self.cancel_handler = self.buttons['cancel'].connect("clicked",
                                                                      self.abort_twist_compensation())
