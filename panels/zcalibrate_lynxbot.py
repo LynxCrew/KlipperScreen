@@ -292,7 +292,7 @@ class ZCalibratePanel(ScreenPanel):
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif "Already running a twist compensation." in data and "Use ABORT_TWIST_COMPENSATION" in data:
+            elif "already running a twist compensation." in data and "use abort_twist_compensation" in data:
                 logging.info("meow")
                 self.buttons['cancel'].set_label('Test')
                 self.buttons['cancel'].disconnect(self.cancel_handler)
