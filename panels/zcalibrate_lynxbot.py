@@ -93,10 +93,7 @@ class ZCalibratePanel(ScreenPanel):
         self.labels['popover'].add(pobox)
         self.labels['popover'].set_position(Gtk.PositionType.BOTTOM)
 
-        if len(self.functions) > 1:
-            self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
-        else:
-            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
+        self.reset_states()
 
         distgrid = Gtk.Grid()
         for j, i in enumerate(self.distances):
@@ -178,10 +175,12 @@ class ZCalibratePanel(ScreenPanel):
             if self.wait_for_continue:
                 self.buttons['start'].set_label('Continue')
                 self.buttons['start'].disconnect(self.start_handler)
-                self.continue_handler = self.buttons['start'].connect("clicked",
-                                                                      self
-                                                                      .continue_
-                                                                      )
+                self.start_handler = None
+                if self.continue_handler is None:
+                    self.continue_handler = self.buttons['start'].connect("clicked",
+                                                                          self
+                                                                          .continue_
+                                                                          )
             self.twist_compensate_running = True
             self._screen._ws.klippy.gcode_script(
                 "AXIS_TWIST_COMPENSATION_CALIBRATE"
@@ -377,10 +376,12 @@ class ZCalibratePanel(ScreenPanel):
         if self.continue_handler is not None:
             self.buttons['start'].set_label('Start')
             self.buttons['start'].disconnect(self.continue_handler)
-            if len(self.functions) > 1:
-                self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
-            else:
-                self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
+            self.continue_handler = None
+            if self.start_handler is None:
+                if len(self.functions) > 1:
+                    self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
+                else:
+                    self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
 
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
