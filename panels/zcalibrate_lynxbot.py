@@ -173,9 +173,10 @@ class ZCalibratePanel(ScreenPanel):
             self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
         elif method == "twist_compensation":
             if self.wait_for_continue:
-                self.buttons['start'].set_label('Continue')
-                self.buttons['start'].disconnect(self.start_handler)
-                self.start_handler = None
+                if self.start_handler is not None:
+                    self.buttons['start'].set_label('Continue')
+                    self.buttons['start'].disconnect(self.start_handler)
+                    self.start_handler = None
                 if self.continue_handler is None:
                     self.continue_handler = self.buttons['start'].connect("clicked",
                                                                           self
@@ -377,11 +378,11 @@ class ZCalibratePanel(ScreenPanel):
             self.buttons['start'].set_label('Start')
             self.buttons['start'].disconnect(self.continue_handler)
             self.continue_handler = None
-            if self.start_handler is None:
-                if len(self.functions) > 1:
-                    self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
-                else:
-                    self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
+        if self.start_handler is None:
+            if len(self.functions) > 1:
+                self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
+            else:
+                self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
 
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
