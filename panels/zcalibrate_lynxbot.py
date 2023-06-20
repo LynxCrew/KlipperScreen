@@ -22,6 +22,7 @@ class ZCalibratePanel(ScreenPanel):
         super().__init__(screen, title)
         self.z_offset = None
         self.running = False
+        self.calibrating = False
         self.twist_compensate_running = False
         self.probe = self._printer.get_probe()
         if self.probe:
@@ -267,7 +268,7 @@ class ZCalibratePanel(ScreenPanel):
         if self.running:
             for button in self.buttons:
                 if button != 'start':
-                    self.buttons[button].set_sensitive(not busy)
+                    self.buttons[button].set_sensitive((not busy) and self.calibrating)
         else:
             if not busy:
                 self.buttons['start'].get_style_context().add_class('color3')
@@ -299,7 +300,7 @@ class ZCalibratePanel(ScreenPanel):
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif "continue" in data:
+            elif "continue" in data and "unknown command:" not in data:
                 self.buttons_not_calibrating()
             elif (("probe cancelled" in data and "calibration aborted" in data)
                   or ("fail" in data and "use testz" in data)):
@@ -343,6 +344,7 @@ class ZCalibratePanel(ScreenPanel):
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ACCEPT)
 
     def buttons_calibrating(self):
+        self.calibrating = True
         self.buttons['start'].get_style_context().remove_class('color3')
         self.buttons['start'].set_sensitive(False)
 
@@ -356,6 +358,7 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['cancel'].get_style_context().add_class('color2')
 
     def buttons_not_calibrating(self):
+        self.calibrating = False
         self.buttons['start'].get_style_context().add_class('color3')
         self.buttons['start'].set_sensitive(True)
 
@@ -374,10 +377,10 @@ class ZCalibratePanel(ScreenPanel):
         if self.continue_handler is not None:
             self.buttons['start'].set_label('Start')
             self.buttons['start'].disconnect(self.continue_handler)
-        if len(self.functions) > 1:
-            self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
-        else:
-            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
+            if len(self.functions) > 1:
+                self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
+            else:
+                self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
 
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
