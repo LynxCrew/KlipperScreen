@@ -288,16 +288,14 @@ class ZCalibratePanel(ScreenPanel):
         elif action == "notify_gcode_response":
             data = data.lower()
             if ("unknown command:\"query_manual_probe_running\"" in data
-                    or "unknown command:\"query_twist_compensation_running\"" in data):
+                    or "unknown command:\"query_twist_compensation_running\"" in data
+                    or ("probe cancelled" in data and "calibration aborted" in data)):
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
             elif "already running a twist compensation." in data and "use abort_twist_compensation" in data:
                 logging.info("meow")
                 self.buttons['cancel'].set_label('Test')
-                self.buttons['cancel'].disconnect(self.cancel_handler)
-                self.cancel_handler = self.buttons['cancel'].connect("clicked",
-                                                                     self.abort_twist_compensation())
             elif "save_config" in data:
                 self.reset_states()
                 self.buttons_not_calibrating()
@@ -308,8 +306,7 @@ class ZCalibratePanel(ScreenPanel):
                 logging.info(data)
             elif "continue" in data and "unknown command:" not in data:
                 self.buttons_not_calibrating()
-            elif (("probe cancelled" in data and "calibration aborted" in data)
-                  or ("fail" in data and "use testz" in data)):
+            elif ("fail" in data and "use testz" in data):
                 self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.reset_states()
                 self.buttons_not_calibrating()
