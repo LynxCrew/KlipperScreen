@@ -295,7 +295,10 @@ class ZCalibratePanel(ScreenPanel):
                 logging.info(data)
             elif "already running a twist compensation." in data and "use abort_twist_compensation" in data:
                 logging.info("meow")
-                self.buttons['cancel'].set_label('Test')
+                self.buttons['cancel'].disconnect(self.cancel_handler)
+                self.cancel_handler = self.buttons['cancel'].connect("clicked",
+                                                                     self.abort_twist_compensation)
+                self.enable_cancel_button()
             elif "save_config" in data:
                 self.reset_states()
                 self.buttons_not_calibrating()
@@ -391,11 +394,16 @@ class ZCalibratePanel(ScreenPanel):
         self.buttons['start'].set_sensitive(False)
         self.buttons['start'].get_style_context().remove_class('color3')
 
+    def enable_cancel_button(self):
+        self.buttons['cancel'].set_sensitive(True)
+        self.buttons['cancel'].get_style_context().add_class('color2')
+
     def abort_twist_compensation(self):
         self._screen._ws.klippy.gcode_script(
             "ABORT_TWIST_COMPENSATION")
         self.buttons['cancel'].disconnect(self.cancel_handler)
         self.cancel_handler = self.buttons['cancel'].connect("clicked", self.abort)
+        self.buttons_not_calibrating()
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
