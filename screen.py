@@ -743,7 +743,10 @@ class KlipperScreen(Gtk.Window):
                 elif data.startswith("!! "):
                     self.show_popup_message(data[3:], 3)
                 elif "unknown" in data.lower() and \
-                        not ("TESTZ" in data or "MEASURE_AXES_NOISE" in data or "ACCELEROMETER_QUERY" in data):
+                        not ("QUERY_MANUAL_PROBE_RUNNING" in data
+                             or "QUERY_TWIST_COMPENSATION_RUNNING" in data
+                             or "MEASURE_AXES_NOISE" in data
+                             or "ACCELEROMETER_QUERY" in data):
                     self.show_popup_message(data)
                 elif "SAVE_CONFIG" in data and self.printer.state == "ready":
                     script = {"script": "SAVE_CONFIG"}
