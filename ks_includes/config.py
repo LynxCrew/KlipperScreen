@@ -290,7 +290,7 @@ class KlipperScreenConfig:
             [i for i in self.configurable_options if list(i)[0] == "screen_blanking"][0])
         for num in SCREEN_BLANKING_OPTIONS:
             hour = num // 3600
-            minute = num / 60
+            minute = num // 60
             second = num
             if hour > 0:
                 name = f'{hour} ' + ngettext("hour", "hours", hour)
