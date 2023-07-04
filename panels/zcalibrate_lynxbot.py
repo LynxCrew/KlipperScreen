@@ -267,7 +267,7 @@ class ZCalibratePanel(ScreenPanel):
     def process_busy(self, busy):
         if self.running:
             for button in self.buttons:
-                if button != 'start' and button != 'cancel':
+                if button != 'start' and (button != 'cancel' or not self.twist_compensate_running):
                     self.buttons[button].set_sensitive(
                         (not busy) and self.calibrating)
         else:
