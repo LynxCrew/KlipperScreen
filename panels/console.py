@@ -109,7 +109,7 @@ class ConsolePanel(ScreenPanel):
         elif message.startswith("//"):
             color = COLORS['warning']
             message = message.replace("// ", "")
-        elif self.hidetemps and re.match('^(?:ok\\s+)?(B|C|T\\d*):', message):
+        elif self.hidetemps and re.match('^(?:ok\\s+)?(A|B|C|R|T\\d*):', message):
             return
         else:
             color = COLORS['response']
