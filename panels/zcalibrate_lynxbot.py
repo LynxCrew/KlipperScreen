@@ -345,7 +345,7 @@ class ZCalibratePanel(ScreenPanel):
         logging.info("Aborting calibration")
         self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
         self.reset_states()
-        self.buttons_calibrating()
+        self.buttons_not_calibrating()
         self.disable_start_button()
         self._screen._menu_go_back()
 
