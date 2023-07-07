@@ -107,7 +107,6 @@ class KlipperScreen(Gtk.Window):
         self.dialogs = []
         self.confirm = None
         self.panels_reinit = []
-        self.z_calibrate_panel = self.ks_printer_cfg.get("z_calibrate_panel", "zcalibrate")
 
         configfile = os.path.normpath(os.path.expanduser(args.configfile))
 
@@ -203,6 +202,7 @@ class KlipperScreen(Gtk.Window):
                 break
 
         self.printer = self.printers[ind]["data"]
+        self.z_calibrate_panel = self._config.get_printer_config(self.printer).get("z_calibrate_panel", "zcalibrate")
         self.apiclient = KlippyRest(
             self.printers[ind][name]["moonraker_host"],
             self.printers[ind][name]["moonraker_port"],
