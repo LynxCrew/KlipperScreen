@@ -155,6 +155,7 @@ class KlipperScreen(Gtk.Window):
             self.dialogs = []
         self.set_screenblanking_timeout(self._config.get_main_config().get('screen_blanking'))
 
+        self.z_calibrate_panel = None
         self.initial_connection()
 
     def initial_connection(self):
@@ -202,7 +203,6 @@ class KlipperScreen(Gtk.Window):
                 break
 
         self.printer = self.printers[ind]["data"]
-        self.z_calibrate_panel = self._config.get_printer_config(self.printer).get("z_calibrate_panel", "zcalibrate")
         self.apiclient = KlippyRest(
             self.printers[ind][name]["moonraker_host"],
             self.printers[ind][name]["moonraker_port"],
@@ -857,6 +857,7 @@ class KlipperScreen(Gtk.Window):
             return False
         self.connecting = not self._ws.connected
         self.connected_printer = self.connecting_to_printer
+        self.z_calibrate_panel = self._config.get_printer_config(self.connected_printer).get("z_calibrate_panel", "zcalibrate")
         self.base_panel.set_ks_printer_cfg(self.connected_printer)
 
         # Moonraker is ready, set a loop to init the printer
