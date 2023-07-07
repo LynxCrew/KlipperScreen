@@ -107,6 +107,7 @@ class KlipperScreen(Gtk.Window):
         self.dialogs = []
         self.confirm = None
         self.panels_reinit = []
+        self.z_calibrate_panel = self.ks_printer_cfg.get("z_calibrate_panel", "zcalibrate")
 
         configfile = os.path.normpath(os.path.expanduser(args.configfile))
 
@@ -731,10 +732,8 @@ class KlipperScreen(Gtk.Window):
             if ('manual_probe' in data
                     and data['manual_probe']['is_active']
                     and 'zoffset' not in self._cur_panels
-                    and 'zcalibrate_lynxbot' not in self._cur_panels):
-                logging.info("MEOW?????")
-                logging.info(self._cur_panels)
-                self.show_panel('z_calibrate', "zcalibrate_lynxbot", None, 1, False)
+                    and self.z_calibrate_panel not in self._cur_panels):
+                self.show_panel(self.z_calibrate_panel, self.z_calibrate_panel, None, 1, False)
         elif action == "notify_filelist_changed":
             if self.files is not None:
                 self.files.process_update(data)
