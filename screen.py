@@ -732,6 +732,7 @@ class KlipperScreen(Gtk.Window):
                     and data['manual_probe']['is_active']
                     and 'zoffset' not in self._cur_panels
                     and 'z_calibrate' not in self._cur_panels):
+                logging.info("MEOW?????")
                 logging.info(self._cur_panels)
                 self.show_panel('z_calibrate', "zcalibrate_lynxbot", None, 1, False)
         elif action == "notify_filelist_changed":
