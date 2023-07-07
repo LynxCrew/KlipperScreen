@@ -731,7 +731,7 @@ class KlipperScreen(Gtk.Window):
             if ('manual_probe' in data
                     and data['manual_probe']['is_active']
                     and 'zoffset' not in self._cur_panels
-                    and 'z_calibrate' not in self._cur_panels):
+                    and 'zcalibrate_lynxbot' not in self._cur_panels):
                 logging.info("MEOW?????")
                 logging.info(self._cur_panels)
                 self.show_panel('z_calibrate', "zcalibrate_lynxbot", None, 1, False)
