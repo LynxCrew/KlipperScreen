@@ -288,10 +288,12 @@ class ZCalibratePanel(ScreenPanel):
                 self.update_position(data['gcode_move']['gcode_position'])
         elif action == "notify_gcode_response":
             data = data.lower()
-            if "manual probe running" in data:
-                self.running = True
             if "twist compensation running" in data:
                 self.twist_compensate_running = True
+                self.buttons_not_calibrating()
+            if "manual probe running" in data:
+                self.running = True
+                self.buttons_calibrating()
             if (("unknown command:\"query_manual_probe_running\"" in data
                     and "unknown command:\"query_twist_compensation_running\"" in data)
                     or ("probe cancelled" in data and "calibration aborted" in data)):
