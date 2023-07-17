@@ -158,7 +158,7 @@ class ZCalibratePanel(ScreenPanel):
         self.running = True
 
         if method == "probe":
-            self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
+            self._screen._ws.klippy.gcode_script("CALIBRATE_PROBE")
         elif method == "mesh":
             self._screen._ws.klippy.gcode_script("LEVEL_AUTO")
         elif method == "delta":
@@ -170,7 +170,7 @@ class ZCalibratePanel(ScreenPanel):
                 self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
         elif method == "endstop":
-            self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
+            self._screen._ws.klippy.gcode_script("CALIBRATE_Z_ENDSTOP")
         elif method == "twist_compensation":
             if self.wait_for_continue:
                 if self.start_handler is not None:
