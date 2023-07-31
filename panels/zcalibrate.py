@@ -1,19 +1,13 @@
+import logging
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
 from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
 
-import logging
 
-
-def create_panel(*args):
-    return ZCalibratePanel(*args)
-
-
-class ZCalibratePanel(ScreenPanel):
+class Panel(ScreenPanel):
     widgets = {}
     distances = ['.01', '.05', '.1', '.5', '1', '5']
     distance = distances[-2]
@@ -25,12 +19,12 @@ class ZCalibratePanel(ScreenPanel):
         if self.probe:
             self.z_offset = float(self.probe['z_offset'])
         logging.info(f"Z offset: {self.z_offset}")
-        self.widgets['zposition'] = Gtk.Label("Z: ?")
+        self.widgets['zposition'] = Gtk.Label(label="Z: ?")
 
         pos = self._gtk.HomogeneousGrid()
         pos.attach(self.widgets['zposition'], 0, 1, 2, 1)
         if self.z_offset is not None:
-            self.widgets['zoffset'] = Gtk.Label("?")
+            self.widgets['zoffset'] = Gtk.Label(label="?")
             pos.attach(Gtk.Label(_("Probe Offset") + ": "), 0, 2, 2, 1)
             pos.attach(Gtk.Label(_("Saved")), 0, 3, 1, 1)
             pos.attach(Gtk.Label(_("New")), 1, 3, 1, 1)
