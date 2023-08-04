@@ -9,11 +9,7 @@ from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
 
 
-def create_panel(*args):
-    return MovePanel(*args)
-
-
-class MovePanel(ScreenPanel):
+class Panel(ScreenPanel):
     distances = ['.1', '.5', '1', '5', '10', '25', '50']
     distance = distances[-2]
 

@@ -11,11 +11,7 @@ from ks_includes.screen_panel import ScreenPanel
 from ks_includes.widgets.bedmap import BedMap
 
 
-def create_panel(*args):
-    return BedMeshPanel(*args)
-
-
-class BedMeshPanel(ScreenPanel):
+class Panel(ScreenPanel):
 
     def __init__(self, screen, title):
         super().__init__(screen, title)
