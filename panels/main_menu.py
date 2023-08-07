@@ -170,7 +170,8 @@ class Panel(MenuPanel):
         return True
 
     def show_devices(self):
-        devices = sorted(self.devices)
+        devices = self._sort_devices()
+
         for device in self.devices:
             pos = devices.index(device) + 1
             logging.info(f"Pos device: {device} {pos}")
@@ -181,6 +182,25 @@ class Panel(MenuPanel):
             self.labels['devices'].attach(self.devices[device]["temp"], 1, pos, 1, 1)
             self.labels['devices'].show_all()
 
+    def _sort_devices(self):
+        result = []
+        offset = 0
+        devices = sorted(self.devices)
+        for device in devices:
+            if device.startswith("extruder")\
+                    or device.startswith("heater_bed"):
+                offset += 1
+        for device in devices:
+            if device.startswith("extruder"):
+                result.append(device)
+        for device in devices:
+            if device.startswith("heater_bed"):
+                result.append(device)
+        for device in devices:
+            if not device.startswith("extruder")\
+                    and not device.startswith("heater_bed"):
+                result.append(device)
+        return result
     def toggle_visibility(self, widget, device):
         self.devices[device]['visible'] ^= True
         logging.info(f"Graph show {self.devices[device]['visible']}: {device}")
