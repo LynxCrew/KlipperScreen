@@ -125,7 +125,8 @@ class Panel(MenuPanel):
             image = "heater"
             class_name = f"graph_label_sensor_{self.h}"
             dev_type = "sensor"
-        elif device.startswith("temperature_fan"):
+        elif device.startswith("temperature_fan") \
+                or device.startswith("controller_temperature_fan"):
             self.f += 1
             image = "fan"
             class_name = f"graph_label_fan_{self.f}"
@@ -202,6 +203,8 @@ class Panel(MenuPanel):
             self._screen._ws.klippy.set_heater_temp(name, temp)
         elif self.active_heater.startswith('temperature_fan '):
             self._screen._ws.klippy.set_temp_fan_temp(name, temp)
+        elif self.active_heater.startswith('controller_temperature_fan '):
+            self._screen._ws.klippy.set_temp_controller_fan_temp(name, temp)
         else:
             logging.info(f"Unknown heater: {self.active_heater}")
             self._screen.show_popup_message(_("Unknown Heater") + " " + self.active_heater)

@@ -176,7 +176,8 @@ class BasePanel(ScreenPanel):
         elif self.titlebar_name_type is not None:
             # The item has a name, do not use an icon
             return None
-        elif device.startswith("temperature_fan"):
+        elif device.startswith("temperature_fan") \
+                or device.startswith("controller_temperature_fan"):
             return self._gtk.Image("fan", img_size, img_size)
         elif device.startswith("heater_generic"):
             return self._gtk.Image("heater", img_size, img_size)

@@ -154,7 +154,8 @@ class Panel(ScreenPanel):
                     self._screen._ws.klippy.set_bed_temp(target)
                 elif heater.startswith('heater_generic '):
                     self._screen._ws.klippy.set_heater_temp(name, target)
-                elif heater.startswith("temperature_fan "):
+                elif heater.startswith("temperature_fan ") \
+                        or heater.startswith("controller_temperature_fan "):
                     self._screen._ws.klippy.set_temp_fan_temp(name, target)
                 else:
                     logging.info(f"Unknown heater: {heater}")
@@ -234,7 +235,9 @@ class Panel(ScreenPanel):
                         elif i == heater:
                             target = self.preheat_options[setting][heater]
                             logging.info(f"heater match {heater}")
-                if target is None and setting == "cooldown" and not heater.startswith('temperature_fan '):
+                if target is None and setting == "cooldown" \
+                        and not heater.startswith('temperature_fan ') \
+                        and not heater.startswith('controller_temperature_fan '):
                     target = 0
                 if heater.startswith('extruder'):
                     if self.validate(heater, target, max_temp):
@@ -252,6 +255,12 @@ class Panel(ScreenPanel):
                     if self.validate(heater, target, max_temp):
                         self._screen._ws.klippy.set_heater_temp(name, target)
                 elif heater.startswith('temperature_fan '):
+                    if target is None:
+                        with suppress(KeyError):
+                            target = self.preheat_options[setting]["temperature_fan"]
+                    if self.validate(heater, target, max_temp):
+                        self._screen._ws.klippy.set_temp_fan_temp(name, target)
+                elif heater.startswith('controller_temperature_fan '):
                     if target is None:
                         with suppress(KeyError):
                             target = self.preheat_options[setting]["temperature_fan"]
@@ -307,7 +316,8 @@ class Panel(ScreenPanel):
             image = "heater"
             class_name = f"graph_label_sensor_{self.h}"
             dev_type = "sensor"
-        elif device.startswith("temperature_fan"):
+        elif device.startswith("temperature_fan") \
+                or device.startswith("controller_temperature_fan"):
             self.f += 1
             image = "fan"
             class_name = f"graph_label_fan_{self.f}"

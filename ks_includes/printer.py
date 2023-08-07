@@ -54,7 +54,8 @@ class Printer:
             if x == 'heater_bed' \
                     or x.startswith('heater_generic ') \
                     or x.startswith('temperature_sensor ') \
-                    or x.startswith('temperature_fan '):
+                    or x.startswith('temperature_fan ') \
+                    or x.startswith('temperature_controller_fan'):
                 self.devices[x] = {"temperature": 0}
                 if not x.startswith('temperature_sensor '):
                     self.devices[x]["target"] = 0
@@ -202,6 +203,7 @@ class Printer:
         heaters.extend(iter(self.get_config_section_list("heater_generic ")))
         heaters.extend(iter(self.get_config_section_list("temperature_sensor ")))
         heaters.extend(iter(self.get_config_section_list("temperature_fan ")))
+        heaters.extend(iter(self.get_config_section_list("controller_temperature_fan ")))
         return heaters
 
     def get_filament_sensors(self):

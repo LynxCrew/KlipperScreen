@@ -44,6 +44,10 @@ class KlippyGcodes:
         return f'SET_TEMPERATURE_FAN_TARGET temperature_fan="{temp_fan}" target={temp}'
 
     @staticmethod
+    def set_temp_controller_fan_temp(temp_fan, temp):
+        return f'SET_TEMPERATURE_FAN_TARGET temperature_fan="{temp_fan}" target={temp}'
+
+    @staticmethod
     def set_fan_speed(speed):
         return f"{KlippyGcodes.SET_FAN_SPEED} S{speed * 2.55:.0f}"
 
