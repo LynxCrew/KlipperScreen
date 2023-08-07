@@ -436,6 +436,11 @@ class KlipperScreen(Gtk.Window):
                 i + 1,
                 style_options['graph_colors']['sensor']['colors'][i]
             )
+        for i in range(len(style_options['graph_colors']['heater_generic']['colors'])):
+            css_data += "\n.graph_label_heater_generic_%s {border-left-color: #%s}" % (
+                i + 1,
+                style_options['graph_colors']['heater_generic']['colors'][i]
+            )
 
         css_data = css_data.replace("KS_FONT_SIZE", f"{self.gtk.font_size}")
 

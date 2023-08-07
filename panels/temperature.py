@@ -309,7 +309,7 @@ class Panel(ScreenPanel):
         elif device.startswith("heater_generic"):
             self.h += 1
             image = "heater"
-            class_name = f"graph_label_sensor_{self.h}"
+            class_name = f"graph_label_heater_generic_{self.h}"
             dev_type = "sensor"
         elif device.startswith("temperature_fan") \
                 or device.startswith("controller_temperature_fan"):
