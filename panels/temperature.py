@@ -254,13 +254,8 @@ class Panel(ScreenPanel):
                             target = self.preheat_options[setting]["heater_generic"]
                     if self.validate(heater, target, max_temp):
                         self._screen._ws.klippy.set_heater_temp(name, target)
-                elif heater.startswith('temperature_fan '):
-                    if target is None:
-                        with suppress(KeyError):
-                            target = self.preheat_options[setting]["temperature_fan"]
-                    if self.validate(heater, target, max_temp):
-                        self._screen._ws.klippy.set_temp_fan_temp(name, target)
-                elif heater.startswith('controller_temperature_fan '):
+                elif heater.startswith('temperature_fan ')\
+                        or heater.startswith('controller_temperature_fan '):
                     if target is None:
                         with suppress(KeyError):
                             target = self.preheat_options[setting]["temperature_fan"]
