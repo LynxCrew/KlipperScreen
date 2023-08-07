@@ -96,7 +96,6 @@ class Panel(MenuPanel):
             self.hide_numpad()
 
     def add_device(self, device):
-
         logging.info(f"Adding device: {device}")
 
         temperature = self._printer.get_dev_stat(device, "temperature")
@@ -178,8 +177,8 @@ class Panel(MenuPanel):
             logging.info(f"{devices}")
 
             self.labels['devices'].insert_row(pos)
-            self.labels['devices'].attach(self.devices["name"], 0, pos, 1, 1)
-            self.labels['devices'].attach(self.devices["temp"], 1, pos, 1, 1)
+            self.labels['devices'].attach(self.devices[device]["name"], 0, pos, 1, 1)
+            self.labels['devices'].attach(self.devices[device]["temp"], 1, pos, 1, 1)
             self.labels['devices'].show_all()
 
     def toggle_visibility(self, widget, device):
