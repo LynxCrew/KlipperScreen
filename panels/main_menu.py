@@ -168,17 +168,19 @@ class Panel(MenuPanel):
             "can_target": can_target,
             "visible": visible
         }
-
-        devices = sorted(self.devices)
-        pos = devices.index(device) + 1
-        logging.info(f"Pos device: {device} {pos}")
-        logging.info(f"{devices}")
-
-        self.labels['devices'].insert_row(pos)
-        self.labels['devices'].attach(name, 0, pos, 1, 1)
-        self.labels['devices'].attach(temp, 1, pos, 1, 1)
-        self.labels['devices'].show_all()
         return True
+
+    def show_devices(self):
+        devices = sorted(self.devices)
+        for device in self.devices:
+            pos = devices.index(device) + 1
+            logging.info(f"Pos device: {device} {pos}")
+            logging.info(f"{devices}")
+
+            self.labels['devices'].insert_row(pos)
+            self.labels['devices'].attach(self.devices["name"], 0, pos, 1, 1)
+            self.labels['devices'].attach(self.devices["temp"], 1, pos, 1, 1)
+            self.labels['devices'].show_all()
 
     def toggle_visibility(self, widget, device):
         self.devices[device]['visible'] ^= True
@@ -257,6 +259,8 @@ class Panel(MenuPanel):
 
         for d in (self._printer.get_tools() + self._printer.get_heaters()):
             self.add_device(d)
+
+        self.show_devices()
 
         return self.left_panel
 
