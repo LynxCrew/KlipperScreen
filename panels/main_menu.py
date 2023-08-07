@@ -172,6 +172,7 @@ class Panel(MenuPanel):
         devices = sorted(self.devices)
         pos = devices.index(device) + 1
         logging.info(f"Pos device: {device} {pos}")
+        logging.info(f"{devices}")
 
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(name, 0, pos, 1, 1)
