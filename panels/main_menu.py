@@ -172,7 +172,7 @@ class Panel(MenuPanel):
     def show_devices(self):
         devices = self._sort_devices()
 
-        for device in self.devices:
+        for device in devices:
             pos = devices.index(device) + 1
             logging.info(f"Pos device: {device} {pos}")
             logging.info(f"{devices}")
@@ -184,12 +184,7 @@ class Panel(MenuPanel):
 
     def _sort_devices(self):
         result = []
-        offset = 0
         devices = sorted(self.devices)
-        for device in devices:
-            if device.startswith("extruder")\
-                    or device.startswith("heater_bed"):
-                offset += 1
         for device in devices:
             if device.startswith("extruder"):
                 result.append(device)
