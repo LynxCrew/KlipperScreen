@@ -150,6 +150,7 @@ class Panel(MenuPanel):
         name.connect("clicked", self.toggle_visibility, device)
         name.set_alignment(0, .5)
         visible = self._config.get_config().getboolean(f"graph {self._screen.connected_printer}", device, fallback=True)
+        logging.info(f"Visible device: {device}")
         if visible:
             name.get_style_context().add_class(class_name)
         else:
