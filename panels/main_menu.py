@@ -123,7 +123,7 @@ class Panel(MenuPanel):
             self.h += 1
             image = "heater"
             class_name = f"graph_label_sensor_{self.h}"
-            dev_type = "sensor"
+            dev_type = "heater_generic"
         elif device.startswith("temperature_fan") \
                 or device.startswith("controller_temperature_fan"):
             self.f += 1
@@ -162,6 +162,7 @@ class Panel(MenuPanel):
 
         self.devices[device] = {
             "class": class_name,
+            "dev_type": dev_type,
             "name": name,
             "temp": temp,
             "can_target": can_target,
@@ -186,16 +187,22 @@ class Panel(MenuPanel):
         result = []
         devices = sorted(self.devices)
         for device in devices:
-            if device.startswith("extruder"):
+            if self.devices[device]["dev_type"] == "extruder":
                 result.append(device)
         for device in devices:
-            if device.startswith("heater_bed"):
+            if self.devices[device]["dev_type"] == "bed":
                 result.append(device)
         for device in devices:
-            if not device.startswith("extruder")\
-                    and not device.startswith("heater_bed"):
+            if self.devices[device]["dev_type"] == "heater_generic":
+                result.append(device)
+        for device in devices:
+            if self.devices[device]["dev_type"] == "fan":
+                result.append(device)
+        for device in devices:
+            if self.devices[device]["dev_type"] == "sensor":
                 result.append(device)
         return result
+
     def toggle_visibility(self, widget, device):
         self.devices[device]['visible'] ^= True
         logging.info(f"Graph show {self.devices[device]['visible']}: {device}")
