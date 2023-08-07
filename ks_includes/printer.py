@@ -55,7 +55,7 @@ class Printer:
                     or x.startswith('heater_generic ') \
                     or x.startswith('temperature_sensor ') \
                     or x.startswith('temperature_fan ') \
-                    or x.startswith('temperature_controller_fan'):
+                    or x.startswith('controller_temperature_fan'):
                 self.devices[x] = {"temperature": 0}
                 if not x.startswith('temperature_sensor '):
                     self.devices[x]["target"] = 0
