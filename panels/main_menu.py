@@ -132,6 +132,7 @@ class Panel(MenuPanel):
             class_name = f"graph_label_fan_{self.f}"
             dev_type = "fan"
         elif self._config.get_main_config().getboolean("only_heaters", False):
+            logging.info(f"only heaters")
             return False
         else:
             self.h += 1
