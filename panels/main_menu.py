@@ -125,7 +125,7 @@ class Panel(MenuPanel):
             self.h += 1
             index = self.h
             max_indices = len(self._screen.get_style_options()['graph_colors']['heater_generic']['colors'])
-            while index >= max_indices:
+            while index > max_indices:
                 index -= max_indices
 
             image = "heater"
@@ -136,7 +136,7 @@ class Panel(MenuPanel):
             self.f += 1
             index = self.f
             max_indices = len(self._screen.get_style_options()['graph_colors']['fan']['colors'])
-            while index >= max_indices:
+            while index > max_indices:
                 index -= max_indices
 
             image = "fan"
@@ -148,7 +148,7 @@ class Panel(MenuPanel):
             self.h += 1
             index = self.h
             max_indices = len(self._screen.get_style_options()['graph_colors']['sensor']['colors'])
-            while index >= max_indices:
+            while index > max_indices:
                 index -= max_indices
 
             image = "heat-up"
