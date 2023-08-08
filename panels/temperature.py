@@ -431,7 +431,8 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.set_bed_temp(temp)
         elif self.active_heater.startswith('heater_generic '):
             self._screen._ws.klippy.set_heater_temp(name, temp)
-        elif self.active_heater.startswith('temperature_fan '):
+        elif self.active_heater.startswith('temperature_fan ') \
+                or self.active_heater.startswith('controller_temperature_fan '):
             self._screen._ws.klippy.set_temp_fan_temp(name, temp)
         else:
             logging.info(f"Unknown heater: {self.active_heater}")
