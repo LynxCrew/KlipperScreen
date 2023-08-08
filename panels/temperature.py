@@ -357,6 +357,10 @@ class Panel(ScreenPanel):
             "visible": visible
         }
 
+        if self.devices[device]["can_target"]:
+            self.devices[device]['select'] = self._gtk.Button(label=_("Select"))
+            self.devices[device]['select'].connect('clicked', self.select_heater, device)
+
     def show_devices(self):
         devices = self._sort_devices()
 
