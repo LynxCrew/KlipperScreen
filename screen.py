@@ -104,6 +104,7 @@ class KlipperScreen(Gtk.Window):
         self.version = version
         self.dialogs = []
         self.confirm = None
+        self.style_options = {}
 
         configfile = os.path.normpath(os.path.expanduser(args.configfile))
 
@@ -397,7 +398,7 @@ class KlipperScreen(Gtk.Window):
         css_data = pathlib.Path(os.path.join(klipperscreendir, "styles", "base.css")).read_text()
 
         with open(os.path.join(klipperscreendir, "styles", "base.conf")) as f:
-            style_options = json.load(f)
+            self.style_options = json.load(f)
         # Load custom theme
         theme = os.path.join(klipperscreendir, "styles", self.theme)
         theme_style = os.path.join(theme, "style.css")
@@ -409,37 +410,37 @@ class KlipperScreen(Gtk.Window):
         if os.path.exists(theme_style_conf):
             try:
                 with open(theme_style_conf) as f:
-                    style_options.update(json.load(f))
+                    self.style_options.update(json.load(f))
             except Exception as e:
                 logging.error(f"Unable to parse custom template conf file:\n{e}")
 
-        self.gtk.color_list = style_options['graph_colors']
+        self.gtk.color_list = self.style_options['graph_colors']
 
-        for i in range(len(style_options['graph_colors']['extruder']['colors'])):
+        for i in range(len(self.style_options['graph_colors']['extruder']['colors'])):
             num = "" if i == 0 else i
             css_data += "\n.graph_label_extruder%s {border-left-color: #%s}" % (
                 num,
-                style_options['graph_colors']['extruder']['colors'][i]
+                self.style_options['graph_colors']['extruder']['colors'][i]
             )
-        for i in range(len(style_options['graph_colors']['bed']['colors'])):
+        for i in range(len(self.style_options['graph_colors']['bed']['colors'])):
             css_data += "\n.graph_label_heater_bed%s {border-left-color: #%s}" % (
                 "" if i == 0 else i + 1,
-                style_options['graph_colors']['bed']['colors'][i]
+                self.style_options['graph_colors']['bed']['colors'][i]
             )
-        for i in range(len(style_options['graph_colors']['fan']['colors'])):
+        for i in range(len(self.style_options['graph_colors']['fan']['colors'])):
             css_data += "\n.graph_label_fan_%s {border-left-color: #%s}" % (
                 i + 1,
-                style_options['graph_colors']['fan']['colors'][i]
+                self.style_options['graph_colors']['fan']['colors'][i]
             )
-        for i in range(len(style_options['graph_colors']['sensor']['colors'])):
+        for i in range(len(self.style_options['graph_colors']['sensor']['colors'])):
             css_data += "\n.graph_label_sensor_%s {border-left-color: #%s}" % (
                 i + 1,
-                style_options['graph_colors']['sensor']['colors'][i]
+                self.style_options['graph_colors']['sensor']['colors'][i]
             )
-        for i in range(len(style_options['graph_colors']['heater_generic']['colors'])):
+        for i in range(len(self.style_options['graph_colors']['heater_generic']['colors'])):
             css_data += "\n.graph_label_heater_generic_%s {border-left-color: #%s}" % (
                 i + 1,
-                style_options['graph_colors']['heater_generic']['colors'][i]
+                self.style_options['graph_colors']['heater_generic']['colors'][i]
             )
 
         css_data = css_data.replace("KS_FONT_SIZE", f"{self.gtk.font_size}")

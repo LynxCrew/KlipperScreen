@@ -1,9 +1,12 @@
 import logging
 import gi
 
+import screen
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 from panels.menu import Panel as MenuPanel
+from screen import KlipperScreen as ks
 from ks_includes.widgets.heatergraph import HeaterGraph
 from ks_includes.widgets.keypad import Keypad
 
@@ -121,12 +124,22 @@ class Panel(MenuPanel):
             dev_type = "bed"
         elif device.startswith("heater_generic"):
             self.h += 1
+            index = self.h
+            max_indices = len(ks.style_options['graph_colors']['heater_generic']['colors'])
+            while index >= max_indices:
+                index -= max_indices
+
             image = "heater"
-            class_name = f"graph_label_heater_generic_{self.h}"
+            class_name = f"graph_label_heater_generic_{index}"
             dev_type = "heater_generic"
         elif device.startswith("temperature_fan") \
                 or device.startswith("controller_temperature_fan"):
             self.f += 1
+            index = self.f
+            max_indices = len(ks.style_options['graph_colors']['fan']['colors'])
+            while index >= max_indices:
+                index -= max_indices
+
             image = "fan"
             class_name = f"graph_label_fan_{self.f}"
             dev_type = "fan"
@@ -134,8 +147,13 @@ class Panel(MenuPanel):
             return False
         else:
             self.h += 1
+            index = self.h
+            max_indices = len(ks.style_options['graph_colors']['sensor']['colors'])
+            while index >= max_indices:
+                index -= max_indices
+
             image = "heat-up"
-            class_name = f"graph_label_sensor_{self.h}"
+            class_name = f"graph_label_sensor_{index}"
             dev_type = "sensor"
 
         rgb = self._gtk.get_temp_color(dev_type)
