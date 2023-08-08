@@ -184,7 +184,6 @@ class Panel(MenuPanel):
             "can_target": can_target,
             "visible": visible
         }
-        logging.info(f"device_class: {class_name}")
         return True
 
     def show_devices(self):
