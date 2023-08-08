@@ -91,6 +91,7 @@ class KlipperScreen(Gtk.Window):
     max_retries = 4
     initialized = initializing = False
     popup_timeout = None
+    style_options = {}
 
     def __init__(self, args, version):
         try:
@@ -104,7 +105,6 @@ class KlipperScreen(Gtk.Window):
         self.version = version
         self.dialogs = []
         self.confirm = None
-        self.style_options = {}
 
         configfile = os.path.normpath(os.path.expanduser(args.configfile))
 
