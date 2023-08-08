@@ -154,7 +154,6 @@ class Panel(MenuPanel):
         else:
             name.get_style_context().add_class("graph_label_hidden")
         self.labels['da'].set_showing(device, visible)
-        logging.info(f"{class_name}")
 
         temp = self._gtk.Button(label="", lines=1)
         if can_target:
