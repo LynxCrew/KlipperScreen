@@ -6,7 +6,6 @@ import screen
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 from panels.menu import Panel as MenuPanel
-from screen import KlipperScreen as ks
 from ks_includes.widgets.heatergraph import HeaterGraph
 from ks_includes.widgets.keypad import Keypad
 
@@ -125,7 +124,7 @@ class Panel(MenuPanel):
         elif device.startswith("heater_generic"):
             self.h += 1
             index = self.h
-            max_indices = len(ks.style_options['graph_colors']['heater_generic']['colors'])
+            max_indices = len(self._screen.get_style_options()['graph_colors']['heater_generic']['colors'])
             while index >= max_indices:
                 index -= max_indices
 
@@ -136,7 +135,7 @@ class Panel(MenuPanel):
                 or device.startswith("controller_temperature_fan"):
             self.f += 1
             index = self.f
-            max_indices = len(ks.style_options['graph_colors']['fan']['colors'])
+            max_indices = len(self._screen.get_style_options()['graph_colors']['fan']['colors'])
             while index >= max_indices:
                 index -= max_indices
 
@@ -148,7 +147,7 @@ class Panel(MenuPanel):
         else:
             self.h += 1
             index = self.h
-            max_indices = len(ks.style_options['graph_colors']['sensor']['colors'])
+            max_indices = len(self._screen.get_style_options()['graph_colors']['sensor']['colors'])
             while index >= max_indices:
                 index -= max_indices
 

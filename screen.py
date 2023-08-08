@@ -91,7 +91,6 @@ class KlipperScreen(Gtk.Window):
     max_retries = 4
     initialized = initializing = False
     popup_timeout = None
-    style_options = {}
 
     def __init__(self, args, version):
         try:
@@ -105,6 +104,7 @@ class KlipperScreen(Gtk.Window):
         self.version = version
         self.dialogs = []
         self.confirm = None
+        self.style_options = {}
 
         configfile = os.path.normpath(os.path.expanduser(args.configfile))
 
@@ -155,6 +155,9 @@ class KlipperScreen(Gtk.Window):
 
         self.z_calibrate_panel = None
         self.initial_connection()
+
+    def get_style_options(self):
+        return self.style_options
 
     def initial_connection(self):
         self.printers = self._config.get_printers()
