@@ -282,7 +282,6 @@ class Panel(ScreenPanel):
         return False
 
     def add_device(self, device):
-
         logging.info(f"Adding device: {device}")
 
         temperature = self._printer.get_dev_stat(device, "temperature")
@@ -310,7 +309,7 @@ class Panel(ScreenPanel):
             self.h += 1
             image = "heater"
             class_name = f"graph_label_heater_generic_{self.h}"
-            dev_type = "sensor"
+            dev_type = "heater_generic"
         elif device.startswith("temperature_fan") \
                 or device.startswith("controller_temperature_fan"):
             self.f += 1
@@ -351,24 +350,43 @@ class Panel(ScreenPanel):
 
         self.devices[device] = {
             "class": class_name,
+            "dev_type": dev_type,
             "name": name,
             "temp": temp,
             "can_target": can_target,
             "visible": visible
         }
 
-        if self.devices[device]["can_target"]:
-            self.devices[device]['select'] = self._gtk.Button(label=_("Select"))
-            self.devices[device]['select'].connect('clicked', self.select_heater, device)
+    def show_devices(self):
+        devices = self._sort_devices()
 
+        for device in devices:
+            pos = devices.index(device) + 1
+
+            self.labels['devices'].insert_row(pos)
+            self.labels['devices'].attach(self.devices[device]["name"], 0, pos, 1, 1)
+            self.labels['devices'].attach(self.devices[device]["temp"], 1, pos, 1, 1)
+            self.labels['devices'].show_all()
+
+    def _sort_devices(self):
+        result = []
         devices = sorted(self.devices)
-        pos = devices.index(device) + 1
-
-        self.labels['devices'].insert_row(pos)
-        self.labels['devices'].attach(name, 0, pos, 1, 1)
-        self.labels['devices'].attach(temp, 1, pos, 1, 1)
-        self.labels['devices'].show_all()
-        return True
+        for device in devices:
+            if self.devices[device]["dev_type"] == "extruder":
+                result.append(device)
+        for device in devices:
+            if self.devices[device]["dev_type"] == "bed":
+                result.append(device)
+        for device in devices:
+            if self.devices[device]["dev_type"] == "heater_generic":
+                result.append(device)
+        for device in devices:
+            if self.devices[device]["dev_type"] == "fan":
+                result.append(device)
+        for device in devices:
+            if self.devices[device]["dev_type"] == "sensor":
+                result.append(device)
+        return result
 
     def name_pressed(self, widget, event, device):
         self.popover_timeout = GLib.timeout_add_seconds(1, self.popover_popup, widget, device)
@@ -475,6 +493,8 @@ class Panel(ScreenPanel):
 
         for d in (self._printer.get_tools() + self._printer.get_heaters()):
             self.add_device(d)
+
+        self.show_devices()
 
         return self.left_panel
 
