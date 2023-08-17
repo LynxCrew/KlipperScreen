@@ -154,6 +154,7 @@ class KlipperScreen(Gtk.Window):
         self.set_screenblanking_timeout(self._config.get_main_config().get('screen_blanking'))
 
         self.z_calibrate_panel = None
+        self.light_devices = None
         self.initial_connection()
 
     def get_style_options(self):
@@ -847,9 +848,14 @@ class KlipperScreen(Gtk.Window):
                           .get_printer_config(self.connected_printer))
         if printer_config is None:
             self.z_calibrate_panel = "zcalibrate"
+            self.light_devices = ['LED-Bars']
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
+            self.light_devices = (printer_config
+                                  .get("light_devices", "LED-Bars")
+                                  .split(',')
+                                  .trim())
         self.base_panel.set_ks_printer_cfg(self.connected_printer)
 
         # Moonraker is ready, set a loop to init the printer

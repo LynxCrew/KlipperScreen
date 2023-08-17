@@ -12,6 +12,7 @@ class Panel(ScreenPanel):
 
     def __init__(self, screen, title):
         super().__init__(screen, title)
+        self.screen = screen
         self.devices = {}
         # Create a grid for all devices
         self.labels['devices'] = Gtk.Grid()
@@ -29,7 +30,7 @@ class Panel(ScreenPanel):
         for pin in output_pins:
             # Support for hiding devices by name
             name = pin.split()[1]
-            if name != 'LED-Bars':
+            if name not in self.screen.light_devices:
                 continue
             self.add_pin(pin)
 
