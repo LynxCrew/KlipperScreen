@@ -30,7 +30,7 @@ class Panel(ScreenPanel):
         for pin in output_pins:
             # Support for hiding devices by name
             name = pin.split()[1]
-            if name not in self.screen.light_devices:
+            if name not in self.screen.lighting_output_pins:
                 continue
             self.add_pin(pin)
 
