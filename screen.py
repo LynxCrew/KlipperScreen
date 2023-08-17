@@ -852,10 +852,9 @@ class KlipperScreen(Gtk.Window):
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
-            self.light_devices = (printer_config
-                                  .get("light_devices", "LED-Bars")
-                                  .split(','))
-            self.light_devices = map(str.strip, self.light_devices)
+            self.light_devices = map(str.strip, printer_config
+                                     .get("light_devices", "LED-Bars")
+                                     .split(','))
         self.base_panel.set_ks_printer_cfg(self.connected_printer)
 
         # Moonraker is ready, set a loop to init the printer
