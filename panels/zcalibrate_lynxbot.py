@@ -159,11 +159,11 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.gcode_script("LEVEL_AUTO")
         elif method == "delta":
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
-                self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
+                self._screen._ws.klippy.gcode_script("G28")
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
         elif method == "delta_manual":
             if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
-                self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
+                self._screen._ws.klippy.gcode_script("G28")
             self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
         elif method == "endstop":
             self._screen._ws.klippy.gcode_script("CALIBRATE_Z_ENDSTOP")
@@ -330,16 +330,16 @@ class Panel(ScreenPanel):
         self.distance = distance
 
     def move(self, widget, direction):
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.testz_move(f"{direction}{self.distance}"))
+        self._screen._ws.klippy.gcode_script(f"TESTZ Z={direction}{self.distance}")
 
     def continue_(self, widget):
         logging.info("Continuing calibration")
         self.disable_start_button()
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.CONTINUE)
+        self._screen._ws.klippy.gcode_script("CONTINUE")
 
     def abort(self, widget):
         logging.info("Aborting calibration")
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.ABORT)
+        self._screen._ws.klippy.gcode_script("ABORT")
         self.reset_states()
         self.buttons_not_calibrating()
         self.disable_start_button()
@@ -347,7 +347,7 @@ class Panel(ScreenPanel):
 
     def accept(self, widget):
         logging.info("Accepting Z position")
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.ACCEPT)
+        self._screen._ws.klippy.gcode_script("ACCEPT")
 
     def buttons_calibrating(self):
         self.calibrating = True
@@ -401,5 +401,5 @@ class Panel(ScreenPanel):
 
     def activate(self):
         # This is only here because klipper doesn't provide a method to detect if it's calibrating
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.QUERY_TWIST_COMPENSATION_RUNNING)
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.QUERY_MANUAL_PROBE_RUNNING)
+        self._screen._ws.klippy.gcode_script("QUERY_TWIST_COMPENSATION_RUNNING")
+        self._screen._ws.klippy.gcode_script("QUERY_MANUAL_PROBE_RUNNING")
