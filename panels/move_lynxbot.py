@@ -200,9 +200,9 @@ class Panel(ScreenPanel):
             speed = self._config.get_config()['main'].getint(config_key, 20)
         speed = 60 * max(1, speed)
 
-        self._screen._ws.klippy.gcode_script(f"{KlippyGcodes.MOVE_RELATIVE}\n{KlippyGcodes.MOVE} {axis}{dist} F{speed}")
+        self._screen._ws.klippy.gcode_script(f"{KlippyGcodes.MOVE_RELATIVE}\nG0 {axis}{dist} F{speed}")
         if self._printer.get_stat("gcode_move", "absolute_coordinates"):
-            self._screen._ws.klippy.gcode_script("G90")
+            self._screen._ws.klippy.gcode_script(KlippyGcodes.MOVE_ABSOLUTE)
 
     def add_option(self, boxname, opt_array, opt_name, option):
         name = Gtk.Label()
@@ -262,13 +262,13 @@ class Panel(ScreenPanel):
         return False
 
     def home(self, widget):
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME)
+        self._screen._ws.klippy.gcode_script("G28")
 
     def homexy(self, widget):
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.HOME_XY)
+        self._screen._ws.klippy.gcode_script("G28 X Y")
 
     def z_tilt(self, widget):
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.Z_TILT)
+        self._screen._ws.klippy.gcode_script("Z_TILT_ADJUST")
 
     def quad_gantry_level(self, widget):
-        self._screen._ws.klippy.gcode_script(KlippyGcodes.QUAD_GANTRY_LEVEL)
+        self._screen._ws.klippy.gcode_script("QUAD_GANTRY_LEVEL")

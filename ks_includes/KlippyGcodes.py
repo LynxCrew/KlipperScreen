@@ -1,4 +1,9 @@
 class KlippyGcodes:
+    MOVE_ABSOLUTE = "G90"
+    MOVE_RELATIVE = "G91"
+    EXTRUDE_ABS = "M82"
+    EXTRUDE_REL = "M83"
+
     @staticmethod
     def set_bed_temp(temp):
         return f"M140 S{temp}"
