@@ -177,7 +177,7 @@ class KlipperScreenConfig:
                     'moonraker_api_key', 'moonraker_host', 'titlebar_name_type',
                     'screw_positions', 'power_devices', 'titlebar_items', 'z_babystep_values',
                     'extrude_distances', "extrude_speeds", 'z_calibrate_panel', 'camera_url',
-                    'lighting_output_pins'
+                    'lighting_output_pins', 'spoolman'
                 )
                 numbers = (
                     'moonraker_port', 'move_speed_xy', 'move_speed_z',
@@ -192,7 +192,9 @@ class KlipperScreenConfig:
                 # This section may be deprecated in favor of moving this options under the printer section
                 numbers = ('rotation', '')
                 strs = ('screw_positions', '')
-            elif section.startswith('graph') or section.startswith('displayed_macros'):
+            elif section.startswith('graph')\
+                    or section.startswith('displayed_macros')\
+                    or section.startswith('spoolman'):
                 bools = [f'{option}' for option in config[section]]
             elif section.startswith('z_calibrate_position'):
                 # This section may be deprecated in favor of moving this options under the printer section
@@ -494,6 +496,7 @@ class KlipperScreenConfig:
 
         extra_sections = [i for i in self.config.sections() if i.startswith("displayed_macros")]
         extra_sections.extend([i for i in self.config.sections() if i.startswith("graph")])
+        extra_sections.extend([i for i in self.config.sections() if i.startswith("spoolman")])
         for section in extra_sections:
             for item in self.config.options(section):
                 value = self.config[section].getboolean(item, fallback=True)
