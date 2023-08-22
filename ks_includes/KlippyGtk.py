@@ -9,17 +9,14 @@ from gi.repository import Gdk, GdkPixbuf, Gio, Gtk, Pango
 
 
 def format_label(widget, lines=2):
-    if type(widget) == Gtk.Label:
-        return widget
-    if type(widget) in (Gtk.Container, Gtk.Bin, Gtk.Button, Gtk.Alignment, Gtk.Box):
+    if isinstance(widget, Gtk.Label):
+        widget.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+        widget.set_line_wrap(True)
+        widget.set_ellipsize(Pango.EllipsizeMode.END)
+        widget.set_lines(lines)
+    elif isinstance(widget, (Gtk.Container, Gtk.Bin, Gtk.Button, Gtk.Alignment, Gtk.Box)):
         for _ in widget.get_children():
-            lbl = format_label(_)
-            if lbl is not None:
-                lbl.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
-                lbl.set_line_wrap(True)
-                lbl.set_ellipsize(True)
-                lbl.set_ellipsize(Pango.EllipsizeMode.END)
-                lbl.set_lines(lines)
+            format_label(_, lines)
 
 
 class KlippyGtk:
@@ -158,6 +155,8 @@ class KlippyGtk:
         b.set_hexpand(True)
         b.set_vexpand(True)
         b.set_can_focus(False)
+        b.set_image_position(position)
+        b.set_always_show_image(True)
         if image_name is not None:
             if scale is None:
                 scale = self.button_image_scale
@@ -165,8 +164,6 @@ class KlippyGtk:
                 scale = scale * 1.4
             width = height = self.img_scale * scale
             b.set_image(self.Image(image_name, width, height))
-            b.set_image_position(position)
-            b.set_always_show_image(True)
             spinner = Gtk.Spinner.new()
             spinner.set_no_show_all(True)
             spinner.set_size_request(width, height)
@@ -187,12 +184,12 @@ class KlippyGtk:
             widget.set_sensitive(False)
             widget.set_always_show_image(False)
             box.get_children()[0].hide()
-            if type(box.get_children()[1]) == Gtk.Spinner:
+            if isinstance(box.get_children()[1], Gtk.Spinner):
                 box.get_children()[1].start()
                 box.get_children()[1].show()
         else:
             box.get_children()[0].show()
-            if type(box.get_children()[1]) == Gtk.Spinner:
+            if isinstance(box.get_children()[1], Gtk.Spinner):
                 box.get_children()[1].stop()
                 box.get_children()[1].hide()
             widget.set_always_show_image(True)
