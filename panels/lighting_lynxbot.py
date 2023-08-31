@@ -27,9 +27,11 @@ class Panel(ScreenPanel):
 
     def load_pins(self):
         output_pins = self._printer.get_output_pins()
+        logging.info(self.screen.lighting_output_pins)
         for pin in output_pins:
             # Support for hiding devices by name
             name = pin.split()[1]
+            logging.info(name)
             if name not in self.screen.lighting_output_pins or name != 'LED-Bars':
                 continue
             self.add_pin(pin)
