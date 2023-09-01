@@ -27,6 +27,8 @@ class Panel(ScreenPanel):
 
     def load_pins(self):
         output_pins = self._printer.get_output_pins()
+        if self.screen.lighting_output_pins is None:
+            logging.info("NONE")
         for device in self.screen.lighting_output_pins:
             logging.info(device)
         for pin in output_pins:
