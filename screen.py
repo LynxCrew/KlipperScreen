@@ -168,7 +168,7 @@ class KlipperScreen(Gtk.Window):
         state_callbacks = {
             "disconnected": self.state_disconnected,
             "error": self.state_error,
-            "paused": self.state_printing,
+            "paused": self.state_paused,
             "printing": self.state_printing,
             "ready": self.state_ready,
             "startup": self.state_startup,
@@ -397,8 +397,7 @@ class KlipperScreen(Gtk.Window):
         buttons = [
             {"name": _("Go Back"), "response": Gtk.ResponseType.CANCEL}
         ]
-        dialog = self.gtk.Dialog(self, buttons, grid, self.error_modal_response)
-        dialog.set_title(_("Error"))
+        self.gtk.Dialog(_("Error"), buttons, grid, self.error_modal_response)
 
     def error_modal_response(self, dialog, response_id):
         self.gtk.remove_dialog(dialog)
@@ -525,7 +524,7 @@ class KlipperScreen(Gtk.Window):
         if self.screensaver_timeout is not None:
             GLib.source_remove(self.screensaver_timeout)
             self.screensaver_timeout = None
-        if not self.use_dpms:
+        if not self.use_dpms and self._config.get_main_config().get('screen_blanking') != "off":
             self.screensaver_timeout = GLib.timeout_add_seconds(self.blanking_time, self.show_screensaver)
 
     def show_screensaver(self):
@@ -672,6 +671,10 @@ class KlipperScreen(Gtk.Window):
             msg += _("Please recompile and flash the micro-controller.") + "\n"
         self.printer_initializing(msg + "\n" + state, remove=True)
 
+    def state_paused(self):
+        self.state_printing()
+        self.show_panel("extrude", _("Extrude"))
+
     def state_printing(self):
         self.close_screensaver()
         for dialog in self.dialogs:
@@ -697,8 +700,15 @@ class KlipperScreen(Gtk.Window):
         msg = msg if "ready" not in msg else ""
         self.printer_initializing(_("Klipper has shutdown") + "\n\n" + msg, remove=True)
 
-    def toggle_shortcut(self, value):
-        self.base_panel.show_shortcut(value)
+    def toggle_shortcut(self, show):
+        if show and not self.printer.get_printer_status_data()["printer"]["gcode_macros"]["count"] > 0:
+            self.show_popup_message(
+                _("No elegible macros:") + "\n"
+                + _("macros with a name starting with '_' are hidden") + "\n"
+                + _("macros that use 'rename_existing' are hidden") + "\n"
+                + _("LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and shold be used from extrude") + "\n"
+            )
+        self.base_panel.show_shortcut(show)
 
     def change_language(self, widget, lang):
         self._config.install_language(lang)
@@ -801,8 +811,9 @@ class KlipperScreen(Gtk.Window):
 
         if self.confirm is not None:
             self.gtk.remove_dialog(self.confirm)
-        self.confirm = self.gtk.Dialog(self, buttons, label, self._confirm_send_action_response, method, params)
-        self.confirm.set_title("KlipperScreen")
+        self.confirm = self.gtk.Dialog(
+            "KlipperScreen", buttons, label, self._confirm_send_action_response, method, params
+        )
 
     def _confirm_send_action_response(self, dialog, response_id, method, params):
         self.gtk.remove_dialog(dialog)
@@ -896,6 +907,8 @@ class KlipperScreen(Gtk.Window):
             cameras = self.apiclient.send_request("server/webcams/list")
             if cameras is not False:
                 self.printer.configure_cameras(cameras['result']['webcams'])
+        if "spoolman" in server_info["components"]:
+            self.printer.enable_spoolman()
 
         if state['result']['klippy_connected'] is False:
             logging.info("Klipper not connected")
@@ -932,8 +945,6 @@ class KlipperScreen(Gtk.Window):
         self.files.initialize()
         self.files.refresh_files()
 
-        self.init_spoolman()
-
         logging.info("Printer initialized")
         self.initialized = True
         self.reinit_count = 0
@@ -959,17 +970,6 @@ class KlipperScreen(Gtk.Window):
                 logging.info(f"Temperature store size: {self.printer.tempstore_size}")
             except KeyError:
                 logging.error("Couldn't get the temperature store size")
-        return False
-
-    def init_spoolman(self):
-        server_config = self.apiclient.send_request("server/config")
-        if server_config:
-            try:
-                server_config["result"]["config"]["spoolman"]
-                self.printer.enable_spoolman()
-            except KeyError:
-                logging.warning("Not using Spoolman")
-
         return False
 
     def show_keyboard(self, entry=None, event=None):
