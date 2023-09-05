@@ -761,6 +761,7 @@ class Panel(ScreenPanel):
                 self.buttons['button_grid'].attach(self.buttons['menu'], 3, 0, 1, 1)
                 self.enable_button("menu")
                 self.can_close = True
+                self.show_panel("job_status", _("Printing"), remove_all=True)
             else:
                 self.disable_button("menu")
         self.content.show_all()
