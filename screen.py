@@ -377,7 +377,7 @@ class KlipperScreen(Gtk.Window):
 
         message = Gtk.Label(label=f"{e}")
         message.set_line_wrap(True)
-        scroll = self.gtk.ScrolledWindow()
+        scroll = self.gtk.ScrolledWindow(steppers=False)
         scroll.set_vexpand(True)
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scroll.add(message)
@@ -706,7 +706,7 @@ class KlipperScreen(Gtk.Window):
                 _("No elegible macros:") + "\n"
                 + _("macros with a name starting with '_' are hidden") + "\n"
                 + _("macros that use 'rename_existing' are hidden") + "\n"
-                + _("LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and shold be used from extrude") + "\n"
+                + _("LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and should be used from extrude") + "\n"
             )
         self.base_panel.show_shortcut(show)
 
