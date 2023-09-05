@@ -708,7 +708,7 @@ class Panel(ScreenPanel):
         elif state == "standby":
             self.labels["status"].set_label(_("Standby"))
         if self.state != state:
-            logging.debug(f"Changing job_status state from '{self.state}' to '{state}'")
+            logging.info(f"Changing job_status state from '{self.state}' to '{state}'")
             self.state = state
         self.show_buttons_for_state()
 
