@@ -708,7 +708,7 @@ class Panel(ScreenPanel):
         elif state == "standby":
             self.labels["status"].set_label(_("Standby"))
         if self.state != state:
-            logging.debug(f"Changing job_status state from '{self.state}' to '{state}'")
+            logging.info(f"Changing job_status state from '{self.state}' to '{state}'")
             self.state = state
         self.show_buttons_for_state()
 
@@ -726,7 +726,6 @@ class Panel(ScreenPanel):
             self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
             self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
             self.enable_button("pause", "cancel")
-            self.disable_button("menu")
             self.can_close = False
         elif self.state == "paused":
             self.buttons['button_grid'].attach(self.buttons['resume'], 0, 0, 1, 1)
@@ -734,7 +733,6 @@ class Panel(ScreenPanel):
             self.buttons['button_grid'].attach(self.buttons['fine_tune'], 2, 0, 1, 1)
             self.buttons['button_grid'].attach(self.buttons['control'], 3, 0, 1, 1)
             self.enable_button("resume", "cancel")
-            self.disable_button("menu")
             self.can_close = False
         else:
             offset = self._printer.get_stat("gcode_move", "homing_origin")
@@ -759,10 +757,7 @@ class Panel(ScreenPanel):
                 self.disable_button("restart")
             if self.state != "cancelling":
                 self.buttons['button_grid'].attach(self.buttons['menu'], 3, 0, 1, 1)
-                self.enable_button("menu")
                 self.can_close = True
-            else:
-                self.disable_button("menu")
         self.content.show_all()
 
     def show_file_thumbnail(self):
