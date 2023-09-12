@@ -281,7 +281,7 @@ class Panel(ScreenPanel):
         return False
 
     def add_device(self, device):
-        logging.info(f"Adding device: {device}")
+        logging.info(f"Adding device 1: {device}")
 
         temperature = self._printer.get_dev_stat(device, "temperature")
         if temperature is None:
