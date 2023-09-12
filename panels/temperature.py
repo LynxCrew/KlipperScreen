@@ -42,6 +42,7 @@ class Panel(ScreenPanel):
             name = h.split()[1] if len(h.split()) > 1 else h
             # Support for hiding devices by name
             if name.startswith("_"):
+                logging.info(name)
                 continue
             if h not in self.active_heaters:
                 self.select_heater(None, h)
@@ -290,7 +291,6 @@ class Panel(ScreenPanel):
         devname = device.split()[1] if len(device.split()) > 1 else device
         # Support for hiding devices by name
         if devname.startswith("_") and not devname.startswith("_driver"):
-            logging.info(devname)
             return False
 
         if device.startswith("extruder"):
