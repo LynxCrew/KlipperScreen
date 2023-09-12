@@ -281,7 +281,7 @@ class Panel(ScreenPanel):
         return False
 
     def add_device(self, device):
-        logging.info(f"Adding device 1: {device}")
+        logging.info(f"Adding device: {device}")
 
         temperature = self._printer.get_dev_stat(device, "temperature")
         if temperature is None:
@@ -289,7 +289,6 @@ class Panel(ScreenPanel):
 
         devname = device.split()[1] if len(device.split()) > 1 else device
         # Support for hiding devices by name
-        logging.info(devname)
         if devname.startswith("_") and not devname.startswith("_driver"):
             return False
 
