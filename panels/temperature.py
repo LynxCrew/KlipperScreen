@@ -289,7 +289,7 @@ class Panel(ScreenPanel):
 
         devname = device.split()[1] if len(device.split()) > 1 else device
         # Support for hiding devices by name
-        if devname.startswith("_"):
+        if devname.startswith("_") and not devname.startswith("_driver"):
             return False
 
         if device.startswith("extruder"):
