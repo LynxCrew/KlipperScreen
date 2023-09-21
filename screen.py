@@ -163,6 +163,7 @@ class KlipperScreen(Gtk.Window):
 
         self.z_calibrate_panel = None
         self.lighting_output_pins = None
+        self.enable_home_full = False
         self.initial_connection()
 
     def get_style_options(self):
@@ -180,7 +181,7 @@ class KlipperScreen(Gtk.Window):
             "shutdown": self.state_shutdown
         }
         for printer in self.printers:
-            printer["data"] = Printer(state_execute, state_callbacks, self.process_busy_state)
+            printer["data"] = Printer(state_execute, state_callbacks, self.process_busy_state, self)
         default_printer = self._config.get_main_config().get('default_printer')
         logging.debug(f"Default printer: {default_printer}")
         if [True for p in self.printers if default_printer in p]:
@@ -892,6 +893,7 @@ class KlipperScreen(Gtk.Window):
                                                              .get("lighting_output_pins",
                                                                   "caselight")
                                                              .split(','))]
+            self.enable_home_full = (printer_config.getboolean("enable_home_full", False))
         self.base_panel.set_ks_printer_cfg(self.connected_printer)
 
         # Moonraker is ready, set a loop to init the printer

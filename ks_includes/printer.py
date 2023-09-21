@@ -6,7 +6,7 @@ from gi.repository import GLib
 
 
 class Printer:
-    def __init__(self, state_cb, state_callbacks, busy_cb):
+    def __init__(self, state_cb, state_callbacks, busy_cb, screen):
         self.config = {}
         self.data = {}
         self.state = "disconnected"
@@ -27,6 +27,7 @@ class Printer:
         self.cameras = []
         self.available_commands = {}
         self.spoolman = False
+        self.screen = screen
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
@@ -259,6 +260,9 @@ class Printer:
         sections = ["firmware_retraction", "input_shaper", "bed_screws", "screws_tilt_adjust"]
         for section in sections:
             data["printer"][section] = self.config_section_exists(section)
+
+        if self.screen.enable_home_full:
+            data["printer"]["home_full"] = True
 
         return data
 
