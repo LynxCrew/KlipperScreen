@@ -6,7 +6,7 @@ from gi.repository import GLib
 
 
 class Printer:
-    def __init__(self, state_cb, state_callbacks, busy_cb, screen):
+    def __init__(self, state_cb, state_callbacks, busy_cb):
         self.config = {}
         self.data = {}
         self.state = "disconnected"
@@ -27,7 +27,7 @@ class Printer:
         self.cameras = []
         self.available_commands = {}
         self.spoolman = False
-        self.screen = screen
+        self.enable_full_home = False
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
@@ -248,7 +248,8 @@ class Printer:
                 "pause_resume": {"is_paused": self.state == "paused"},
                 "power_devices": {"count": len(self.get_power_devices())},
                 "cameras": {"count": len(self.cameras)},
-                "spoolman": self.spoolman
+                "spoolman": self.spoolman,
+                "full_home": self.enable_full_home
             }
         }
 
@@ -260,9 +261,6 @@ class Printer:
         sections = ["firmware_retraction", "input_shaper", "bed_screws", "screws_tilt_adjust"]
         for section in sections:
             data["printer"][section] = self.config_section_exists(section)
-
-        if self.screen.enable_home_full:
-            data["printer"]["home_full"] = True
 
         return data
 
@@ -388,3 +386,6 @@ class Printer:
     def enable_spoolman(self):
         logging.info("Enabling Spoolman")
         self.spoolman = True
+
+    def enable_full_home(self):
+        self.enable_full_home = True
