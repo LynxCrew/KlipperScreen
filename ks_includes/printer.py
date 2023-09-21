@@ -27,7 +27,7 @@ class Printer:
         self.cameras = []
         self.available_commands = {}
         self.spoolman = False
-        self.enable_full_home = False
+        self.enable_home_full = False
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
@@ -249,7 +249,7 @@ class Printer:
                 "power_devices": {"count": len(self.get_power_devices())},
                 "cameras": {"count": len(self.cameras)},
                 "spoolman": self.spoolman,
-                "full_home": self.enable_full_home
+                "home_full": self.enable_home_full
             }
         }
 
@@ -387,5 +387,5 @@ class Printer:
         logging.info("Enabling Spoolman")
         self.spoolman = True
 
-    def enable_full_home(self):
-        self.enable_full_home = True
+    def enable_home_full(self):
+        self.enable_home_full = True
