@@ -180,7 +180,7 @@ class KlipperScreen(Gtk.Window):
             "shutdown": self.state_shutdown
         }
         for printer in self.printers:
-            printer["data"] = Printer(state_execute, state_callbacks, self.process_busy_state, self)
+            printer["data"] = Printer(state_execute, state_callbacks, self.process_busy_state)
         default_printer = self._config.get_main_config().get('default_printer')
         logging.debug(f"Default printer: {default_printer}")
         if [True for p in self.printers if default_printer in p]:
