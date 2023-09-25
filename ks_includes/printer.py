@@ -260,7 +260,7 @@ class Printer:
                 "power_devices": {"count": len(self.get_power_devices())},
                 "cameras": {"count": len(self.cameras)},
                 "spoolman": self.spoolman,
-                "home_full": self.enable_home_full
+                "home_full": self.enable_home_full,
                 "leds": {"count": self.ledcount},
             }
         }
