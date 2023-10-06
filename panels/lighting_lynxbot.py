@@ -57,6 +57,9 @@ class Panel(ScreenPanel):
         min_btn = self._gtk.Button("cancel", None, "color1", 1)
         min_btn.set_hexpand(False)
         min_btn.connect("clicked", self.update_pin_value, pin, 0)
+        max_btn = self._gtk.Button("fan-on", _("Max"), "color2")
+        max_btn.set_hexpand(False)
+        max_btn.connect("clicked", self.update_pin_value, pin, 100)
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
