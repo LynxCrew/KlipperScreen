@@ -101,13 +101,13 @@ class Panel(ScreenPanel):
         if enable == "{{ moonraker_connected }}":
             logging.info(f"moonraker connected {self._screen._ws.connected}")
             return self._screen._ws.connected
-        elif enable == "{{ camera_configured }}":
-            return self.ks_printer_cfg and self.ks_printer_cfg.get("camera_url", None) is not None
-        self.j2_data = self._printer.get_printer_status_data()
-        # try:
-        #     j2_temp = Template(enable, autoescape=True)
-        #     result = j2_temp.render(self.j2_data)
-        #     return result == 'True'
-        # except Exception as e:
-        #     logging.debug(f"Error evaluating enable statement: {enable}\n{e}")
-        #     return False
+        # elif enable == "{{ camera_configured }}":
+        #     return self.ks_printer_cfg and self.ks_printer_cfg.get("camera_url", None) is not None
+        # self.j2_data = self._printer.get_printer_status_data()
+        try:
+            j2_temp = Template(enable, autoescape=True)
+            result = j2_temp.render(self.j2_data)
+            return result == 'True'
+        except Exception as e:
+            logging.debug(f"Error evaluating enable statement: {enable}\n{e}")
+            return False
