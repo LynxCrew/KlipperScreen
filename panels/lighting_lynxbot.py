@@ -64,6 +64,7 @@ class Panel(ScreenPanel):
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
         pin_col.add(scale)
+        pin_col.add(max_btn)
 
         pin_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         pin_row.add(name)
