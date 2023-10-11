@@ -45,7 +45,7 @@ class Panel(ScreenPanel):
         name.set_valign(Gtk.Align.CENTER)
         name.set_line_wrap(True)
         name.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
-        
+
         scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
         scale.set_value(self.check_pin_value(pin))
         scale.set_digits(0)
