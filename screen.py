@@ -889,10 +889,16 @@ class KlipperScreen(Gtk.Window):
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
-            self.lighting_output_pins = [s.strip() for s in (printer_config
-                                                             .get("lighting_output_pins",
-                                                                  "caselight")
-                                                             .split(','))]
+            # self.lighting_output_pins = [s.strip() for s in (printer_config
+            #                                                  .get("lighting_output_pins",
+            #                                                       "caselight")
+            #                                                  .split(','))]
+            self.lighting_output_pins = dict((name.strip(), float(value.strip()))
+                                             for name, value
+                                             in (element.strip().split(':')
+                                                 for element in printer_config
+                                             .get("lighting_output_pins",
+                                                  "caselight: 100").split(',')))
             if printer_config.getboolean("enable_home_full", False):
                 self.printer.enable_home_full()
         self.base_panel.set_ks_printer_cfg(self.connected_printer)

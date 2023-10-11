@@ -45,7 +45,7 @@ class Panel(ScreenPanel):
         name.set_valign(Gtk.Align.CENTER)
         name.set_line_wrap(True)
         name.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
-
+        
         scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
         scale.set_value(self.check_pin_value(pin))
         scale.set_digits(0)
@@ -57,9 +57,9 @@ class Panel(ScreenPanel):
         min_btn = self._gtk.Button("cancel", None, "color1", 1)
         min_btn.set_hexpand(False)
         min_btn.connect("clicked", self.update_pin_value, pin, 0)
-        max_btn = self._gtk.Button("fan-on", _("Max"), "color2")
+        max_btn = self._gtk.Button("light", _("On"), "color2")
         max_btn.set_hexpand(False)
-        max_btn.connect("clicked", self.update_pin_value, pin, 100)
+        max_btn.connect("clicked", self.update_pin_value, pin, self.screen.lighting_output_pins[pin.split()[1]])
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
