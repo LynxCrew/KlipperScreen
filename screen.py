@@ -885,7 +885,7 @@ class KlipperScreen(Gtk.Window):
                           .get_printer_config(self.connected_printer))
         if printer_config is None:
             self.z_calibrate_panel = "zcalibrate"
-            self.lighting_output_pins = {"caselight" : 100}
+            self.lighting_output_pins = {"caselight": 100}
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
