@@ -346,6 +346,11 @@ class Printer:
             return self.config[pin]["value"]
         return 0
 
+    def get_pin_scale(self, pin):
+        if pin in self.config and 'scale' in self.config[pin]:
+            return self.config[pin]['scale']
+        return 1
+
     def get_temp_store_devices(self):
         if self.tempstore is not None:
             return list(self.tempstore)

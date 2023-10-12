@@ -60,6 +60,7 @@ class Panel(ScreenPanel):
         on_btn = self._gtk.Button("light", _("On"), "color2")
         on_btn.set_hexpand(False)
         on_btn.connect("clicked", self.update_pin_value, pin, self.screen.lighting_output_pins[pin.split()[1]])
+        logging.info(self._printer.get_pin_scale(pin))
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
@@ -84,7 +85,7 @@ class Panel(ScreenPanel):
 
     def set_output_pin(self, widget, event, pin):
         self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} '
-                                             f'VALUE={self.devices[pin]["scale"].get_value() / 100}')
+                                             f'VALUE={self.devices[pin]["scale"].get_value() / (self._printer.get_pin_scale(pin) * 100)}')
         # Check the speed in case it wasn't applied
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 
@@ -105,7 +106,7 @@ class Panel(ScreenPanel):
             return
 
         self.devices[pin]['scale'].disconnect_by_func(self.set_output_pin)
-        self.devices[pin]['scale'].set_value(round(float(value) * 100))
+        self.devices[pin]['scale'].set_value(round(float(value) * self._printer.get_pin_scale(pin) * 100))
         self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
 
         if widget is not None:
