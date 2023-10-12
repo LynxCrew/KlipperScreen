@@ -48,7 +48,7 @@ class Panel(ScreenPanel):
 
         scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL,
                                          min=0,
-                                         max=self._printer.get_pin_scale(pin),
+                                         max=100 * self._printer.get_pin_scale(pin),
                                          step=1)
         scale.set_value(self.check_pin_value(pin))
         scale.set_digits(0)
