@@ -46,7 +46,10 @@ class Panel(ScreenPanel):
         name.set_line_wrap(True)
         name.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
-        scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+        scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL,
+                                         min=0,
+                                         max=self._printer.get_pin_scale(pin),
+                                         step=1)
         scale.set_value(self.check_pin_value(pin))
         scale.set_digits(0)
         scale.set_hexpand(True)
@@ -106,7 +109,7 @@ class Panel(ScreenPanel):
             return
 
         self.devices[pin]['scale'].disconnect_by_func(self.set_output_pin)
-        self.devices[pin]['scale'].set_value(round(float(value) * self._printer.get_pin_scale(pin) * 100))
+        self.devices[pin]['scale'].set_value(round(float(value) * 100))
         self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
 
         if widget is not None:
