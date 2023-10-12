@@ -60,6 +60,7 @@ class Panel(ScreenPanel):
         max_btn = self._gtk.Button("light", _("On"), "color2")
         max_btn.set_hexpand(False)
         max_btn.connect("clicked", self.update_pin_value, pin, self.screen.lighting_output_pins[pin.split()[1]])
+        logging.info(self.screen.lighting_output_pins[pin.split()[1]])
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
