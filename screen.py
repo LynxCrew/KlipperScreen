@@ -908,6 +908,7 @@ class KlipperScreen(Gtk.Window):
                 else:
                     logging.error(f"lighting_output_pin [{element}] is not valid.")
                     continue
+                logging.info("scale %f" % self.printer.get_pin_scale("output_pin %s" % pair[0]))
                 self.lighting_output_pins[pair[0]] = pair[1]
             # self.lighting_output_pins = dict((name.strip(), float(value.strip()))
             #                                  for name, value
