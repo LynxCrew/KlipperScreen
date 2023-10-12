@@ -885,7 +885,7 @@ class KlipperScreen(Gtk.Window):
                           .get_printer_config(self.connected_printer))
         if printer_config is None:
             self.z_calibrate_panel = "zcalibrate"
-            self.lighting_output_pins = {"caselight": 100}
+            self.lighting_output_pins = {"caselight": 9999999.0}
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
@@ -897,7 +897,7 @@ class KlipperScreen(Gtk.Window):
             for element in printer_config.get("lighting_output_pins", "caselight: 100").split(','):
                 pair = [p.strip() for p in element.strip().split(':')]
                 if len(pair) == 1:
-                    pair.append(1.0)
+                    pair.append(9999999.0)
                 elif len(pair) == 2:
                     if not pair[1].replace(".", "").isnumeric():
                         logging.error(f"[{pair[1]}] in lighting_output_pins is not a number")
