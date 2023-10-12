@@ -90,8 +90,9 @@ class Panel(ScreenPanel):
         self.labels['devices'].show_all()
 
     def set_output_pin(self, widget, event, pin):
+        value = (self.devices[pin]["scale"].get_value() / 100) * self._printer.get_pin_scale(pin)
         self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} '
-                                             f'VALUE={(self.devices[pin]["scale"].get_value() / 100) * self._printer.get_pin_scale(pin)}')
+                                             f'VALUE={value}')
         # Check the speed in case it wasn't applied
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 
