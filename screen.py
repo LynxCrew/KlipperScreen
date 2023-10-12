@@ -897,7 +897,7 @@ class KlipperScreen(Gtk.Window):
             for element in printer_config.get("lighting_output_pins", "caselight: 100").split(','):
                 pair = [p.strip() for p in element.strip().split(':')]
                 if len(pair) == 1:
-                    pair.append(1000)
+                    pair.append(1.0)
                 elif len(pair) == 2:
                     if not pair[1].replace(".", "").isnumeric():
                         logging.error(f"[{pair[1]}] in lighting_output_pins is not a number")
@@ -906,7 +906,6 @@ class KlipperScreen(Gtk.Window):
                 else:
                     logging.error(f"lighting_output_pin [{element}] is not valid.")
                     continue
-                logging.info(f"[{pair[0]}] = [{pair[1]}]")
                 self.lighting_output_pins[pair[0]] = pair[1]
             # self.lighting_output_pins = dict((name.strip(), float(value.strip()))
             #                                  for name, value
