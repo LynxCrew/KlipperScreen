@@ -159,7 +159,7 @@ class KlipperScreenConfig:
                 bools = (
                     'invert_x', 'invert_y', 'invert_z', '24htime', 'only_heaters', 'show_cursor', 'confirm_estop',
                     'autoclose_popups', 'use_dpms', 'use_default_menu', 'side_macro_shortcut', 'use-matchbox-keyboard',
-                    'show_heater_power', "show_scroll_steppers", "auto_open_extrude", "enable_home_full"
+                    'show_heater_power', "show_scroll_steppers", "auto_open_extrude"
                 )
                 strs = (
                     'default_printer', 'language', 'print_sort_dir', 'theme', 'screen_blanking', 'font_size',
@@ -171,7 +171,7 @@ class KlipperScreenConfig:
                 )
             elif section.startswith('printer '):
                 bools = (
-                    'invert_x', 'invert_y', 'invert_z',
+                    'invert_x', 'invert_y', 'invert_z', "enable_home_full",
                 )
                 strs = (
                     'moonraker_api_key', 'moonraker_host', 'titlebar_name_type',
