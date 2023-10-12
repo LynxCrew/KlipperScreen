@@ -109,7 +109,7 @@ class Panel(ScreenPanel):
             return
 
         self.devices[pin]['scale'].disconnect_by_func(self.set_output_pin)
-        self.devices[pin]['scale'].set_value(round(float(value) * 100))
+        self.devices[pin]['scale'].set_value(round(float(value) * self._printer.get_pin_scale(pin) * 100))
         self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
 
         if widget is not None:
