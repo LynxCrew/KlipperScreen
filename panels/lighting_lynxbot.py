@@ -62,7 +62,7 @@ class Panel(ScreenPanel):
         min_btn.connect("clicked", self.update_pin_value, pin, 0)
         on_btn = self._gtk.Button("light", _("On"), "color2")
         on_btn.set_hexpand(False)
-        on_btn.connect("clicked", self.update_pin_value, pin, self.screen.lighting_output_pins[pin.split()[1]])
+        on_btn.connect("clicked", self.update_pin_value, pin, self.screen.lighting_output_pins[pin.split()[1] / self._printer.get_pin_scale(pin)])
         logging.info(self._printer.get_pin_scale(pin))
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
