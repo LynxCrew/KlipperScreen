@@ -2,8 +2,8 @@ import logging
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib
-from math import pi, floor
+from gi.repository import Gtk
+from math import pi
 from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
 
@@ -79,9 +79,7 @@ class Panel(ScreenPanel):
             logging.error("Error: Color order is None")
             self.back()
             return
-        on = []
-        for i in range(4):
-            on.append(1 if self.color_available(i) else 0)
+        on = [1 if self.color_available(i) else 0 for i in range(4)]
         self.presets["on"] = on
         scale_grid = self._gtk.HomogeneousGrid()
         da_size = self._gtk.img_scale * 2.75
@@ -211,7 +209,7 @@ class Panel(ScreenPanel):
         # The idea here is to use the white channel as a saturation control
         # The white channel 'washes' the color
         return (
-            [color[i] + color[3] for i in range(3)]  # Special case of only white channel
+            [color[3] for i in range(3)]  # Special case of only white channel
             if color[0] == 0 and color[1] == 0 and color[2] == 0
             else [color[i] + (1 - color[i]) * color[3] / 3 for i in range(3)]
         )
