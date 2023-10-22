@@ -180,7 +180,7 @@ class KlipperScreenConfig:
                     'lighting_output_pins',
                 )
                 numbers = (
-                    'moonraker_port', 'move_speed_xy', 'move_speed_z',
+                    'moonraker_port', 'move_speed_xy', 'move_speed_z', 'screw_rotation',
                     'calibrate_x_position', 'calibrate_y_position',
                 )
             elif section.startswith('preheat '):
