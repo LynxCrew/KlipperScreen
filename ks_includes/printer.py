@@ -28,7 +28,7 @@ class Printer:
         self.cameras = []
         self.available_commands = {}
         self.spoolman = False
-        self.enable_home_full = False
+        self.home_full = False
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
@@ -260,7 +260,7 @@ class Printer:
                 "power_devices": {"count": len(self.get_power_devices())},
                 "cameras": {"count": len(self.cameras)},
                 "spoolman": self.spoolman,
-                "home_full": self.enable_home_full,
+                "home_full": self.home_full,
                 "leds": {"count": self.ledcount},
             }
         }
@@ -347,6 +347,12 @@ class Printer:
             return self.config[pin]["value"]
         return 0
 
+    def get_pin_scale(self, pin):
+        logging.info(pin)
+        if pin in self.config and 'scale' in self.config[pin]:
+            return float(self.config[pin]['scale'])
+        return 1.0
+
     def get_temp_store_devices(self):
         if self.tempstore is not None:
             return list(self.tempstore)
@@ -427,4 +433,4 @@ class Printer:
         self.spoolman = True
 
     def enable_home_full(self):
-        self.enable_home_full = True
+        self.home_full = True

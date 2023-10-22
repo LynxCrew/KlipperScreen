@@ -46,7 +46,10 @@ class Panel(ScreenPanel):
         name.set_line_wrap(True)
         name.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
-        scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
+        scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL,
+                                         min=0,
+                                         max=100,
+                                         step=1)
         scale.set_value(self.check_pin_value(pin))
         scale.set_digits(0)
         scale.set_hexpand(True)
@@ -57,10 +60,18 @@ class Panel(ScreenPanel):
         min_btn = self._gtk.Button("cancel", None, "color1", 1)
         min_btn.set_hexpand(False)
         min_btn.connect("clicked", self.update_pin_value, pin, 0)
+        on_btn = self._gtk.Button("light", _("On"), "color2")
+        on_btn.set_hexpand(False)
+        on_btn.connect("clicked",
+                       self.update_pin_value,
+                       pin,
+                       float(self.screen.lighting_output_pins[pin.split()[1]] / self._printer.get_pin_scale(pin)))
+        logging.info(self._printer.get_pin_scale(pin))
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
         pin_col.add(scale)
+        pin_col.add(on_btn)
 
         pin_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         pin_row.add(name)
@@ -79,8 +90,9 @@ class Panel(ScreenPanel):
         self.labels['devices'].show_all()
 
     def set_output_pin(self, widget, event, pin):
+        value = (self.devices[pin]["scale"].get_value() * self._printer.get_pin_scale(pin)) / 100
         self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} '
-                                             f'VALUE={self.devices[pin]["scale"].get_value() / 100}')
+                                             f'VALUE={value}')
         # Check the speed in case it wasn't applied
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 

@@ -171,7 +171,7 @@ class KlipperScreenConfig:
                 )
             elif section.startswith('printer '):
                 bools = (
-                    'invert_x', 'invert_y', 'invert_z',
+                    'invert_x', 'invert_y', 'invert_z', "enable_home_full",
                 )
                 strs = (
                     'moonraker_api_key', 'moonraker_host', 'titlebar_name_type',
