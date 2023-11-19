@@ -16,6 +16,7 @@ from gi.repository import Gtk, Gdk, GLib, Pango
 from importlib import import_module
 from jinja2 import Environment
 from signal import SIGTERM
+from datetime import datetime
 
 from ks_includes import functions
 from ks_includes.KlippyWebsocket import KlippyWebsocket
@@ -93,6 +94,7 @@ class KlipperScreen(Gtk.Window):
     popup_timeout = None
     wayland = False
     windowed = False
+    notification_log = []
 
     def __init__(self, args):
         try:
@@ -126,10 +128,13 @@ class KlipperScreen(Gtk.Window):
         self.width = self._config.get_main_config().getint("width", None)
         self.height = self._config.get_main_config().getint("height", None)
         if 'XDG_CURRENT_DESKTOP' in os.environ:
+            logging.warning("Running inside a desktop environment is not recommended")
             if not self.width:
                 self.width = max(int(monitor.get_geometry().width * .5), 480)
             if not self.height:
                 self.height = max(int(monitor.get_geometry().height * .5), 320)
+        if self.width or self.height:
+            logging.info("Setting windowed mode")
             self.set_resizable(True)
             self.windowed = True
         else:
@@ -166,6 +171,7 @@ class KlipperScreen(Gtk.Window):
 
         self.z_calibrate_panel = None
         self.lighting_output_pins = None
+        self.log_notification("KlipperScreen Started", 1)
         self.initial_connection()
 
     def get_style_options(self):
@@ -318,10 +324,20 @@ class KlipperScreen(Gtk.Window):
             self.panels[panel].activate()
         self.show_all()
 
+    def log_notification(self, message, level=0):
+        time = datetime.now().strftime("%H:%M:%S")
+        log_entry = {"message": message, "level": level, "time": time}
+        if len(self.notification_log) > 999:
+            del self.notification_log[0]
+        self.notification_log.append(log_entry)
+        self.process_update("notify_log", log_entry)
+
     def show_popup_message(self, message, level=3):
         self.close_screensaver()
         if self.popup_message is not None:
             self.close_popup_message()
+
+        self.log_notification(message, level)
 
         msg = Gtk.Button(label=f"{message}")
         msg.set_hexpand(True)
@@ -843,6 +859,7 @@ class KlipperScreen(Gtk.Window):
         if 'splash_screen' not in self.panels or remove:
             self.show_panel("splash_screen", None, remove_all=True)
         self.panels['splash_screen'].update_text(msg)
+        self.log_notification(msg, 0)
 
     def search_power_devices(self, devices):
         found_devices = []
@@ -997,6 +1014,7 @@ class KlipperScreen(Gtk.Window):
         self.reinit_count = 0
         self.initializing = False
         self.printer.process_update(data['result']['status'])
+        self.log_notification("Printer Initialized", 1)
         return False
 
     def init_tempstore(self):
