@@ -88,7 +88,7 @@ class KlipperScreenConfig:
             logging.exception(msg)
             self.errors.append(msg)
 
-        printers = sorted([i for i in self.config.sections() if i.startswith("printer ")])
+        printers = [i for i in self.config.sections() if i.startswith("printer ")]
         if len(printers) == 0:
             printers.append("Printer Printer")
         self.printers = [
