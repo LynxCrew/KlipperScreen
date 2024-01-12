@@ -225,14 +225,18 @@ class Printer:
         return macros
 
     def get_heaters(self):
-        heaters = []
+        heaters = self.get_config_section_list("heater_generic ")
         if "heater_bed" in self.devices:
-            heaters.append("heater_bed")
-        heaters.extend(iter(self.get_config_section_list("heater_generic ")))
-        heaters.extend(iter(self.get_config_section_list("temperature_sensor ")))
-        heaters.extend(iter(self.get_config_section_list("temperature_fan ")))
-        heaters.extend(iter(self.get_config_section_list("controller_temperature_fan ")))
+            heaters.insert(0, "heater_bed")
         return heaters
+
+    def get_temp_fans(self):
+        temp_fans = self.get_config_section_list("temperature_fan ")
+        temp_fans.extend(iter(self.get_config_section_list("controller_temperature_fan ")))
+        return temp_fans
+
+    def get_temp_sensors(self):
+        return self.get_config_section_list("temperature_sensor ")
 
     def get_filament_sensors(self):
         sensors = list(self.get_config_section_list("filament_switch_sensor "))
@@ -384,7 +388,7 @@ class Printer:
             for device in self.tools
             if not device.startswith('extruder_stepper')
         ]
-        return devices + self.get_heaters()
+        return devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
 
     def get_tools(self):
         return self.tools
