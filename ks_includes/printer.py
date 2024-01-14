@@ -29,6 +29,7 @@ class Printer:
         self.available_commands = {}
         self.spoolman = False
         self.home_full = False
+        self.temp_devices = self.sensors = None
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
@@ -46,6 +47,7 @@ class Printer:
             self.store_timeout = GLib.timeout_add_seconds(1, self._update_temp_store)
         self.tempstore_size = 1200
         self.available_commands = {}
+        self.temp_devices = self.sensors = None
 
         for x in self.config.keys():
             if x[:8] == "extruder":
@@ -203,15 +205,12 @@ class Printer:
         fans = []
         if self.config_section_exists("fan"):
             fans.append("fan")
-        fan_types = ["controller_fan", "fan_generic", "heater_fan", "controller_temperature_fan"]
-        for fan_type in fan_types:
+        for fan_type in ["controller_fan", "fan_generic", "heater_fan", "controller_temperature_fan"]:
             fans.extend(iter(self.get_config_section_list(f"{fan_type} ")))
         return fans
 
     def get_output_pins(self):
-        output_pins = []
-        output_pins.extend(iter(self.get_config_section_list("output_pin ")))
-        return output_pins
+        return self.get_config_section_list("output_pin ")
 
     def get_gcode_macros(self):
         macros = []
@@ -239,9 +238,10 @@ class Printer:
         return self.get_config_section_list("temperature_sensor ")
 
     def get_filament_sensors(self):
-        sensors = list(self.get_config_section_list("filament_switch_sensor "))
-        sensors.extend(iter(self.get_config_section_list("filament_motion_sensor ")))
-        return sensors
+        if self.sensors is None:
+            self.sensors = list(self.get_config_section_list("filament_switch_sensor "))
+            self.sensors.extend(iter(self.get_config_section_list("filament_motion_sensor ")))
+        return self.sensors
 
     def get_probe(self):
         probe_types = ["probe", "bltouch", "smart_effector", "dockable_probe"]
@@ -383,12 +383,14 @@ class Printer:
         return temp
 
     def get_temp_devices(self):
-        devices = [
-            device
-            for device in self.tools
-            if not device.startswith('extruder_stepper')
-        ]
-        return devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
+        if self.temp_devices is None:
+            devices = [
+                device
+                for device in self.tools
+                if not device.startswith('extruder_stepper')
+            ]
+            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
+        return self.temp_devices
 
     def get_tools(self):
         return self.tools
