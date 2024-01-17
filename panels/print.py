@@ -264,7 +264,7 @@ class Panel(ScreenPanel):
             self.sort_current[1] = (self.sort_current[1] + 1) % 2
         else:
             oldkey = self.sort_current[0]
-            logging.info(f"Changing sort_{oldkey} to {self.sort_items[self.sort_current[0]]}")
+            logging.info(f"Changing from {oldkey} to {key}")
             self.labels[f'sort_{oldkey}'].set_image(None)
             self.labels[f'sort_{oldkey}'].show_all()
             self.sort_current = [key, 0]
@@ -289,7 +289,7 @@ class Panel(ScreenPanel):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         box.add(label)
 
-        height = self._screen.height * .9 - self._gtk.font_size * 10
+        height = (self._screen.height - self._gtk.dialog_buttons_height - self._gtk.font_size) * .75
         pixbuf = self.get_file_image(filename, self._screen.width * .9, height)
         if pixbuf is not None:
             image = Gtk.Image.new_from_pixbuf(pixbuf)
@@ -377,14 +377,16 @@ class Panel(ScreenPanel):
         # Update icon
         GLib.idle_add(self.image_load, filename)
 
-    def _callback(self, newfiles, deletedfiles, updatedfiles=None):
+    def _callback(self, newfiles, deletedfiles, modifiedfiles):
         for file in newfiles:
+            logging.info(f"adding {file}")
             self.add_file(file)
         for file in deletedfiles:
+            logging.info(f"deleting {file}")
             self.delete_file(file)
-        if updatedfiles is not None:
-            for file in updatedfiles:
-                self.update_file(file)
+        for file in modifiedfiles:
+            logging.info(f"updating {file}")
+            self.update_file(file)
         self._gtk.Button_busy(self.refresh, False)
 
     def _refresh_files(self, widget=None):

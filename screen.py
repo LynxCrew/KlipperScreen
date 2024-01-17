@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse
+import gc
 import json
 import logging
 import os
@@ -211,14 +212,13 @@ class KlipperScreen(Gtk.Window):
 
     def connect_printer(self, name):
         self.connecting_to_printer = name
+        if self.files:
+            self.files.__init__(self)
+        gc.collect()
         if self._ws is not None and self._ws.connected:
             self._ws.close()
             self.connected_printer = None
             self.printer.state = "disconnected"
-            if self.files:
-                self.files.reset()
-                self.files = None
-
         self.connecting = True
         self.initialized = False
 
@@ -249,8 +249,8 @@ class KlipperScreen(Gtk.Window):
                                    self.printers[ind][name]["moonraker_host"],
                                    self.printers[ind][name]["moonraker_port"],
                                    )
-
-        self.files = KlippyFiles(self)
+        if self.files is None:
+            self.files = KlippyFiles(self)
         self._ws.initial_connect()
 
     def ws_subscribe(self):
@@ -432,6 +432,7 @@ class KlipperScreen(Gtk.Window):
     def restart_ks(self, *args):
         logging.debug(f"Restarting {sys.executable} {' '.join(sys.argv)}")
         os.execv(sys.executable, ['python'] + sys.argv)
+        # noinspection PyUnreachableCode
         self._ws.send_method("machine.services.restart", {"service": "KlipperScreen"})  # Fallback
 
     def init_style(self):
@@ -672,8 +673,6 @@ class KlipperScreen(Gtk.Window):
         self.printer.state = "disconnected"
         self.connecting = True
         self.connected_printer = None
-        self.files.reset()
-        self.files = None
         self.initialized = False
         self.connect_printer(self.connecting_to_printer)
 
@@ -1030,7 +1029,7 @@ class KlipperScreen(Gtk.Window):
         if len(self.printer.get_temp_devices()) > 0:
             self.init_tempstore()
 
-        self.files.initialize()
+        self.files.set_gcodes_path()
         self.files.refresh_files()
 
         logging.info("Printer initialized")
