@@ -758,11 +758,14 @@ class KlipperScreen(Gtk.Window):
             return
         elif action == "notify_klippy_shutdown":
             self.printer.process_update({'webhooks': {'state': "shutdown"}})
+            return
         elif action == "notify_klippy_ready":
             if not self.initialized:
-                logging.debug("Still not initialized")
+                self.reinit_count = 0
+                self._init_printer("Reconnecting", klipper=True)
                 return
             self.printer.process_update({'webhooks': {'state': "ready"}})
+            return
         elif action == "notify_status_update" and self.printer.state != "shutdown":
             self.printer.process_update(data)
             if ('manual_probe' in data
@@ -772,8 +775,10 @@ class KlipperScreen(Gtk.Window):
         elif action == "notify_filelist_changed":
             if self.files is not None:
                 self.files.process_update(data)
+            return
         elif action == "notify_metadata_update":
             self.files.request_metadata(data['filename'])
+            return
         elif action == "notify_update_response":
             if 'message' in data and 'Error' in data['message']:
                 logging.error(f"{action}:{data['message']}")
