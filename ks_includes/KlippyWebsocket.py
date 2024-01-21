@@ -256,8 +256,10 @@ class MoonrakerApi:
     def print_cancel(self, callback=None, *args):
         logging.debug("Sending printer.print.cancel")
         return self._ws.send_method(
-            "printer.print.cancel",
-            {},
+            "printer.gcode.script",
+            {
+                "script": "CANCEL_PRINT"
+            },
             callback,
             *args
         )
@@ -265,8 +267,10 @@ class MoonrakerApi:
     def print_pause(self, callback=None, *args):
         logging.debug("Sending printer.print.pause")
         return self._ws.send_method(
-            "printer.print.pause",
-            {},
+            "printer.gcode.script",
+            {
+                "script": "PAUSE"
+            },
             callback,
             *args
         )
@@ -274,8 +278,10 @@ class MoonrakerApi:
     def print_resume(self, callback=None, *args):
         logging.debug("Sending printer.print.resume")
         return self._ws.send_method(
-            "printer.print.resume",
-            {},
+            "printer.gcode.script",
+            {
+                "script": "RESUME"
+            },
             callback,
             *args
         )
