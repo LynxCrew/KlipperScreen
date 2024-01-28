@@ -58,8 +58,10 @@ class Panel(ScreenPanel):
             if ('wait_for_continue' in twist_compensation
                     and twist_compensation['wait_for_continue'] == 'true'):
                 self.wait_for_continue = True
+
         self.functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+
         if "Z_ENDSTOP_CALIBRATE" in self._printer.available_commands:
             self._add_button("Endstop", "endstop", pobox)
             self.functions.append("endstop")
