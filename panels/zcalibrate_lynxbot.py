@@ -26,7 +26,7 @@ class Panel(ScreenPanel):
         logging.info(f"Z offset: {self.z_offset}")
         self.widgets['zposition'] = Gtk.Label("Z: ?")
 
-        pos = self._gtk.HomogeneousGrid()
+        pos = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         pos.attach(self.widgets['zposition'], 0, 1, 2, 1)
         if self.z_offset is not None:
             self.widgets['zoffset'] = Gtk.Label("?")
@@ -114,8 +114,7 @@ class Panel(ScreenPanel):
 
         self.buttons_not_calibrating()
 
-        grid = Gtk.Grid()
-        grid.set_column_homogeneous(True)
+        grid = Gtk.Grid(column_homogeneous=True)
         if self._screen.vertical_mode:
             grid.attach(self.buttons['zpos'], 0, 1, 1, 1)
             grid.attach(self.buttons['zneg'], 0, 2, 1, 1)
