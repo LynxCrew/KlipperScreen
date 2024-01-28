@@ -50,9 +50,8 @@ class Panel(ScreenPanel):
         self.start_handler = None
         self.continue_handler = None
 
-        self.twist_compensate = "axis_twist_compensation" in self._printer.get_config_section_list()
         self.wait_for_continue = False
-        if self.twist_compensate:
+        if "axis_twist_compensation" in self._printer.get_config_section_list():
             twist_compensation = self._printer.get_config_section(
                 "axis_twist_compensation"
             )
@@ -61,33 +60,31 @@ class Panel(ScreenPanel):
                 self.wait_for_continue = True
         self.functions = []
         pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if self._printer.config_section_exists("stepper_z") \
-                and not self._printer.get_config_section("stepper_z")['endstop_pin'].startswith("probe"):
+        if "Z_ENDSTOP_CALIBRATE" in self._printer.available_commands:
             self._add_button("Endstop", "endstop", pobox)
             self.functions.append("endstop")
-        if self.probe:
+        if "PROBE_CALIBRATE" in self._printer.available_commands:
             self._add_button("Probe", "probe", pobox)
             self.functions.append("probe")
-        if self._printer.config_section_exists("bed_mesh") and "probe" not in self.functions:
+        if "BED_MESH_CALIBRATE" in self._printer.available_commands and "probe" not in self.functions:
             # This is used to do a manual bed mesh if there is no probe
             self._add_button("Bed mesh", "mesh", pobox)
             self.functions.append("mesh")
-        if "delta" in self._printer.get_config_section("printer")['kinematics']:
+        if "DELTA_CALIBRATE" in self._printer.available_commands:
             if "probe" in self.functions:
                 self._add_button("Delta Automatic", "delta", pobox)
                 self.functions.append("delta")
             # Since probes may not be accturate enough for deltas, always show the manual method
             self._add_button("Delta Manual", "delta_manual", pobox)
             self.functions.append("delta_manual")
-        if self.twist_compensate:
+        if "AXIS_TWIST_COMPENSATION_CALIBRATE" in self._printer.available_commands:
             self._add_button("Twist Compensation", "twist_compensation", pobox)
             self.functions.append("twist_compensation")
 
         logging.info(f"Available functions for calibration: {self.functions}")
 
-        self.labels['popover'] = Gtk.Popover()
+        self.labels['popover'] = Gtk.Popover(position=Gtk.PositionType.BOTTOM)
         self.labels['popover'].add(pobox)
-        self.labels['popover'].set_position(Gtk.PositionType.BOTTOM)
 
         self.reset_states()
 
@@ -276,6 +273,11 @@ class Panel(ScreenPanel):
                 self.widgets['zposition'].set_text("Z: ?")
             elif "gcode_move" in data and "gcode_position" in data['gcode_move']:
                 self.update_position(data['gcode_move']['gcode_position'])
+            if "manual_probe" in data:
+                if data["manual_probe"]["is_active"]:
+                    self.buttons_calibrating()
+                else:
+                    self.buttons_not_calibrating()
         elif action == "notify_gcode_response":
             data = data.lower()
             if "twist compensation running" in data:
@@ -315,7 +317,7 @@ class Panel(ScreenPanel):
     def update_position(self, position):
         self.widgets['zposition'].set_text(f"Z: {position[2]:.3f}")
         if self.z_offset is not None:
-            self.widgets['zoffset'].set_text(f"{position[2] - self.z_offset:.3f}")
+            self.widgets['zoffset'].set_text(f"{abs(position[2] - self.z_offset):.3f}")
 
     def change_distance(self, widget, distance):
         logging.info(f"### Distance {distance}")
