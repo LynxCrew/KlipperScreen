@@ -132,9 +132,10 @@ textview .time {
 }
 
 .horizontal_togglebuttons_active {
-    border-color: #424242;
-    border-style: solid;
-    background-color: rgba(0,0,0,0);
+    border-bottom: .4em solid #252525;
+    margin: .3em;
+    min-height: 3em;
+    background-color: rgba(0,0,0,0.5);
     font-weight: 600;
 }
 
