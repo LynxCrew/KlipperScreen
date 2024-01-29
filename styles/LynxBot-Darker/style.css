@@ -131,6 +131,20 @@ textview .time {
     border-bottom-color: #B71C1C;
 }
 
+.horizontal_togglebuttons_active {
+    background-color: @active;
+    font-weight: 600;
+}
+
+.horizontal_togglebuttons {
+    background-image: none;
+    background-color: @bg;
+    margin: .25em;
+    padding: .2em .5em 0;
+    border-radius: 0;
+    border: 0;
+    -gtk-icon-shadow: none;}
+
 .tempbutton_top, .tempbutton, .tempbutton_bottom, .distbutton_top, .distbutton, .distbutton_bottom  {
     border-color: #545454;
     border-width: .1em;
