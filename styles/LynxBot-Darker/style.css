@@ -132,18 +132,17 @@ textview .time {
 }
 
 .horizontal_togglebuttons_active {
-    background-color: @active;
+    border-color: #424242;
+    border-style: solid;
+    background-color: rgba(0,0,0,0);
     font-weight: 600;
 }
 
 .horizontal_togglebuttons {
-    background-image: none;
-    background-color: @bg;
-    margin: .25em;
-    padding: .2em .5em 0;
-    border-radius: 0;
-    border: 0;
-    -gtk-icon-shadow: none;}
+    background-color: rgba(0,0,0,0.5);
+    border-color: #252525;
+    border-radius: .25em;
+}
 
 .tempbutton_top, .tempbutton, .tempbutton_bottom, .distbutton_top, .distbutton, .distbutton_bottom  {
     border-color: #545454;
