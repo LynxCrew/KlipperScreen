@@ -139,6 +139,12 @@ textview .time {
 }
 
 .horizontal_togglebuttons {
+    background-image: none;
+    margin: .25em;
+    padding: .2em .5em 0;
+    border: 0;
+    -gtk-icon-shadow: none;
+
     background-color: rgba(0,0,0,0.5);
     border-color: #252525;
     border-radius: .25em;
