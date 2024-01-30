@@ -132,7 +132,7 @@ textview .time {
 }
 
 .horizontal_togglebuttons_active {
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.75);
 }
 
 .horizontal_togglebuttons {
