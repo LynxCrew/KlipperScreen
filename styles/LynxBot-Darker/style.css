@@ -131,6 +131,10 @@ textview .time {
     border-bottom-color: #B71C1C;
 }
 
+.horizontal_togglebuttons_active {
+    background-color: #252525;
+}
+
 .horizontal_togglebuttons {
     border-color: #252525;
 }
