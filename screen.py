@@ -966,7 +966,7 @@ class KlipperScreen(Gtk.Window):
 
             self.extrude_distances = ['1', '1', '1', '1']
             i = 0
-            for element in printer_config.get("extrude_distances", "1, 2, 5, 25").split(','):
+            for element in printer_config.get("extrude_distances", "5, 10, 15, 25").split(','):
                 self.extrude_distances.insert(i, element.strip())
                 i += 1
             if len(self.extrude_distances) > 4:
