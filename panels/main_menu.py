@@ -298,8 +298,8 @@ class Panel(MenuPanel):
         self._screen.base_panel.set_control_sensitive(False, control='back')
 
     def process_update(self, action, data):
-        if "extruder" in data and not data["extruder"]["can_extrude"]:
-            logging.info("test")
+        if "extruder" in data:
+            logging.info(data["extruder"])
         if action != "notify_status_update":
             return
         for x in self._printer.get_temp_devices():
