@@ -177,6 +177,8 @@ class Panel(ScreenPanel):
         self.enable_buttons(self._printer.state in ("ready", "paused"))
 
     def process_update(self, action, data):
+        if "extruder" in data and not data["extruder"]["can_extrude"]:
+            self.enable_buttons(False)
         if action == "notify_gcode_response":
             if "action:cancel" in data or "action:paused" in data:
                 self.enable_buttons(True)
