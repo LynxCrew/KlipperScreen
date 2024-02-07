@@ -178,7 +178,7 @@ class Panel(ScreenPanel):
 
     def process_update(self, action, data):
         extruder = self._printer.get_stat("extruder")
-
+        logging.info(extruder)
         if not extruder["can_extrude"]:
             self.enable_buttons(False)
         if action == "notify_gcode_response":
