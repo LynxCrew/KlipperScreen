@@ -140,6 +140,8 @@ class Panel(ScreenPanel):
         grid = Gtk.Grid(column_homogeneous=True)
         grid.attach(xbox, 0, 0, 4, 1)
 
+        self.enable_buttons(self._printer.get_stat("extruder")["can_extrude"])
+
         if self._screen.vertical_mode:
             grid.attach(self.buttons['extrude'], 0, 1, 2, 1)
             grid.attach(self.buttons['retract'], 2, 1, 2, 1)
@@ -178,17 +180,20 @@ class Panel(ScreenPanel):
 
     def process_update(self, action, data):
         extruder = self._printer.get_stat("extruder")
-        logging.info(extruder)
-        if not extruder["can_extrude"]:
-            self.enable_buttons(False)
         if action == "notify_gcode_response":
-            if "action:cancel" in data or "action:paused" in data:
-                self.enable_buttons(True)
-            elif "action:resumed" in data:
+            if "action:resumed" in data or not extruder["can_extrude"]:
                 self.enable_buttons(False)
+            elif "action:cancel" in data or "action:paused" in data:
+                self.enable_buttons(True)
             return
         if action != "notify_status_update":
             return
+
+        if not extruder["can_extrude"]:
+            self.enable_buttons(False)
+        else:
+            self.enable_buttons(True)
+
         for x in self._printer.get_tools():
             if x in data:
                 self.update_temp(
