@@ -169,9 +169,13 @@ class Panel(ScreenPanel):
 
     def enable_buttons(self, enable):
         for button in self.buttons:
-            if button in ("temperature", "spoolman"):
-                continue
-            self.buttons[button].set_sensitive(enable)
+            if button not in ("temperature", "spoolman"):
+                if button == "load" and not self.load_filament:
+                    self.buttons[button].set_sensitive(False)
+                elif button == "unload" and not self.unload_filament:
+                    self.buttons[button].set_sensitive(False)
+                else:
+                    self.buttons[button].set_sensitive(enable)
 
     def activate(self):
         can_extrude = self._printer.get_stat("extruder")["can_extrude"]
