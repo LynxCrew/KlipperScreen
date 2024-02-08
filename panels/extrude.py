@@ -176,6 +176,8 @@ class Panel(ScreenPanel):
             self.buttons[button].set_sensitive(enable)
 
     def activate(self):
+        extruder = self._printer.get_stat("extruder")
+        logging.info(extruder)
         self.enable_buttons(self._printer.state in ("ready", "paused"))
 
     def process_update(self, action, data):
