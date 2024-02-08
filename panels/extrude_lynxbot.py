@@ -174,21 +174,17 @@ class Panel(ScreenPanel):
             self.buttons[button].set_sensitive(enable)
 
     def activate(self):
-        self._screen._ws.klippy.gcode_script("QUERY_CAN_EXTRUDE")
+        extruder = self._printer.get_stat("extruder")
+        logging.info(extruder)
         self.enable_buttons(self._printer.state in ("ready", "paused"))
 
     def process_update(self, action, data):
         if action == "notify_gcode_response":
-            data = data.lower()
-            if "can_extrude:false" in data or "action:resumed" in data:
-                self.enable_buttons(False)
-            elif (("action:cancel" in data or "action:paused" in data)
-                  and "can_extrude:true" in data):
+            if "action:cancel" in data or "action:paused" in data:
                 self.enable_buttons(True)
-            else:
-                self._screen._ws.klippy.gcode_script("QUERY_CAN_EXTRUDE")
+            elif "action:resumed" in data:
+                self.enable_buttons(False)
             return
-        self._screen._ws.klippy.gcode_script("QUERY_CAN_EXTRUDE")
         if action != "notify_status_update":
             return
         for x in self._printer.get_tools():
