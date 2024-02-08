@@ -179,11 +179,16 @@ class Panel(ScreenPanel):
 
     def process_update(self, action, data):
         if action == "notify_gcode_response":
-            if "action:cancel" in data or "action:paused" in data:
-                self.enable_buttons(True)
-            elif "action:resumed" in data:
+            data = data.lower()
+            if "can_extrude:false" in data or "action:resumed" in data:
                 self.enable_buttons(False)
+            elif (("action:cancel" in data or "action:paused" in data)
+                  and "can_extrude:true" in data):
+                self.enable_buttons(True)
+            else:
+                self._screen._ws.klippy.gcode_script("QUERY_CAN_EXTRUDE")
             return
+        self._screen._ws.klippy.gcode_script("QUERY_CAN_EXTRUDE")
         if action != "notify_status_update":
             return
         for x in self._printer.get_tools():
