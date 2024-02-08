@@ -176,7 +176,6 @@ class Panel(ScreenPanel):
     def activate(self):
         extruder = self._printer.get_stat("extruder")
         logging.info(extruder)
-        logging.info(self._printer.get_dev_stat('extruder', 'can_extrude'))
         self.enable_buttons(self._printer.state in ("ready", "paused"))
 
     def process_update(self, action, data):
