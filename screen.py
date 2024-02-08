@@ -281,9 +281,9 @@ class KlipperScreen(Gtk.Window):
         }
         for extruder in self.printer.get_tools():
             requested_updates['objects'][extruder] = [
-                "target", "temperature", "pressure_advance", "smooth_time", "power"]
+                "target", "temperature", "pressure_advance", "smooth_time", "power", "can_extrude"]
         for h in self.printer.get_heaters():
-            requested_updates['objects'][h] = ["target", "temperature", "power", "can_extrude"]
+            requested_updates['objects'][h] = ["target", "temperature", "power"]
         for t in self.printer.get_temp_sensors():
             requested_updates['objects'][t] = ["temperature"]
         for f in self.printer.get_temp_fans():
