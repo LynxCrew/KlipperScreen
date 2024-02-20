@@ -175,6 +175,7 @@ class KlipperScreen(Gtk.Window):
         self.set_screenblanking_timeout(self._config.get_main_config().get('screen_blanking'))
 
         self.z_calibrate_panel = None
+        self.extrude_panel = None
         self.lighting_output_pins = None
         self.extrude_speeds = None
         self.extrude_distances = None
@@ -697,7 +698,7 @@ class KlipperScreen(Gtk.Window):
     def state_paused(self):
         self.state_printing()
         if self._config.get_main_config().getboolean("auto_open_extrude", fallback=True):
-            self.show_panel("extrude", _("Extrude"))
+            self.show_panel(self.extrude_panel, _("Extrude"))
 
     def state_printing(self):
         self.close_screensaver()
@@ -923,12 +924,15 @@ class KlipperScreen(Gtk.Window):
                           .get_printer_config(self.connected_printer))
         if printer_config is None:
             self.z_calibrate_panel = "zcalibrate"
+            self.extrude_panel = "extrude"
             self.lighting_output_pins = {"caselight": 1.0}
             self.extrude_speeds = ['1', '2', '5', '25']
             self.extrude_distances = ['5', '10', '15', '25']
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
+            self.extrude_panel = (printer_config
+                                  .get("exttrude_panel", "extrude"))
             # self.lighting_output_pins = [s.strip() for s in (printer_config
             #                                                  .get("lighting_output_pins",
             #                                                       "caselight")
