@@ -245,7 +245,7 @@ class Panel(ScreenPanel):
 
         # Load zcalibrate to do a manual mesh
         if not self._printer.get_probe():
-            self.menu_item_clicked(widget, {"name": _("Mesh calibrate"), "panel": "zcalibrate"})
+            self.menu_item_clicked(widget, {"name": _("Mesh calibrate"), "panel": self._screen.z_calibrate_panel})
 
     def send_clear_mesh(self, widget):
         self._screen._send_action(widget, "printer.gcode.script", {"script": "BED_MESH_CLEAR"})
