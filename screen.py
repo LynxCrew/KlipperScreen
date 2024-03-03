@@ -936,7 +936,7 @@ class KlipperScreen(Gtk.Window):
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
             self.extrude_panel = (printer_config
-                                  .get("exttrude_panel", "extrude"))
+                                  .get("extrude_panel", "extrude"))
             # self.lighting_output_pins = [s.strip() for s in (printer_config
             #                                                  .get("lighting_output_pins",
             #                                                       "caselight")
