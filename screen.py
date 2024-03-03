@@ -937,10 +937,6 @@ class KlipperScreen(Gtk.Window):
                                       .get("z_calibrate_panel", "zcalibrate"))
             self.extrude_panel = (printer_config
                                   .get("extrude_panel", "extrude"))
-            # self.lighting_output_pins = [s.strip() for s in (printer_config
-            #                                                  .get("lighting_output_pins",
-            #                                                       "caselight")
-            #                                                  .split(','))]
             self.lighting_output_pins = {}
             for element in printer_config.get("lighting_output_pins", "caselight: 1.0").split(','):
                 pair = [p.strip() for p in element.strip().split(':')]
@@ -955,12 +951,6 @@ class KlipperScreen(Gtk.Window):
                     logging.error(f"lighting_output_pin [{element}] is not valid.")
                     continue
                 self.lighting_output_pins[pair[0]] = pair[1]
-            # self.lighting_output_pins = dict((name.strip(), float(value.strip()))
-            #                                  for name, value
-            #                                  in (element.strip().split(':')
-            #                                      for element in printer_config
-            #                                  .get("lighting_output_pins",
-            #                                       "caselight: 100").split(',')))
 
             self.extrude_speeds = ['1', '1', '1', '1']
             i = 0
