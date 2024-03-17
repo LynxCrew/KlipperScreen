@@ -722,6 +722,7 @@ class KlipperScreen(Gtk.Window):
             logging.debug("Printer not initialized yet")
             self.printer.state = "not ready"
             return
+        self.files.refresh_files()
         self.show_panel("main_menu", None, remove_all=True, items=self._config.get_menu_items("__main"))
 
     def state_startup(self):
@@ -1058,7 +1059,6 @@ class KlipperScreen(Gtk.Window):
             return self._init_printer("Error getting printer object data with extra items")
 
         self.files.set_gcodes_path()
-        self.files.refresh_files()
 
         logging.info("Printer initialized")
         self.initialized = True
