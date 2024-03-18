@@ -17,8 +17,8 @@ class Panel(ScreenPanel):
         self.load_filament = any("LOAD_FILAMENT" in macro.upper() for macro in macros)
         self.unload_filament = any("UNLOAD_FILAMENT" in macro.upper() for macro in macros)
 
-        self.speeds = screen.extrude_speeds
-        self.distances = screen.extrude_distances
+        self.speeds = ['1', '2', '5', '25']
+        self.distances = ['5', '10', '15', '25']
         if self.ks_printer_cfg is not None:
             dis = self.ks_printer_cfg.get("extrude_distances", '')
             if re.match(r'^[0-9,\s]+$', dis):
