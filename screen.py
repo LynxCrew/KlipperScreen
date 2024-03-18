@@ -185,8 +185,6 @@ class KlipperScreen(Gtk.Window):
         self.z_calibrate_panel = None
         self.extrude_panel = None
         self.lighting_output_pins = None
-        self.extrude_speeds = None
-        self.extrude_distances = None
         self.log_notification("KlipperScreen Started", 1)
         self.initial_connection()
         if sys.version_info == (3, 7):
@@ -933,8 +931,6 @@ class KlipperScreen(Gtk.Window):
             self.z_calibrate_panel = "zcalibrate"
             self.extrude_panel = "extrude"
             self.lighting_output_pins = {"caselight": 1.0}
-            self.extrude_speeds = ['1', '2', '5', '25']
-            self.extrude_distances = ['5', '10', '15', '25']
         else:
             self.z_calibrate_panel = (printer_config
                                       .get("z_calibrate_panel", "zcalibrate"))
@@ -954,26 +950,6 @@ class KlipperScreen(Gtk.Window):
                     logging.error(f"lighting_output_pin [{element}] is not valid.")
                     continue
                 self.lighting_output_pins[pair[0]] = pair[1]
-
-            self.extrude_speeds = ['1', '1', '1', '1']
-            i = 0
-            for element in printer_config.get("extrude_speeds", "1, 2, 5, 25").split(','):
-                self.extrude_speeds.insert(i, element.strip())
-                i += 1
-            if len(self.extrude_speeds) > 4:
-                logging.error(f"extrude_speeds can have a maximum of 4 values.")
-                self.extrude_speeds = ['1', '2', '5', '25']
-            self.extrude_speeds.sort()
-
-            self.extrude_distances = ['1', '1', '1', '1']
-            i = 0
-            for element in printer_config.get("extrude_distances", "5, 10, 15, 25").split(','):
-                self.extrude_distances.insert(i, element.strip())
-                i += 1
-            if len(self.extrude_distances) > 4:
-                logging.error(f"extrude_distances can have a maximum of 4 values.")
-                self.extrude_distances = ['5', '10', '15', '25']
-            self.extrude_distances.sort()
 
             if printer_config.getboolean("enable_home_full", False):
                 logging.info("home_full")
