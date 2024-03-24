@@ -12,7 +12,9 @@ class Panel(ScreenPanel):
 
     def __init__(self, screen, title):
         super().__init__(screen, title)
-        self.preview = Gtk.DrawingArea()
+        self.da_size = self._gtk.img_scale * 2
+        self.preview = Gtk.DrawingArea(width_request=self.da_size, height_request=self.da_size)
+        self.preview.set_size_request(-1, self.da_size * 2)
         self.preview.connect("draw", self.on_draw)
         self.preview_label = Gtk.Label()
         self.preset_list = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
@@ -88,7 +90,7 @@ class Panel(ScreenPanel):
             color = [0, 0, 0, 0]
             color[idx] = 1
             button = self._gtk.Button()
-            preview = Gtk.DrawingArea(width_request=da_size, height_request=da_size)
+            preview = Gtk.DrawingArea(width_request=self.da_size, height_request=self.da_size)
             preview.connect("draw", self.on_draw, color)
             button.set_image(preview)
             button.connect("clicked", self.apply_preset, color)
@@ -102,13 +104,11 @@ class Panel(ScreenPanel):
             scale.connect("button-release-event", self.apply_scales)
             scale.connect("value_changed", self.update_preview)
             self.scales[idx] = scale
-            scale_grid.attach(button, 1, idx, 1, 1)
-            scale_grid.attach(scale, 2, idx, 3, 1)
-        grid.attach(scale_grid, 0, 0, 2, 1)
+            scale_grid.attach(button, 0, idx, 1, 1)
+            scale_grid.attach(scale, 1, idx, 3, 1)
+        grid.attach(scale_grid, 0, 0, 3, 1)
 
         columns = 3 if self._screen.vertical_mode else 2
-        self.preset_list.attach(self.preview_label, 0, 0, 1, 1)
-        self.preset_list.attach(self.preview, 1, 0, columns - 1, 1)
         data_misc = self._screen.apiclient.send_request(
             "server/database/item?namespace=mainsail&key=miscellaneous.entries")
         if data_misc:
@@ -117,7 +117,7 @@ class Panel(ScreenPanel):
                 self.presets.update(self.parse_presets(presets_data))
         for i, key in enumerate(self.presets):
             logging.info(f'Adding preset: {key}')
-            preview = Gtk.DrawingArea(width_request=da_size, height_request=da_size)
+            preview = Gtk.DrawingArea(width_request=self.da_size, height_request=self.da_size)
             preview.connect("draw", self.on_draw, self.presets[key])
             button = self._gtk.Button()
             button.set_image(preview)
@@ -133,9 +133,9 @@ class Panel(ScreenPanel):
         box.add(preview_box)
         box.add(scroll)
         if self._screen.vertical_mode:
-            grid.attach(scroll, 0, 1, 2, 1)
+            grid.attach(box, 0, 1, 3, 1)
         else:
-            grid.attach(scroll, 2, 0, 1, 1)
+            grid.attach(box, 3, 0, 2, 1)
         return grid
 
     def on_draw(self, da, ctx, color=None):
