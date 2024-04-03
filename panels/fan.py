@@ -78,7 +78,7 @@ class Panel(ScreenPanel):
             scale.set_has_origin(True)
             scale.get_style_context().add_class("fan_slider")
             scale.connect("button-release-event", self.set_fan_speed, fan)
-            scale.connect("format-value", self.format_scale_value, "HI")
+            scale.connect("format-value", self.format_scale_value, "%.0f \%")
             fan_col.add(stop_btn)
             fan_col.add(scale)
             fan_col.add(max_btn)
