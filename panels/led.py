@@ -1,6 +1,8 @@
 import logging
 import gi
 
+from ks_includes import KlippyGtk
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from math import pi
@@ -102,6 +104,7 @@ class Panel(ScreenPanel):
             scale.set_has_origin(True)
             scale.get_style_context().add_class("fan_slider")
             scale.connect("button-release-event", self.apply_scales)
+            scale.connect("format-value", KlippyGtk.format_scale_value_percent)
             scale.connect("value_changed", self.update_preview)
             self.scales[idx] = scale
             scale_grid.attach(button, 0, idx, 1, 1)

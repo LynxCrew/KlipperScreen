@@ -2,6 +2,8 @@ import logging
 
 import gi
 
+from ks_includes import KlippyGtk
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib, Pango
 
@@ -56,6 +58,7 @@ class Panel(ScreenPanel):
         scale.set_has_origin(True)
         scale.get_style_context().add_class("fan_slider")
         scale.connect("button-release-event", self.set_output_pin, pin)
+        scale.connect("format-value", KlippyGtk.format_scale_value_percent)
 
         min_btn = self._gtk.Button("cancel", None, "color1", 1)
         min_btn.set_hexpand(False)
