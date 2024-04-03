@@ -28,7 +28,7 @@ def format_label(widget, lines=2):
         label.set_lines(lines)
 
 def format_scale_value_percent(self, scale, value):
-    return f"{round(value)} %"
+    return f"{round(value)}%"
 
 
 class KlippyGtk:
