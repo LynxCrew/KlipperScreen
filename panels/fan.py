@@ -39,12 +39,13 @@ class Panel(ScreenPanel):
         if self.devices[fan]['changeable'] is True:
             if self.devices[fan]['scale'].has_grab():
                 return
-            self.devices[fan]["speed"] = round(float(speed))
+            self.devices[fan]['speed'] = round(float(speed) * 100)
+            logging.info("update: %f" % round(float(speed) * 100))
             self.devices[fan]['scale'].disconnect_by_func(self.set_fan_speed)
-            self.devices[fan]['scale'].set_value(self.devices[fan]["speed"])
+            self.devices[fan]['scale'].set_value(self.devices[fan]['speed'])
             self.devices[fan]['scale'].connect("button-release-event", self.set_fan_speed, fan)
         else:
-            self.devices[fan]["speed"] = float(speed)
+            self.devices[fan]['speed'] = float(speed)
             self.devices[fan]['scale'].set_fraction(self.devices[fan]["speed"])
         if widget is not None:
             self.set_fan_speed(None, None, fan)
