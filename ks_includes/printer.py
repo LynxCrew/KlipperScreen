@@ -326,7 +326,7 @@ class Printer:
         if fan not in self.config or fan not in self.data:
             logging.debug(f"Error getting {fan} config")
             return speed
-        if "speed" in self.data[fan]:
+        if 'speed' in self.data[fan]:
             speed = self.data[fan]["speed"]
         if 'max_power' in self.config[fan]:
             max_power = float(self.config[fan]['max_power'])
@@ -336,6 +336,8 @@ class Printer:
             off_below = float(self.config[fan]['off_below'])
             if speed < off_below:
                 speed = 0
+        if 'normalized_speed' in self.data[fan]:
+            speed = self.data[fan]['normalized_speed']
         return speed
 
     def get_pin_value(self, pin):

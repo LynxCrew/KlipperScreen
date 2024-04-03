@@ -269,7 +269,7 @@ class KlipperScreen(Gtk.Window):
                 "bed_mesh": ["profile_name", "mesh_max", "mesh_min", "probed_matrix", "profiles"],
                 "configfile": ["config"],
                 "display_status": ["progress", "message"],
-                "fan": ["speed"],
+                "fan": ["speed", "normalized_speed"],
                 "gcode_move": ["extrude_factor", "gcode_position", "homing_origin", "speed_factor", "speed"],
                 "idle_timeout": ["state"],
                 "pause_resume": ["is_paused"],
