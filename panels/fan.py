@@ -78,7 +78,7 @@ class Panel(ScreenPanel):
             scale.set_has_origin(True)
             scale.get_style_context().add_class("fan_slider")
             scale.connect("button-release-event", self.set_fan_speed, fan)
-            scale.connect("format-value", self.format_scale_value, "%.0f \%")
+            scale.connect("format-value", KlippyGtk.format_scale_value_percent)
             fan_col.add(stop_btn)
             fan_col.add(scale)
             fan_col.add(max_btn)
@@ -131,8 +131,3 @@ class Panel(ScreenPanel):
     def check_fan_speed(self, fan):
         self.update_fan_speed(None, fan, self._printer.get_fan_speed(fan))
         return False
-
-    def format_scale_value(self, scale, value, format_string):
-        logging.info("format:")
-        logging.info(format_string % value)
-        return format_string % value
