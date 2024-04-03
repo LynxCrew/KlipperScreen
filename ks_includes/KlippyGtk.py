@@ -27,6 +27,7 @@ def format_label(widget, lines=2):
         label.set_ellipsize(Pango.EllipsizeMode.END)
         label.set_lines(lines)
 
+
 def format_scale_value_percent(self, value):
     return f"{value} %"
 
