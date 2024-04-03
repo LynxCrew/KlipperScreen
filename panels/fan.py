@@ -40,7 +40,6 @@ class Panel(ScreenPanel):
             if self.devices[fan]['scale'].has_grab():
                 return
             self.devices[fan]['speed'] = round(float(speed) * 100)
-            logging.info("update2: %f" % float(speed) * 100)
             self.devices[fan]['scale'].disconnect_by_func(self.set_fan_speed)
             self.devices[fan]['scale'].set_value(self.devices[fan]['speed'])
             self.devices[fan]['scale'].connect("button-release-event", self.set_fan_speed, fan)
@@ -73,6 +72,7 @@ class Panel(ScreenPanel):
             scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
             scale.set_value(speed)
             scale.set_digits(0)
+            Gtk.Scale.signals.format_value(scale, "%f\%")
             scale.set_hexpand(True)
             scale.set_has_origin(True)
             scale.get_style_context().add_class("fan_slider")
