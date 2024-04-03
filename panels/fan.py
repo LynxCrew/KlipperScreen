@@ -72,7 +72,6 @@ class Panel(ScreenPanel):
             scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
             scale.set_value(speed)
             scale.set_digits(0)
-            Gtk.Scale.signals.format_value(scale, "%f\%")
             scale.set_hexpand(True)
             scale.set_has_origin(True)
             scale.get_style_context().add_class("fan_slider")
