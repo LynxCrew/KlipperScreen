@@ -16,6 +16,7 @@ class Panel(ScreenPanel):
         self.grid = Gtk.Grid()
 
         conf = self._printer.get_config_section("printer")
+        logging.info(conf)
         self.options = [
             {
                 "name": _("Max Acceleration"),
@@ -27,7 +28,7 @@ class Panel(ScreenPanel):
                 "name": _("Minimum Cruise Ratio"),
                 "option": "minimum_cruise_ratio",
                 "units": "%",
-                "value": int(float(conf['max_accel_to_decel']) * 100),
+                "value": int(float(conf['minimum_cruise_ratio']) * 100),
                 "max": 99
             },
             {
