@@ -28,6 +28,8 @@ def format_label(widget, lines=2):
         label.set_lines(lines)
 
 def format_scale_value(self, scale, value, format_string):
+    logging.info("format:")
+    logging.info(format_string % value)
     return format_string % value
 
 
