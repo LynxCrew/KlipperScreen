@@ -29,7 +29,7 @@ class Panel(ScreenPanel):
             return
 
         for fan in self.devices:
-            if fan in data and ("speed" in data[fan] or "normalized_speed" in data[fan]):
+            if fan in data and "speed" in data[fan]:
                 self.update_fan_speed(None, fan, self._printer.get_fan_speed(fan))
 
     def update_fan_speed(self, widget, fan, speed):
