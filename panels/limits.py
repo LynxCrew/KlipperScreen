@@ -16,8 +16,6 @@ class Panel(ScreenPanel):
         self.grid = Gtk.Grid()
 
         conf = self._printer.get_config_section("printer")
-        if 'minimum_cruise_ratio' not in conf:
-            conf['minimum_cruise_ratio'] = 0.5
         self.options = [
             {
                 "name": _("Max Acceleration"),
@@ -30,13 +28,14 @@ class Panel(ScreenPanel):
                 "option": "minimum_cruise_ratio",
                 "units": "%",
                 "value": int(float(conf['minimum_cruise_ratio']) * 100) if "minimum_cruise_ratio" in conf else 50,
-                "max": 99
+                "max": 100
             },
             {
                 "name": _("Max Velocity"),
                 "option": "max_velocity",
                 "units": _("mm/s"),
-                "value": int(float(conf["max_velocity"]))},
+                "value": int(float(conf["max_velocity"]))
+            },
             {
                 "name": _("Square Corner Velocity"),
                 "option": "square_corner_velocity",
