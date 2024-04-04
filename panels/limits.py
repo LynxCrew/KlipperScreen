@@ -27,20 +27,20 @@ class Panel(ScreenPanel):
                 "name": _("Minimum Cruise Ratio"),
                 "option": "minimum_cruise_ratio",
                 "units": "%",
-                "value": int(float(conf['minimum_cruise_ratio']) * 100) if "minimum_cruise_ratio" in conf else 50,
+                "value": int(float(conf['minimum_cruise_ratio']) * 100) if 'minimum_cruise_ratio' in conf else 50,
                 "max": 100
             },
             {
                 "name": _("Max Velocity"),
                 "option": "max_velocity",
                 "units": _("mm/s"),
-                "value": int(float(conf["max_velocity"]))
+                "value": int(float(conf['max_velocity']))
             },
             {
                 "name": _("Square Corner Velocity"),
                 "option": "square_corner_velocity",
                 "units": _("mm/s"),
-                "value": int(float(conf['square_corner_velocity'])) if "square_corner_velocity" in conf else 5
+                "value": int(float(conf['square_corner_velocity'])) if 'square_corner_velocity' in conf else 5
             }
         ]
 
