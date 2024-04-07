@@ -254,7 +254,8 @@ class KlipperScreenConfig:
                     {"name": _("Auto") + " " + _("(default)"), "value": "auto"},
                     {"name": _("File"), "value": "file"},
                     {"name": _("Filament Used"), "value": "filament"},
-                    {"name": _("Slicer"), "value": "slicer"}]}},
+                    {"name": _("Slicer"), "value": "slicer"},
+                    {"name": _("M73"), "value": "M73"}]}},
             {"screen_blanking": {
                 "section": "main", "name": _("Screen Power Off Time"), "type": "dropdown",
                 "value": "3600", "callback": screen.set_screenblanking_timeout, "options": [
