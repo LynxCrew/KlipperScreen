@@ -604,8 +604,6 @@ class Panel(ScreenPanel):
                         self.file_metadata['gcode_start_byte']))
         else:
             progress = self._printer.get_stat('virtual_sdcard', 'progress')
-        if progress_type == "slicer" and :
-            progress = self._printer.get_stat('display_status', 'progress')
         self.labels["duration"].set_label(self.format_time(total_duration))
         elapsed_label = f"{self.labels['elapsed'].get_text()}  {self.labels['duration'].get_text()}"
         self.buttons['elapsed'].set_label(elapsed_label)
