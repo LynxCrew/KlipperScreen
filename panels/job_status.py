@@ -632,7 +632,7 @@ class Panel(ScreenPanel):
 
         if progress_type == 'M73':
             progress = self._printer.get_stat('display_status', 'progress')
-            remaining = self._printer.get_stat('display_status', 'remaining')
+            remaining = self._printer.get_stat('display_status', 'remaining') * 60
             estimated = slicer_time
         else:
             if progress_type == "file":
