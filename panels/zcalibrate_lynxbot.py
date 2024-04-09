@@ -275,27 +275,15 @@ class Panel(ScreenPanel):
                 self.widgets['zposition'].set_text("Z: ?")
             elif "gcode_move" in data and "gcode_position" in data['gcode_move']:
                 self.update_position(data['gcode_move']['gcode_position'])
-            if "manual_probe" in data:
-                if data["manual_probe"]["is_active"]:
-                    self.buttons_calibrating()
-                else:
-                    self.buttons_not_calibrating()
+            if "manual_probe" in data or "axis_twist_compensation" in data:
+                self.activate()
         elif action == "notify_gcode_response":
             data = data.lower()
-            if "twist compensation running" in data:
-                self.twist_compensate_running = True
-                self.buttons_not_calibrating()
-            if "manual probe running" in data:
-                self.running = True
-                self.buttons_calibrating()
-            if (("unknown command:\"query_manual_probe_running\"" in data
-                    and "unknown command:\"query_twist_compensation_running\"" in data)
-                    or ("probe cancelled" in data and "calibration aborted" in data)):
+            if ("probe cancelled" in data and "calibration aborted" in data):
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
-            elif (("already running a twist compensation." in data and "use abort" in data)
-                  or ("probe triggered prior to movement" in data)):
+            elif "probe triggered prior to movement" in data:
                 self.enable_cancel_button()
             elif "save_config" in data:
                 self.reset_states()
@@ -398,6 +386,17 @@ class Panel(ScreenPanel):
         self.buttons['cancel'].get_style_context().add_class('color2')
 
     def activate(self):
-        # This is only here because klipper doesn't provide a method to detect if it's calibrating
-        self._screen._ws.klippy.gcode_script("QUERY_TWIST_COMPENSATION_RUNNING")
-        self._screen._ws.klippy.gcode_script("QUERY_MANUAL_PROBE_RUNNING")
+        running = False
+        if self._printer.get_stat("axis_twist_compensation", "is_active"):
+            self.twist_compensate_running = True
+            self.buttons_not_calibrating()
+            self.enable_cancel_button()
+            running = True
+        if self._printer.get_stat("manual_probe", "is_active"):
+            self.running = True
+            self.buttons_calibrating()
+            running = True
+
+        if not running:
+            self.reset_states()
+            self.buttons_not_calibrating()
