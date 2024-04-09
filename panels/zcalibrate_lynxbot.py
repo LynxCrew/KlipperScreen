@@ -390,6 +390,7 @@ class Panel(ScreenPanel):
         if self._printer.get_stat("axis_twist_compensation", "is_active"):
             self.twist_compensate_running = True
             self.buttons_not_calibrating()
+            self.disable_start_button()
             self.enable_cancel_button()
             running = True
         if self._printer.get_stat("manual_probe", "is_active"):
