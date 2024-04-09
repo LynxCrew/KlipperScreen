@@ -75,8 +75,8 @@ class Panel(ScreenPanel):
                                 if "CALIBRATE_PROBE" in self._printer.available_commands
                                 else ["PROBE_CALIBRATE", True])
         self.endstop_calibrate = (["CALIBRATE_Z_ENDSTOP", False]
-                                if "CALIBRATE_Z_ENDSTOP" in self._printer.available_commands
-                                else ["Z_ENDSTOP_CALIBRATE", True])
+                                  if "CALIBRATE_Z_ENDSTOP" in self._printer.available_commands
+                                  else ["Z_ENDSTOP_CALIBRATE", True])
 
         self.wait_for_continue = False
         if "axis_twist_compensation" in self._printer.get_config_section_list():
@@ -229,7 +229,7 @@ class Panel(ScreenPanel):
                             "clicked",
                             self
                             .continue_
-                            )
+                        )
                 self.twist_compensate_running = True
                 self._screen._ws.klippy.gcode_script(
                     "AXIS_TWIST_COMPENSATION_CALIBRATE"
