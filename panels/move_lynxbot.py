@@ -149,9 +149,17 @@ class Panel(ScreenPanel):
             for i, axis in enumerate(('x', 'y', 'z')):
                 if axis not in homed_axes:
                     self.labels[f"pos_{axis}"].set_text(f"{axis.upper()}: ?")
+                    self.buttons[axis + '-'].set_sensitive(False)
+                    self.buttons[axis + '-'].get_style_context().remove_class('color4')
+                    self.buttons[axis + '+'].set_sensitive(False)
+                    self.buttons[axis + '+'].get_style_context().remove_class('color4')
                 elif "gcode_move" in data and "gcode_position" in data["gcode_move"]:
                     self.labels[f"pos_{axis}"].set_text(
                         f"{axis.upper()}: {data['gcode_move']['gcode_position'][i]:.2f}")
+                    self.buttons[axis + '-'].set_sensitive(True)
+                    self.buttons[axis + '-'].get_style_context().add_class('color4')
+                    self.buttons[axis + '+'].set_sensitive(True)
+                    self.buttons[axis + '+'].get_style_context().add_class('color4')
 
     def change_distance(self, widget, distance):
         logging.info(f"### Distance {distance}")
