@@ -42,7 +42,6 @@ class Panel(ScreenPanel):
         self.buttons['z+'].connect("clicked", self.move, "Z", "+")
         self.buttons['z-'].connect("clicked", self.move, "Z", "-")
         self.buttons['home'].connect("clicked", self.home)
-        script = {"script": "M18"}
         self.buttons['motors_off'].connect("clicked", self.motors_off)
         adjust = self._gtk.Button("settings", None, "color2", 1, Gtk.PositionType.LEFT, 1)
         adjust.connect("clicked", self.load_menu, 'options', _('Settings'))
@@ -239,6 +238,6 @@ class Panel(ScreenPanel):
             self._screen._send_action(widget, "printer.gcode.script", {"script": 'M18'})
             return
         name = "motors_off"
-        disname = self._screen._config.get_menu_name("move", name)
-        menuitems = self._screen._config.get_menu_items("move", name)
+        disname = self._screen._config.get_menu_name("move_lynxbot", name)
+        menuitems = self._screen._config.get_menu_items("move_lynxbot", name)
         self._screen.show_panel("menu", disname, items=menuitems)
