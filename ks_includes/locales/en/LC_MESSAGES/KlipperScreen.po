@@ -185,6 +185,24 @@ msgstr ""
 msgid "Disable Motors"
 msgstr ""
 
+msgid "Disable X"
+msgstr ""
+
+msgid "Disable Y"
+msgstr ""
+
+msgid "Disable Z"
+msgstr ""
+
+msgid "Disable XY"
+msgstr ""
+
+msgid "Disable E"
+msgstr ""
+
+msgid "Disable Motors"
+msgstr ""
+
 msgid "Distance (mm)"
 msgstr ""
 
