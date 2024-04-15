@@ -231,6 +231,7 @@ class Panel(ScreenPanel):
         name = "homing"
         disname = self._screen._config.get_menu_name("move", name)
         menuitems = self._screen._config.get_menu_items("move", name)
+        logging.info(menuitems)
         self._screen.show_panel("menu", disname, items=menuitems)
 
     def motors_off(self, widget):
@@ -238,6 +239,7 @@ class Panel(ScreenPanel):
             self._screen._send_action(widget, "printer.gcode.script", {"script": 'M18'})
             return
         name = "motors_off"
-        disname = self._screen._config.get_menu_name("move_lynxbot", name)
-        menuitems = self._screen._config.get_menu_items("move_lynxbot", name)
+        disname = self._screen._config.get_menu_name("move", name)
+        menuitems = self._screen._config.get_menu_items("move", name)
+        logging.info(menuitems)
         self._screen.show_panel("menu", disname, items=menuitems)
