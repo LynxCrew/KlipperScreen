@@ -233,7 +233,7 @@ class Panel(ScreenPanel):
         menuitems = self._screen._config.get_menu_items("move", name)
         logging.info(disname)
         logging.info(menuitems)
-        self._screen.show_panel("menu", disname, items=menuitems)
+        self._screen.show_panel("menu", disname, items=menuitems, panel_name="Homing")
 
     def motors_off(self, widget):
         if "delta" in self._printer.get_config_section("printer")['kinematics']:
@@ -244,4 +244,4 @@ class Panel(ScreenPanel):
         menuitems = self._screen._config.get_menu_items("move", name)
         logging.info(disname)
         logging.info(menuitems)
-        self._screen.show_panel("menu", disname, items=menuitems)
+        self._screen.show_panel("menu", disname, items=menuitems, panel_name="Motors Off")
