@@ -347,7 +347,7 @@ class KlipperScreenConfig:
         exclude_list = ['preheat']
         if not self.defined_config.getboolean('main', "use_default_menu", fallback=True):
             logging.info("Using custom menu, removing default menu entries.")
-            exclude_list.extend(('menu __main', 'menu __print', 'menu __splashscreen'))
+            exclude_list.extend(('menu __main', 'menu __print', 'menu __splashscreen', 'menu move'))
         for i in exclude_list:
             for j in config.sections():
                 if j.startswith(i):
