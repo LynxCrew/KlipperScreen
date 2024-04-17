@@ -160,8 +160,8 @@ class KlipperScreenConfig:
             if section == 'main':
                 bools = (
                     'invert_x', 'invert_y', 'invert_z', '24htime', 'only_heaters', 'show_cursor', 'confirm_estop',
-                    'autoclose_popups', 'use_dpms', 'use_default_menu', 'side_macro_shortcut', 'use-matchbox-keyboard',
-                    'show_heater_power', "show_scroll_steppers", "auto_open_extrude"
+                    'autoclose_popups', 'use_dpms', 'use_default_menu', 'use_default_move_menu', 'side_macro_shortcut',
+                    'use-matchbox-keyboard', 'show_heater_power', "show_scroll_steppers", "auto_open_extrude"
                 )
                 strs = (
                     'default_printer', 'language', 'print_sort_dir', 'theme', 'screen_blanking', 'font_size',
@@ -347,7 +347,11 @@ class KlipperScreenConfig:
         exclude_list = ['preheat']
         if not self.defined_config.getboolean('main', "use_default_menu", fallback=True):
             logging.info("Using custom menu, removing default menu entries.")
-            exclude_list.extend(('menu __main', 'menu __print', 'menu __splashscreen', 'menu move'))
+            exclude_list.extend(('menu __main', 'menu __print', 'menu __splashscreen'))
+        if not self.defined_config.getboolean('main', "use_default_move_menu",
+                                              fallback=True):
+            logging.info("Using custom move menu, removing default move menu entries.")
+            exclude_list.extend(('menu move'))
         for i in exclude_list:
             for j in config.sections():
                 if j.startswith(i):

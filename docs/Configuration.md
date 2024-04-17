@@ -34,6 +34,10 @@ The options listed here are not editable from within the user interface.
 # set this to False. See Menu section below.
 # use_default_menu: True
 
+# To define a full set of custom move menus (instead of merging user entries with default entries)
+# set this to False. See Menu section below.
+# use_default_move_menu: True
+
 # Define one or more moonraker power devices that turn on/off with the screensaver (CSV list)
 # screen_on_devices: example1, example2
 # screen_off_devices:  example1, example2

@@ -188,7 +188,7 @@ msgid "Deselect"
 msgstr ""
 
 msgid "Disable Motors"
-msgstr ""
+msgstr "Disable All"
 
 msgid "Disable X"
 msgstr ""
