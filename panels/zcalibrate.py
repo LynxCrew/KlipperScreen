@@ -55,7 +55,10 @@ class Panel(ScreenPanel):
         self.buttons['zpos'].connect("clicked", self.move, "+")
         self.buttons['zneg'].connect("clicked", self.move, "-")
         self.buttons['complete'].connect("clicked", self.accept)
-        self.buttons['cancel'].connect("clicked", self.abort)
+        script = {"script": "ABORT"}
+        self.buttons['cancel'].connect("clicked", self._screen._confirm_send_action,
+                                       _("Are you sure you want to stop the calibration?"),
+                                       "printer.gcode.script", script)
 
         self.labels['popover'] = Gtk.Popover(position=Gtk.PositionType.BOTTOM)
 
@@ -130,6 +133,9 @@ class Panel(ScreenPanel):
             # Since probes may not be accturate enough for deltas, always show the manual method
             self._add_button("Delta Manual", "delta_manual", pobox)
             functions.append("delta_manual")
+        if "AXIS_TWIST_COMPENSATION_CALIBRATE" in self._printer.available_commands:
+            self._add_button("Axis Twist Compensation", "axis_twist", pobox)
+            functions.append("axis_twist")
 
         self.labels['popover'].add(pobox)
         if len(functions) > 1:
@@ -170,6 +176,8 @@ class Panel(ScreenPanel):
                 self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
             elif method == "endstop":
                 self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
+            elif method == "axis_twist":
+                self._screen._ws.klippy.gcode_script("AXIS_TWIST_COMPENSATION_CALIBRATE")
 
     def _move_to_position(self, x, y):
         if not x or not y:
@@ -265,12 +273,6 @@ class Panel(ScreenPanel):
 
     def move(self, widget, direction):
         self._screen._ws.klippy.gcode_script(f"TESTZ Z={direction}{self.distance}")
-
-    def abort(self, widget):
-        logging.info("Aborting calibration")
-        self._screen._ws.klippy.gcode_script("ABORT")
-        self.buttons_not_calibrating()
-        self._screen._menu_go_back()
 
     def accept(self, widget):
         logging.info("Accepting Z position")
