@@ -64,16 +64,16 @@ class WifiManager:
 
     def add_network(self, ssid, psk):
         for netid in list(self.supplicant_networks):
-            if self.supplicant_networks[netid]['ssid'] == ssid:
+            if self.supplicant_networks[netid]["ssid"] == ssid:
                 # Modify network
                 return
 
         # TODO: Add wpa_cli error checking
         network_id = self.wpa_cli("ADD_NETWORK")
         commands = [
-            f'ENABLE_NETWORK {network_id}',
-            'SET_NETWORK %s ssid "%s"' % (network_id, ssid.replace('"', '\"')),
-            'SET_NETWORK %s psk "%s"' % (network_id, psk.replace('"', '\"'))
+            f"ENABLE_NETWORK {network_id}",
+            'SET_NETWORK %s ssid "%s"' % (network_id, ssid.replace('"', '"')),
+            'SET_NETWORK %s psk "%s"' % (network_id, psk.replace('"', '"')),
         ]
 
         self.wpa_cli_batch(commands)
@@ -81,7 +81,7 @@ class WifiManager:
         self.read_wpa_supplicant()
         netid = None
         for i in list(self.supplicant_networks):
-            if self.supplicant_networks[i]['ssid'] == ssid:
+            if self.supplicant_networks[i]["ssid"] == ssid:
                 netid = i
                 break
 
@@ -100,7 +100,7 @@ class WifiManager:
     def connect(self, ssid):
         netid = None
         for nid, net in self.supplicant_networks.items():
-            if net['ssid'] == ssid:
+            if net["ssid"] == ssid:
                 netid = nid
                 break
 
@@ -116,7 +116,7 @@ class WifiManager:
     def delete_network(self, ssid):
         netid = None
         for i in list(self.supplicant_networks):
-            if self.supplicant_networks[i]['ssid'] == ssid:
+            if self.supplicant_networks[i]["ssid"] == ssid:
                 netid = i
                 break
 
@@ -126,7 +126,7 @@ class WifiManager:
         self.wpa_cli(f"REMOVE_NETWORK {netid}")
 
         for netid in list(self.supplicant_networks):
-            if self.supplicant_networks[netid]['ssid'] == ssid:
+            if self.supplicant_networks[netid]["ssid"] == ssid:
                 del self.supplicant_networks[netid]
                 break
 
@@ -139,10 +139,10 @@ class WifiManager:
         con_ssid = os.popen("sudo iwgetid -r").read().strip()
         con_bssid = os.popen("sudo iwgetid -r -a").read().strip()
         # wpa_cli status output is unstable use it as backup only
-        status = self.wpa_cli("STATUS").split('\n')
+        status = self.wpa_cli("STATUS").split("\n")
         variables = {}
         for line in status:
-            arr = line.split('=')
+            arr = line.split("=")
             variables[arr[0]] = "=".join(arr[1:])
         prev_ssid = self.connected_ssid
 
@@ -150,30 +150,30 @@ class WifiManager:
             self.connected = True
             self.connected_ssid = con_ssid
             for ssid, val in self.networks.items():
-                self.networks[ssid]['connected'] = ssid == con_ssid
+                self.networks[ssid]["connected"] = ssid == con_ssid
             if prev_ssid != self.connected_ssid:
-                for cb in self._callbacks['connected']:
+                for cb in self._callbacks["connected"]:
                     args = self.connected_ssid, prev_ssid
                     GLib.idle_add(cb, *args)
             return [con_ssid, con_bssid]
         elif "ssid" in variables and "bssid" in variables:
             self.connected = True
-            self.connected_ssid = variables['ssid']
+            self.connected_ssid = variables["ssid"]
             for ssid, val in self.networks.items():
-                self.networks[ssid]['connected'] = ssid == variables['ssid']
+                self.networks[ssid]["connected"] = ssid == variables["ssid"]
             if prev_ssid != self.connected_ssid:
-                for cb in self._callbacks['connected']:
+                for cb in self._callbacks["connected"]:
                     args = self.connected_ssid, prev_ssid
                     GLib.idle_add(cb, *args)
-            return [variables['ssid'], variables['bssid']]
+            return [variables["ssid"], variables["bssid"]]
         else:
             logging.info("Resetting connected_ssid")
             self.connected = False
             self.connected_ssid = None
             for ssid, val in self.networks.items():
-                self.networks[ssid]['connected'] = False
+                self.networks[ssid]["connected"] = False
             if prev_ssid != self.connected_ssid:
-                for cb in self._callbacks['connected']:
+                for cb in self._callbacks["connected"]:
                     args = self.connected_ssid, prev_ssid
                     GLib.idle_add(cb, *args)
             return None
@@ -187,7 +187,7 @@ class WifiManager:
             return self.networks[ssid]
         if mac is not None and ssid is None:
             for net in self.networks:
-                if mac == net['mac']:
+                if mac == net["mac"]:
                     return net
         return {}
 
@@ -198,15 +198,15 @@ class WifiManager:
         return self.supplicant_networks
 
     def read_wpa_supplicant(self):
-        results = self.wpa_cli("LIST_NETWORKS").split('\n')
+        results = self.wpa_cli("LIST_NETWORKS").split("\n")
         results.pop(0)
         self.supplicant_networks = {}
         self.networks_in_supplicant = []
-        for net in [n.split('\t') for n in results]:
+        for net in [n.split("\t") for n in results]:
             self.supplicant_networks[net[0]] = {
                 "ssid": net[1],
                 "bssid": net[2],
-                "flags": net[3] if len(net) == 4 else ""
+                "flags": net[3] if len(net) == 4 else "",
             }
             self.networks_in_supplicant.append(self.supplicant_networks[net[0]])
 
@@ -221,12 +221,14 @@ class WifiManager:
         new_networks = []
         deleted_networks = list(self.networks)
 
-        results = self.wpa_cli("SCAN_RESULTS").split('\n')
+        results = self.wpa_cli("SCAN_RESULTS").split("\n")
         results.pop(0)
 
         aps = []
         for res in results:
-            match = re.match("^([a-f0-9:]+)\\s+([0-9]+)\\s+([\\-0-9]+)\\s+(\\S+)\\s+(.+)?", res)
+            match = re.match(
+                "^([a-f0-9:]+)\\s+([0-9]+)\\s+([\\-0-9]+)\\s+(\\S+)\\s+(.+)?", res
+            )
             if match:
                 net = {
                     "mac": match[1],
@@ -236,26 +238,30 @@ class WifiManager:
                     "frequency": match[2],
                     "flags": match[4],
                     "signal_level_dBm": match[3],
-                    "ssid": match[5]
+                    "ssid": match[5],
                 }
 
-                if "WPA2" in net['flags']:
-                    net['encryption'] = "WPA2"
-                elif "WPA" in net['flags']:
-                    net['encryption'] = "WPA"
-                elif "WEP" in net['flags']:
-                    net['encryption'] = "WEP"
+                if "WPA2" in net["flags"]:
+                    net["encryption"] = "WPA2"
+                elif "WPA" in net["flags"]:
+                    net["encryption"] = "WPA"
+                elif "WEP" in net["flags"]:
+                    net["encryption"] = "WEP"
                 else:
-                    net['encryption'] = "off"
+                    net["encryption"] = "off"
 
                 aps.append(net)
 
         cur_info = self.get_current_wifi()
         self.networks = {}
         for ap in aps:
-            self.networks[ap['ssid']] = ap
-            if cur_info is not None and cur_info[0] == ap['ssid'] and cur_info[1].lower() == ap['mac'].lower():
-                self.networks[ap['ssid']]['connected'] = True
+            self.networks[ap["ssid"]] = ap
+            if (
+                cur_info is not None
+                and cur_info[0] == ap["ssid"]
+                and cur_info[1].lower() == ap["mac"].lower()
+            ):
+                self.networks[ap["ssid"]]["connected"] = True
 
         for net in list(self.networks):
             if net in deleted_networks:
@@ -263,7 +269,7 @@ class WifiManager:
             else:
                 new_networks.append(net)
         if new_networks or deleted_networks:
-            for cb in self._callbacks['scan_results']:
+            for cb in self._callbacks["scan_results"]:
                 args = new_networks, deleted_networks
                 GLib.idle_add(cb, *args)
 
@@ -303,11 +309,14 @@ class WpaSocket(Thread):
                     GLib.idle_add(self.wm.scan_results)
                 elif "CTRL-EVENT-DISCONNECTED" in msg:
                     self.callback("connecting_status", msg)
-                    match = re.match('<3>CTRL-EVENT-DISCONNECTED bssid=(\\S+) reason=3 locally_generated=1', msg)
+                    match = re.match(
+                        "<3>CTRL-EVENT-DISCONNECTED bssid=(\\S+) reason=3 locally_generated=1",
+                        msg,
+                    )
                     if match:
                         for net in self.wm.networks:
-                            if self.wm.networks[net]['mac'] == match[1]:
-                                self.wm.networks[net]['connected'] = False
+                            if self.wm.networks[net]["mac"] == match[1]:
+                                self.wm.networks[net]["connected"] = False
                                 break
                 elif "Trying to associate" in msg or "CTRL-EVENT-REGDOM-CHANGE" in msg:
                     self.callback("connecting_status", msg)
@@ -327,7 +336,7 @@ class WpaSocket(Thread):
 class WifiChannels:
     @staticmethod
     def lookup(freq: str):
-        if freq == '2484':
+        if freq == "2484":
             return "2.4", "14"
         try:
             freq = float(freq)

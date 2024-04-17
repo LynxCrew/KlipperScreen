@@ -11,15 +11,21 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self._screen = screen
-        self.object_list = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, hexpand=True, vexpand=True)
+        self.object_list = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL, hexpand=True, vexpand=True
+        )
         self.buttons = {}
-        self.current_object = self._gtk.Button("extrude", "", scale=self.bts, position=Gtk.PositionType.LEFT, lines=1)
+        self.current_object = self._gtk.Button(
+            "extrude", "", scale=self.bts, position=Gtk.PositionType.LEFT, lines=1
+        )
         self.current_object.connect("clicked", self.exclude_current)
         self.current_object.set_vexpand(False)
-        self.excluded_objects = self._printer.get_stat("exclude_object", "excluded_objects")
-        logging.info(f'Excluded: {self.excluded_objects}')
+        self.excluded_objects = self._printer.get_stat(
+            "exclude_object", "excluded_objects"
+        )
+        logging.info(f"Excluded: {self.excluded_objects}")
         self.objects = self._printer.get_stat("exclude_object", "objects")
-        self.labels['map'] = None
+        self.labels["map"] = None
         for obj in self.objects:
             logging.info(f"Adding {obj['name']}")
             self.add_object(obj["name"])
@@ -32,12 +38,14 @@ class Panel(ScreenPanel):
         grid.attach(Gtk.Separator(), 0, 1, 2, 1)
 
         if self.objects and "polygon" in self.objects[0]:
-            self.labels['map'] = ObjectMap(self._screen, self._printer, self._gtk.font_size)
+            self.labels["map"] = ObjectMap(
+                self._screen, self._printer, self._gtk.font_size
+            )
             if self._screen.vertical_mode:
-                grid.attach(self.labels['map'], 0, 2, 2, 1)
+                grid.attach(self.labels["map"], 0, 2, 2, 1)
                 grid.attach(scroll, 0, 3, 2, 1)
             else:
-                grid.attach(self.labels['map'], 0, 2, 1, 1)
+                grid.attach(self.labels["map"], 0, 2, 1, 1)
                 grid.attach(scroll, 1, 2, 1, 1)
         else:
             grid.attach(scroll, 0, 2, 2, 1)
@@ -48,7 +56,9 @@ class Panel(ScreenPanel):
     def add_object(self, name):
         if name not in self.buttons and name not in self.excluded_objects:
             self.buttons[name] = self._gtk.Button(label=name.replace("_", " "))
-            self.buttons[name].get_children()[0].set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+            self.buttons[name].get_children()[0].set_line_wrap_mode(
+                Pango.WrapMode.WORD_CHAR
+            )
             self.buttons[name].get_children()[0].set_line_wrap(True)
             self.buttons[name].connect("clicked", self.exclude_object, name)
             self.buttons[name].get_style_context().add_class("frame-item")
@@ -70,7 +80,7 @@ class Panel(ScreenPanel):
             widget,
             _("Are you sure do you want to exclude the object?") + f"\n\n{name}",
             "printer.gcode.script",
-            script
+            script,
         )
 
     def exclude_current(self, widget):
@@ -79,7 +89,7 @@ class Panel(ScreenPanel):
     def process_update(self, action, data):
         if action == "notify_status_update":
             if "exclude_object" in data:
-                if "object" in data["exclude_object"]:                    # Update objects
+                if "object" in data["exclude_object"]:  # Update objects
                     self.objects = data["exclude_object"]["objects"]
                     logging.info(f'Objects: {data["exclude_object"]["objects"]}')
                     for obj in self.buttons:
@@ -89,14 +99,18 @@ class Panel(ScreenPanel):
                         logging.info(f"Adding {obj['name']}")
                         self.add_object(obj["name"])
                     self.content.show_all()
-                if "current_object" in data["exclude_object"]:                    # Update objects
+                if "current_object" in data["exclude_object"]:  # Update objects
                     # Update current objects
                     if data["exclude_object"]["current_object"]:
-                        self.current_object.set_label(f'{data["exclude_object"]["current_object"].replace("_", " ")}')
+                        self.current_object.set_label(
+                            f'{data["exclude_object"]["current_object"].replace("_", " ")}'
+                        )
                     self.update_graph()
-                if "excluded_objects" in data["exclude_object"]:                    # Update objects
+                if "excluded_objects" in data["exclude_object"]:  # Update objects
                     # Update excluded objects
-                    logging.info(f'Excluded objects: {data["exclude_object"]["excluded_objects"]}')
+                    logging.info(
+                        f'Excluded objects: {data["exclude_object"]["excluded_objects"]}'
+                    )
                     self.excluded_objects = data["exclude_object"]["excluded_objects"]
                     for name in self.excluded_objects:
                         if name in self.buttons:
@@ -112,5 +126,5 @@ class Panel(ScreenPanel):
         self.update_graph()
 
     def update_graph(self):
-        if self.labels['map']:
-            self.labels['map'].queue_draw()
+        if self.labels["map"]:
+            self.labels["map"].queue_draw()

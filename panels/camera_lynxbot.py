@@ -15,7 +15,9 @@ class Panel(ScreenPanel):
         self.da = Gtk.DrawingArea()
         self.da.set_hexpand(True)
         self.da.set_vexpand(True)
-        fs = self._gtk.Button("move", _("Fullscreen"), None, self.bts, Gtk.PositionType.LEFT, 1)
+        fs = self._gtk.Button(
+            "move", _("Fullscreen"), None, self.bts, Gtk.PositionType.LEFT, 1
+        )
         fs.connect("clicked", self.play)
         fs.set_hexpand(True)
         fs.set_vexpand(False)
@@ -24,7 +26,9 @@ class Panel(ScreenPanel):
         box.add(fs)
         self.content.add(box)
         self.content.show_all()
-        self.url = self.ks_printer_cfg.get("camera_url", "http://127.0.0.1/webcam/?action=stream").replace('"', '')
+        self.url = self.ks_printer_cfg.get(
+            "camera_url", "http://127.0.0.1/webcam/?action=stream"
+        ).replace('"', "")
         logging.debug(f"Camera URL: {self.url}")
 
     def activate(self):
@@ -40,25 +44,26 @@ class Panel(ScreenPanel):
             self.mpv.terminate()
             self.mpv = None
         # Create mpv after show or the 'window' property will be None
-        self.mpv = mpv.MPV(log_handler=self.log, vo='gpu,wlshm,xv,x11')
+        self.mpv = mpv.MPV(log_handler=self.log, vo="gpu,wlshm,xv,x11")
 
         with suppress(Exception):
-            self.mpv.profile = 'sw-fast'
+            self.mpv.profile = "sw-fast"
 
         # LOW LATENCY PLAYBACK
         with suppress(Exception):
-            self.mpv.profile = 'low-latency'
+            self.mpv.profile = "low-latency"
         self.mpv.untimed = True
-        self.mpv.audio = 'no'
+        self.mpv.audio = "no"
 
         # On wayland mpv cannot be embedded at least for now
         # https://github.com/mpv-player/mpv/issues/9654
         # if fs:
         self.mpv.fullscreen = True
 
-        @self.mpv.on_key_press('MBTN_LEFT' or 'MBTN_LEFT_DBL')
+        @self.mpv.on_key_press("MBTN_LEFT" or "MBTN_LEFT_DBL")
         def clicked():
             self.mpv.quit(0)
+
         # else:
         #     self.mpv.wid = f'{self.da.get_property("window").get_xid()}'
         #
@@ -70,7 +75,7 @@ class Panel(ScreenPanel):
         try:
             self.mpv.wait_for_playback()
         except mpv.ShutdownError:
-            logging.info('Exiting Fullscreen')
+            logging.info("Exiting Fullscreen")
         except Exception as e:
             logging.exception(e)
         self.mpv.terminate()
@@ -79,4 +84,4 @@ class Panel(ScreenPanel):
 
     @staticmethod
     def log(loglevel, component, message):
-        logging.debug(f'[{loglevel}] {component}: {message}')
+        logging.debug(f"[{loglevel}] {component}: {message}")

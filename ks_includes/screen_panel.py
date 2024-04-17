@@ -26,9 +26,13 @@ class ScreenPanel:
         self.title = title
         self.devices = {}
         self.active_heaters = []
-        self.content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, hexpand=True, vexpand=True)
+        self.content = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL, hexpand=True, vexpand=True
+        )
         self.content.get_style_context().add_class("content")
-        self._show_heater_power = self._config.get_main_config().getboolean('show_heater_power', False)
+        self._show_heater_power = self._config.get_main_config().getboolean(
+            "show_heater_power", False
+        )
         self.bts = self._gtk.bsidescale
 
         self.update_dialog = None
@@ -38,9 +42,12 @@ class ScreenPanel:
         adj.set_value(adj.get_upper() - adj.get_page_size())
 
     def emergency_stop(self, widget):
-        if self._config.get_main_config().getboolean('confirm_estop', False):
-            self._screen._confirm_send_action(widget, _("Are you sure you want to run Emergency Stop?"),
-                                              "printer.emergency_stop")
+        if self._config.get_main_config().getboolean("confirm_estop", False):
+            self._screen._confirm_send_action(
+                widget,
+                _("Are you sure you want to run Emergency Stop?"),
+                "printer.emergency_stop",
+            )
         else:
             self._screen._ws.klippy.emergency_stop()
         self._screen._ws.klippy.emergency_stop()
@@ -60,10 +67,10 @@ class ScreenPanel:
         return None
 
     def menu_item_clicked(self, widget, item):
-        if 'extra' in item:
-            self._screen.show_panel(item['panel'], item['name'], extra=item['extra'])
+        if "extra" in item:
+            self._screen.show_panel(item["panel"], item["name"], extra=item["extra"])
             return
-        self._screen.show_panel(item['panel'], item['name'])
+        self._screen.show_panel(item["panel"], item["name"])
 
     def load_menu(self, widget, name, title=None):
         logging.info(f"loading menu {name}")
@@ -74,7 +81,7 @@ class ScreenPanel:
         for child in self.content.get_children():
             self.content.remove(child)
 
-        self.menu.append(f'{name}_menu')
+        self.menu.append(f"{name}_menu")
         self.content.add(self.labels[self.menu[-1]])
         self.content.show_all()
         if title:
@@ -84,7 +91,9 @@ class ScreenPanel:
         logging.debug(f"self.menu: {self.menu}")
         if len(self.menu) <= 1 or self.menu[-2] not in self.labels:
             return
-        self._screen.base_panel.set_title(self._screen.panels[self._screen._cur_panels[-1]].title)
+        self._screen.base_panel.set_title(
+            self._screen.panels[self._screen._cur_panels[-1]].title
+        )
         self.menu.pop()
         for child in self.content.get_children():
             self.content.remove(child)
@@ -128,10 +137,12 @@ class ScreenPanel:
         seconds %= 3600
         minutes = round(seconds / 60)
         seconds %= 60
-        return f"{f'{days:2.0f}d ' if days > 0 else ''}" \
-               f"{f'{hours:2.0f}h ' if hours > 0 else ''}" \
-               f"{f'{minutes:2.0f}m ' if minutes > 0 else ''}" \
-               f"{f'{seconds:2.0f}s' if days == 0 and hours == 0 and minutes == 0 else ''}"
+        return (
+            f"{f'{days:2.0f}d ' if days > 0 else ''}"
+            f"{f'{hours:2.0f}h ' if hours > 0 else ''}"
+            f"{f'{minutes:2.0f}m ' if minutes > 0 else ''}"
+            f"{f'{seconds:2.0f}s' if days == 0 and hours == 0 and minutes == 0 else ''}"
+        )
 
     def format_eta(self, total, remaining):
         if total is None:
@@ -144,7 +155,9 @@ class ScreenPanel:
         hours = seconds // 3600
         seconds %= 3600
         minutes = seconds // 60
-        eta = datetime.datetime.now() + datetime.timedelta(days=days, hours=hours, minutes=minutes)
+        eta = datetime.datetime.now() + datetime.timedelta(
+            days=days, hours=hours, minutes=minutes
+        )
         if self._config.get_main_config().getboolean("24htime", True):
             return f"{self.format_time(remaining)} | {eta:%H:%M} {f' +{days:2.0f}d' if days > 0 else ''}"
         return f"{self.format_time(remaining)} | {eta:%I:%M %p} {f' +{days:2.0f}d' if days > 0 else ''}"
@@ -154,7 +167,7 @@ class ScreenPanel:
         size = float(size)
         suffixes = ["kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
         for i, suffix in enumerate(suffixes, start=2):
-            unit = 1024 ** i
+            unit = 1024**i
             if size < unit:
                 return f"{(1024 * size / unit):.1f} {suffix}"
 
@@ -192,6 +205,8 @@ class ScreenPanel:
             if show_power:
                 self.labels[dev].get_style_context().add_class("heater-grid-temp-power")
             else:
-                self.labels[dev].get_style_context().remove_class("heater-grid-temp-power")
+                self.labels[dev].get_style_context().remove_class(
+                    "heater-grid-temp-power"
+                )
         elif dev in self.devices:
             self.devices[dev]["temp"].get_child().set_label(new_label_text)

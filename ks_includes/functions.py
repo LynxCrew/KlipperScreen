@@ -14,8 +14,8 @@ import struct
 
 dpms_loaded = False
 try:
-    ctypes.cdll.LoadLibrary('libXext.so.6')
-    libXext = ctypes.CDLL('libXext.so.6')
+    ctypes.cdll.LoadLibrary("libXext.so.6")
+    libXext = ctypes.CDLL("libXext.so.6")
 
     class DPMS_State:
         Fail = -1
@@ -24,7 +24,7 @@ try:
         Suspend = 2
         Off = 3
 
-    def get_DPMS_state(display_name_in_byte_string=b':0'):
+    def get_DPMS_state(display_name_in_byte_string=b":0"):
         state = DPMS_State.Fail
         if not isinstance(display_name_in_byte_string, bytes):
             raise TypeError
@@ -35,14 +35,15 @@ try:
         dummy1_i_p = ctypes.create_string_buffer(8)
         dummy2_i_p = ctypes.create_string_buffer(8)
         if display.value:
-            if libXext.DPMSQueryExtension(display, dummy1_i_p, dummy2_i_p) \
-                    and libXext.DPMSCapable(display):
+            if libXext.DPMSQueryExtension(
+                display, dummy1_i_p, dummy2_i_p
+            ) and libXext.DPMSCapable(display):
                 onoff_p = ctypes.create_string_buffer(1)
                 state_p = ctypes.create_string_buffer(2)
                 if libXext.DPMSInfo(display, state_p, onoff_p):
-                    onoff = struct.unpack('B', onoff_p.raw)[0]
+                    onoff = struct.unpack("B", onoff_p.raw)[0]
                     if onoff:
-                        state = struct.unpack('H', state_p.raw)[0]
+                        state = struct.unpack("H", state_p.raw)[0]
             libXext.XCloseDisplay(display)
         return state
 
@@ -52,28 +53,32 @@ except Exception as msg:
 
 
 def get_network_interfaces():
-    stream = os.popen("ip addr | grep ^'[0-9]' | cut -d ' ' -f 2 | grep -o '[a-zA-Z0-9\\.]*'")
-    return [i for i in stream.read().strip().split('\n') if not i.startswith('lo')]
+    stream = os.popen(
+        "ip addr | grep ^'[0-9]' | cut -d ' ' -f 2 | grep -o '[a-zA-Z0-9\\.]*'"
+    )
+    return [i for i in stream.read().strip().split("\n") if not i.startswith("lo")]
 
 
 def get_wireless_interfaces():
     p = subprocess.Popen(["which", "iwconfig"], stdout=subprocess.PIPE)
 
     while p.poll() is None:
-        time.sleep(.1)
+        time.sleep(0.1)
     if p.poll() != 0:
         return None
 
     try:
-        p = subprocess.Popen(["iwconfig"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result = p.stdout.read().decode('ascii').split('\n')
+        p = subprocess.Popen(
+            ["iwconfig"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
+        result = p.stdout.read().decode("ascii").split("\n")
     except Exception as e:
         logging.critical(e, exc_info=True)
         logging.info("Error with running iwconfig command")
         return None
     interfaces = []
     for line in result:
-        match = re.search('^(\\S+)\\s+.*$', line)
+        match = re.search("^(\\S+)\\s+.*$", line)
         if match:
             interfaces.append(match[1])
 
@@ -81,11 +86,18 @@ def get_wireless_interfaces():
 
 
 def get_software_version():
-    prog = ('git', '-C', os.path.dirname(__file__), 'describe', '--always',
-            '--tags', '--long', '--dirty')
+    prog = (
+        "git",
+        "-C",
+        os.path.dirname(__file__),
+        "describe",
+        "--always",
+        "--tags",
+        "--long",
+        "--dirty",
+    )
     try:
-        process = subprocess.Popen(prog, stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
+        process = subprocess.Popen(prog, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         ver, err = process.communicate()
         retcode = process.wait()
         if retcode == 0:
@@ -132,9 +144,9 @@ class KlipperScreenLoggingHandler(logging.handlers.RotatingFileHandler):
     def __init__(self, filename, **kwargs):
         super(KlipperScreenLoggingHandler, self).__init__(filename, **kwargs)
         self.rollover_info = {
-            'header': f"{'-' * 20}KlipperScreen Log Start{'-' * 20}",
-            'version': f"KlipperScreen Version: {get_software_version()}",
-            'py_ver': f"Python version: {sys.version_info.major}.{sys.version_info.minor}",
+            "header": f"{'-' * 20}KlipperScreen Log Start{'-' * 20}",
+            "version": f"KlipperScreen Version: {get_software_version()}",
+            "py_ver": f"Python version: {sys.version_info.major}.{sys.version_info.minor}",
         }
         self.log_start()
 
@@ -160,13 +172,16 @@ def setup_logging(log_file):
 
     stdout_hdlr = logging.StreamHandler(sys.stdout)
     stdout_fmt = logging.Formatter(
-        '%(asctime)s,%(msecs)03d [%(filename)s:%(funcName)s] - %(message)s',
-        '%Y%m%d %H:%M:%S')
+        "%(asctime)s,%(msecs)03d [%(filename)s:%(funcName)s] - %(message)s",
+        "%Y%m%d %H:%M:%S",
+    )
     stdout_hdlr.setFormatter(stdout_fmt)
     fh = listener = None
     try:
         fh = KlipperScreenLoggingHandler(log_file, maxBytes=4194304, backupCount=1)
-        formatter = logging.Formatter('%(asctime)s [%(filename)s:%(funcName)s()] - %(message)s')
+        formatter = logging.Formatter(
+            "%(asctime)s [%(filename)s:%(funcName)s()] - %(message)s"
+        )
         fh.setFormatter(formatter)
         listener = logging.handlers.QueueListener(queue, fh, stdout_hdlr)
     except Exception as e:
@@ -182,8 +197,8 @@ def setup_logging(log_file):
 
     def logging_exception_handler(ex_type, value, tb, thread_identifier=None):
         logging.exception(
-            f'Uncaught exception {ex_type}: {value}\n'
-            + '\n'.join([str(x) for x in [*traceback.format_tb(tb)]])
+            f"Uncaught exception {ex_type}: {value}\n"
+            + "\n".join([str(x) for x in [*traceback.format_tb(tb)]])
         )
 
     sys.excepthook = logging_exception_handler

@@ -15,13 +15,15 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         super().__init__(screen, title)
         self.da_size = self._gtk.img_scale * 2
-        self.preview = Gtk.DrawingArea(width_request=self.da_size, height_request=self.da_size)
+        self.preview = Gtk.DrawingArea(
+            width_request=self.da_size, height_request=self.da_size
+        )
         self.preview.set_size_request(-1, self.da_size * 2)
         self.preview.connect("draw", self.on_draw)
         self.preview_label = Gtk.Label()
         self.preset_list = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         self.color_data = [0, 0, 0, 0]
-        self.color_order = 'RGBW'
+        self.color_order = "RGBW"
         self.presets = {"off": [0.0, 0.0, 0.0, 0.0]}
         self.scales = {}
         self.buttons = []
@@ -31,10 +33,10 @@ class Panel(ScreenPanel):
 
     def color_available(self, idx):
         return (
-            (idx == 0 and 'R' in self.color_order)
-            or (idx == 1 and 'G' in self.color_order)
-            or (idx == 2 and 'B' in self.color_order)
-            or (idx == 3 and 'W' in self.color_order)
+            (idx == 0 and "R" in self.color_order)
+            or (idx == 1 and "G" in self.color_order)
+            or (idx == 2 and "B" in self.color_order)
+            or (idx == 3 and "W" in self.color_order)
         )
 
     def activate(self):
@@ -92,12 +94,16 @@ class Panel(ScreenPanel):
             color = [0, 0, 0, 0]
             color[idx] = 1
             button = self._gtk.Button()
-            preview = Gtk.DrawingArea(width_request=self.da_size, height_request=self.da_size)
+            preview = Gtk.DrawingArea(
+                width_request=self.da_size, height_request=self.da_size
+            )
             preview.connect("draw", self.on_draw, color)
             button.set_image(preview)
             button.connect("clicked", self.apply_preset, color)
             button.set_hexpand(False)
-            scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min=0, max=255, step=1)
+            scale = Gtk.Scale.new_with_range(
+                Gtk.Orientation.HORIZONTAL, min=0, max=255, step=1
+            )
             scale.set_value(round(col_value * 255))
             scale.set_digits(0)
             scale.set_hexpand(True)
@@ -113,14 +119,19 @@ class Panel(ScreenPanel):
 
         columns = 3 if self._screen.vertical_mode else 2
         data_misc = self._screen.apiclient.send_request(
-            "server/database/item?namespace=mainsail&key=miscellaneous.entries")
+            "server/database/item?namespace=mainsail&key=miscellaneous.entries"
+        )
         if data_misc:
-            presets_data = data_misc['result']['value'][next(iter(data_misc["result"]["value"]))]['presets']
+            presets_data = data_misc["result"]["value"][
+                next(iter(data_misc["result"]["value"]))
+            ]["presets"]
             if presets_data:
                 self.presets.update(self.parse_presets(presets_data))
         for i, key in enumerate(self.presets):
-            logging.info(f'Adding preset: {key}')
-            preview = Gtk.DrawingArea(width_request=self.da_size, height_request=self.da_size)
+            logging.info(f"Adding preset: {key}")
+            preview = Gtk.DrawingArea(
+                width_request=self.da_size, height_request=self.da_size
+            )
             preview.connect("draw", self.on_draw, self.presets[key])
             button = self._gtk.Button()
             button.set_image(preview)
@@ -146,8 +157,8 @@ class Panel(ScreenPanel):
             color = self.color_data
         ctx.set_source_rgb(*self.rgbw_to_rgb(color))
         # Set the size of the rectangle
-        width = height = da.get_allocated_width() * .9
-        x = da.get_allocated_width() * .05
+        width = height = da.get_allocated_width() * 0.9
+        x = da.get_allocated_width() * 0.05
         # Set the radius of the corners
         radius = width / 2 * 0.2
         ctx.arc(x + radius, radius, radius, pi, 3 * pi / 2)
@@ -163,7 +174,7 @@ class Panel(ScreenPanel):
         self.preview_label.set_label(self.rgb_to_hex(self.rgbw_to_rgb(self.color_data)))
 
     def process_update(self, action, data):
-        if action != 'notify_status_update':
+        if action != "notify_status_update":
             return
         if self.current_led in data and "color_data" in data[self.current_led]:
             self.update_scales(data[self.current_led]["color_data"][0])
@@ -187,15 +198,22 @@ class Panel(ScreenPanel):
         self.set_led_color(self.color_data)
 
     def set_led_color(self, color_data):
-        name = self.current_led.split()[1] if len(self.current_led.split()) > 1 else self.current_led
-        self._screen._send_action(None, "printer.gcode.script",
-                                  {"script": KlippyGcodes.set_led_color(name, color_data)})
+        name = (
+            self.current_led.split()[1]
+            if len(self.current_led.split()) > 1
+            else self.current_led
+        )
+        self._screen._send_action(
+            None,
+            "printer.gcode.script",
+            {"script": KlippyGcodes.set_led_color(name, color_data)},
+        )
 
     @staticmethod
     def parse_presets(presets_data) -> {}:
         parsed = {}
         for i, preset in enumerate(presets_data.values()):
-            name = i if preset["name"] == '' else preset["name"].lower()
+            name = i if preset["name"] == "" else preset["name"].lower()
             parsed[name] = []
             for color in ["red", "green", "blue", "white"]:
                 if color not in preset or preset[color] is None:
@@ -206,7 +224,7 @@ class Panel(ScreenPanel):
 
     @staticmethod
     def rgb_to_hex(color):
-        hex_color = '#'
+        hex_color = "#"
         for value in color:
             int_value = round(value * 255)
             hex_color += hex(int_value)[2:].zfill(2)

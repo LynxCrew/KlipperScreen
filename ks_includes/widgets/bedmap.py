@@ -9,7 +9,7 @@ class BedMap(Gtk.DrawingArea):
         super().__init__()
         self.set_hexpand(True)
         self.set_vexpand(True)
-        self.connect('draw', self.draw_graph)
+        self.connect("draw", self.draw_graph)
         self.font_size = font_size
         self.font_spacing = round(self.font_size * 1.5)
         self.bm = list(reversed(bm)) if bm is not None else None
@@ -77,9 +77,14 @@ class BedMap(Gtk.DrawingArea):
                 # Numbers
                 ctx.set_source_rgb(0, 0, 0)
                 if column > 0:
-                    ctx.move_to((lx + rx) / 2 - self.font_size, (ty + by + self.font_size) / 2)
+                    ctx.move_to(
+                        (lx + rx) / 2 - self.font_size, (ty + by + self.font_size) / 2
+                    )
                 else:
-                    ctx.move_to((lx + rx) / 2 - self.font_size * 1.2, (ty + by + self.font_size) / 2)
+                    ctx.move_to(
+                        (lx + rx) / 2 - self.font_size * 1.2,
+                        (ty + by + self.font_size) / 2,
+                    )
                 ctx.show_text(f"{column:.2f}")
                 ctx.stroke()
 

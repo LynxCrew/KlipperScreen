@@ -18,8 +18,12 @@ class Panel(ScreenPanel):
                 continue
             logging.info(cam)
             cam[cam["name"]] = self._gtk.Button(
-                image_name="camera", label=cam["name"], style=f"color{i % 4 + 1}",
-                scale=self.bts, position=Gtk.PositionType.LEFT, lines=1
+                image_name="camera",
+                label=cam["name"],
+                style=f"color{i % 4 + 1}",
+                scale=self.bts,
+                position=Gtk.PositionType.LEFT,
+                lines=1,
             )
             cam[cam["name"]].set_hexpand(True)
             cam[cam["name"]].set_vexpand(True)
@@ -36,7 +40,7 @@ class Panel(ScreenPanel):
         # if only 1 cam start playing fullscreen
         if len(self._printer.cameras) == 1:
             cam = next(iter(self._printer.cameras))
-            if cam['enabled']:
+            if cam["enabled"]:
                 self.play(None, cam)
 
     def deactivate(self):
@@ -45,14 +49,16 @@ class Panel(ScreenPanel):
             self.mpv = None
 
     def play(self, widget, cam):
-        url = cam['stream_url']
-        if url.startswith('/'):
+        url = cam["stream_url"]
+        if url.startswith("/"):
             logging.info("camera URL is relative")
-            endpoint = self._screen.apiclient.endpoint.split(':')
+            endpoint = self._screen.apiclient.endpoint.split(":")
             url = f"{endpoint[0]}:{endpoint[1]}{url}"
-        if '/webrtc' in url:
-            self._screen.show_popup_message(_('WebRTC is not supported by the backend trying Stream'))
-            url = url.replace('/webrtc', '/stream')
+        if "/webrtc" in url:
+            self._screen.show_popup_message(
+                _("WebRTC is not supported by the backend trying Stream")
+            )
+            url = url.replace("/webrtc", "/stream")
         vf = ""
         if cam["flip_horizontal"]:
             vf += "hflip,"
@@ -63,20 +69,20 @@ class Panel(ScreenPanel):
 
         if self.mpv:
             self.mpv.terminate()
-        self.mpv = mpv.MPV(fullscreen=True, log_handler=self.log, vo='gpu,wlshm,xv,x11')
+        self.mpv = mpv.MPV(fullscreen=True, log_handler=self.log, vo="gpu,wlshm,xv,x11")
 
         self.mpv.vf = vf
 
         with suppress(Exception):
-            self.mpv.profile = 'sw-fast'
+            self.mpv.profile = "sw-fast"
 
         # LOW LATENCY PLAYBACK
         with suppress(Exception):
-            self.mpv.profile = 'low-latency'
+            self.mpv.profile = "low-latency"
         self.mpv.untimed = True
-        self.mpv.audio = 'no'
+        self.mpv.audio = "no"
 
-        @self.mpv.on_key_press('MBTN_LEFT' or 'MBTN_LEFT_DBL')
+        @self.mpv.on_key_press("MBTN_LEFT" or "MBTN_LEFT_DBL")
         def clicked():
             self.mpv.quit(0)
 
@@ -86,7 +92,7 @@ class Panel(ScreenPanel):
         try:
             self.mpv.wait_for_playback()
         except mpv.ShutdownError:
-            logging.info('Exiting Fullscreen')
+            logging.info("Exiting Fullscreen")
         except Exception as e:
             logging.exception(e)
         self.mpv.terminate()
@@ -95,6 +101,10 @@ class Panel(ScreenPanel):
             self._screen._menu_go_back()
 
     def log(self, loglevel, component, message):
-        logging.debug(f'[{loglevel}] {component}: {message}')
-        if loglevel == 'error' and 'No Xvideo support found' not in message and 'youtube-dl' not in message:
-            self._screen.show_popup_message(f'{message}')
+        logging.debug(f"[{loglevel}] {component}: {message}")
+        if (
+            loglevel == "error"
+            and "No Xvideo support found" not in message
+            and "youtube-dl" not in message
+        ):
+            self._screen.show_popup_message(f"{message}")

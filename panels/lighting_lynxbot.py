@@ -17,13 +17,13 @@ class Panel(ScreenPanel):
         self.screen = screen
         self.devices = {}
         # Create a grid for all devices
-        self.labels['devices'] = Gtk.Grid()
-        self.labels['devices'].set_valign(Gtk.Align.CENTER)
+        self.labels["devices"] = Gtk.Grid()
+        self.labels["devices"].set_valign(Gtk.Align.CENTER)
 
         self.load_pins()
 
         scroll = self._gtk.ScrolledWindow()
-        scroll.add(self.labels['devices'])
+        scroll.add(self.labels["devices"])
 
         self.content.add(scroll)
 
@@ -48,10 +48,9 @@ class Panel(ScreenPanel):
         name.set_line_wrap(True)
         name.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
-        scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL,
-                                         min=0,
-                                         max=100,
-                                         step=1)
+        scale = Gtk.Scale.new_with_range(
+            orientation=Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1
+        )
         scale.set_value(self.check_pin_value(pin))
         scale.set_digits(0)
         scale.set_hexpand(True)
@@ -65,10 +64,15 @@ class Panel(ScreenPanel):
         min_btn.connect("clicked", self.update_pin_value, pin, 0)
         on_btn = self._gtk.Button("light", _("On"), "color2")
         on_btn.set_hexpand(False)
-        on_btn.connect("clicked",
-                       self.update_pin_value,
-                       pin,
-                       float(self.screen.lighting_output_pins[pin.split()[1]] / self._printer.get_pin_scale(pin)))
+        on_btn.connect(
+            "clicked",
+            self.update_pin_value,
+            pin,
+            float(
+                self.screen.lighting_output_pins[pin.split()[1]]
+                / self._printer.get_pin_scale(pin)
+            ),
+        )
         logging.info(self._printer.get_pin_scale(pin))
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
@@ -88,14 +92,17 @@ class Panel(ScreenPanel):
         devices = sorted(self.devices)
         pos = devices.index(pin)
 
-        self.labels['devices'].insert_row(pos)
-        self.labels['devices'].attach(self.devices[pin]['row'], 0, pos, 1, 1)
-        self.labels['devices'].show_all()
+        self.labels["devices"].insert_row(pos)
+        self.labels["devices"].attach(self.devices[pin]["row"], 0, pos, 1, 1)
+        self.labels["devices"].show_all()
 
     def set_output_pin(self, widget, event, pin):
-        value = (self.devices[pin]["scale"].get_value() * self._printer.get_pin_scale(pin)) / 100
-        self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} '
-                                             f'VALUE={value}')
+        value = (
+            self.devices[pin]["scale"].get_value() * self._printer.get_pin_scale(pin)
+        ) / 100
+        self._screen._ws.klippy.gcode_script(
+            f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} ' f"VALUE={value}"
+        )
         # Check the speed in case it wasn't applied
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 
@@ -115,9 +122,11 @@ class Panel(ScreenPanel):
         if pin not in self.devices:
             return
 
-        self.devices[pin]['scale'].disconnect_by_func(self.set_output_pin)
-        self.devices[pin]['scale'].set_value(round(float(value) * 100))
-        self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
+        self.devices[pin]["scale"].disconnect_by_func(self.set_output_pin)
+        self.devices[pin]["scale"].set_value(round(float(value) * 100))
+        self.devices[pin]["scale"].connect(
+            "button-release-event", self.set_output_pin, pin
+        )
 
         if widget is not None:
             self.set_output_pin(None, None, pin)

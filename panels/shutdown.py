@@ -21,7 +21,12 @@ class Panel(ScreenPanel):
         restart.connect("clicked", self.reboot_poweroff, "reboot")
 
         self.main = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
-        if self._printer and self._printer.state not in {'disconnected', 'startup', 'shutdown', 'error'}:
+        if self._printer and self._printer.state not in {
+            "disconnected",
+            "startup",
+            "shutdown",
+            "error",
+        }:
             self.main.attach(estop, 0, 0, 2, 1)
         self.main.attach(poweroff, 0, 1, 1, 1)
         self.main.attach(restart, 1, 1, 1, 1)
@@ -39,14 +44,40 @@ class Panel(ScreenPanel):
         logging.info(self._screen.apiclient.endpoint)
         local = {"127.0.0.1", "localhost"}
         if any(endpoint in self._screen.apiclient.endpoint for endpoint in local):
-            buttons.append({"name": _("Accept"), "response": Gtk.ResponseType.ACCEPT, "style": 'dialog-primary'})
+            buttons.append(
+                {
+                    "name": _("Accept"),
+                    "response": Gtk.ResponseType.ACCEPT,
+                    "style": "dialog-primary",
+                }
+            )
         else:
-            buttons.extend([
-                {"name": _("Host"), "response": Gtk.ResponseType.OK, "style": 'dialog-info'},
-                {"name": _("Printer"), "response": Gtk.ResponseType.APPLY, "style": 'dialog-warning'},
-                {"name": _("Both"), "response": Gtk.ResponseType.ACCEPT, "style": 'dialog-primary'},
-            ])
-        buttons.append({"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": 'dialog-error'})
+            buttons.extend(
+                [
+                    {
+                        "name": _("Host"),
+                        "response": Gtk.ResponseType.OK,
+                        "style": "dialog-info",
+                    },
+                    {
+                        "name": _("Printer"),
+                        "response": Gtk.ResponseType.APPLY,
+                        "style": "dialog-warning",
+                    },
+                    {
+                        "name": _("Both"),
+                        "response": Gtk.ResponseType.ACCEPT,
+                        "style": "dialog-primary",
+                    },
+                ]
+            )
+        buttons.append(
+            {
+                "name": _("Cancel"),
+                "response": Gtk.ResponseType.CANCEL,
+                "style": "dialog-error",
+            }
+        )
         self._gtk.Dialog(title, buttons, label, self.reboot_poweroff_confirm, method)
 
     def reboot_poweroff_confirm(self, dialog, response_id, method):

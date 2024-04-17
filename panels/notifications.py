@@ -14,7 +14,7 @@ COLORS = {
 
 
 def remove_newlines(msg: str) -> str:
-    return msg.replace('\n', ' ')
+    return msg.replace("\n", " ")
 
 
 class Panel(ScreenPanel):
@@ -22,7 +22,9 @@ class Panel(ScreenPanel):
         super().__init__(screen, title)
         self.empty = _("Notification log empty")
         self.tb = Gtk.TextBuffer(text=self.empty)
-        tv = Gtk.TextView(editable=False, cursor_visible=False, wrap_mode=Gtk.WrapMode.WORD_CHAR)
+        tv = Gtk.TextView(
+            editable=False, cursor_visible=False, wrap_mode=Gtk.WrapMode.WORD_CHAR
+        )
         tv.set_buffer(self.tb)
         tv.connect("size-allocate", self._autoscroll)
 
@@ -51,7 +53,7 @@ class Panel(ScreenPanel):
             self.tb.get_end_iter(),
             f'\n<span color="{COLORS["time"]}">{log["time"]}</span> '
             f'<span color="{color}"><b>{remove_newlines(log["message"])}</b></span>',
-            -1
+            -1,
         )
 
     def clear(self):
