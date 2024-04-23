@@ -596,6 +596,8 @@ class Panel(ScreenPanel):
         total_duration = float(self._printer.get_stat('print_stats', 'total_duration'))
         print_duration = float(self._printer.get_stat('print_stats', 'print_duration'))
         fila_used = float(self._printer.get_stat('print_stats', 'filament_used'))
+        progress_type = self._config.get_config()['main'].get('print_estimate_method', 'auto')
+
         if "gcode_start_byte" in self.file_metadata:
             progress = (max(self._printer.get_stat('virtual_sdcard', 'file_position') -
                         self.file_metadata['gcode_start_byte'], 0) / (self.file_metadata['gcode_end_byte'] -
@@ -606,7 +608,6 @@ class Panel(ScreenPanel):
         elapsed_label = f"{self.labels['elapsed'].get_text()}  {self.labels['duration'].get_text()}"
         self.buttons['elapsed'].set_label(elapsed_label)
         estimated = slicer_time = filament_time = file_time = 0
-        timeleft_type = self._config.get_config()['main'].get('print_estimate_method', 'auto')
 
         if 'estimated_time' in self.file_metadata and self.file_metadata['estimated_time'] > 1:
             spdcomp = sqrt(self.speed_factor)
@@ -624,31 +625,43 @@ class Panel(ScreenPanel):
             file_time = (print_duration / progress)
             self.labels["file_time"].set_label(self.format_time(file_time))
 
-        if timeleft_type == "file":
-            estimated = file_time
-        elif timeleft_type == "filament":
-            estimated = filament_time
-        elif timeleft_type == "slicer":
+        if (progress_type == 'M73'
+                and 'display_status'not in self._printer.data
+                and 'remaining' not in self._printer.data['display_status']):
+            progress_type = 'auto'
+
+        if progress_type == 'M73':
+            progress = self._printer.get_stat('display_status', 'progress')
+            remaining = self._printer.get_stat('display_status', 'remaining') * 60
             estimated = slicer_time
-        elif estimated < 1:  # Auto
-            if print_duration < slicer_time > 1:
-                if progress < 0.15:
-                    # At the begining file and filament are innacurate
-                    estimated = slicer_time
-                elif filament_time > 1 and file_time > 1:
-                    # Weighted arithmetic mean (Slicer is the most accurate)
-                    estimated = (slicer_time * 3 + filament_time + file_time) / 5
-                elif file_time > 1:
-                    # Weighted arithmetic mean (Slicer is the most accurate)
-                    estimated = (slicer_time * 2 + file_time) / 3
-            elif print_duration < filament_time > 1 and file_time > 1:
-                estimated = (filament_time + file_time) / 2
-            elif file_time > 1:
+        else:
+            if progress_type == "file":
                 estimated = file_time
-        if estimated > 1:
+            elif progress_type == "filament":
+                estimated = filament_time
+            elif progress_type == "slicer":
+                estimated = slicer_time
+            elif estimated < 1:  # Auto
+                if print_duration < slicer_time > 1:
+                    if progress < 0.15:
+                        # At the begining file and filament are innacurate
+                        estimated = slicer_time
+                    elif filament_time > 1 and file_time > 1:
+                        # Weighted arithmetic mean (Slicer is the most accurate)
+                        estimated = (slicer_time * 3 + filament_time + file_time) / 5
+                    elif file_time > 1:
+                        # Weighted arithmetic mean (Slicer is the most accurate)
+                        estimated = (slicer_time * 2 + file_time) / 3
+                elif print_duration < filament_time > 1 and file_time > 1:
+                    estimated = (filament_time + file_time) / 2
+                elif file_time > 1:
+                    estimated = file_time
             progress = min(max(print_duration / estimated, 0), 1)
+            remaining = estimated - print_duration
+
+        if estimated > 1:
             self.labels["est_time"].set_label(self.format_time(estimated))
-            self.labels["time_left"].set_label(self.format_eta(estimated, print_duration))
+            self.labels["time_left"].set_label(self.format_eta(estimated, remaining))
             remaining_label = f"{self.labels['left'].get_text()}  {self.labels['time_left'].get_text()}"
             self.buttons['left'].set_label(remaining_label)
         self.update_progress(progress)

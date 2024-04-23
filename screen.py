@@ -268,7 +268,7 @@ class KlipperScreen(Gtk.Window):
             "objects": {
                 "bed_mesh": ["profile_name", "mesh_max", "mesh_min", "probed_matrix", "profiles"],
                 "configfile": ["config"],
-                "display_status": ["progress", "message"],
+                "display_status": ["progress", "message", "remaining"],
                 "fan": ["speed", "normalized_speed"],
                 "gcode_move": ["extrude_factor", "gcode_position", "homing_origin", "speed_factor", "speed"],
                 "idle_timeout": ["state"],
@@ -283,6 +283,7 @@ class KlipperScreen(Gtk.Window):
                 "motion_report": ["live_position", "live_velocity", "live_extruder_velocity"],
                 "exclude_object": ["current_object", "objects", "excluded_objects"],
                 "manual_probe": ['is_active'],
+                "axis_twist_compensation": ['is_active'],
                 "screws_tilt_adjust": ['results', 'error'],
             }
         }
