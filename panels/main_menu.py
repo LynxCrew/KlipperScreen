@@ -235,7 +235,10 @@ class Panel(MenuPanel):
 
     def verify_max_temp(self, temp):
         temp = int(temp)
-        max_temp = int(float(self._printer.get_config_section(self.active_heater)['max_temp']))
+        heater_name = ("hotend" + self.active_heater.replace("extruder", "")
+                       if self.active_heater.startswith("extruder")
+                       else self.active_heater)
+        max_temp = int(float(self._printer.get_config_section(heater_name)['max_temp']))
         logging.debug(f"{temp}/{max_temp}")
         if temp > max_temp:
             self._screen.show_popup_message(_("Can't set above the maximum:") + f' {max_temp}')
