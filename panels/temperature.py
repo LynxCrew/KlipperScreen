@@ -550,6 +550,7 @@ class Panel(ScreenPanel):
         for d in self.active_heaters:
             self.devices[d]['name'].get_style_context().remove_class("button_active")
         self.active_heater = self.popover_device if device is None else device
+        self.active_heater = "hotend" + self.active_heater.replace("extruder", "") if self.active_heater.startswith("extruder") else self.active_heater
         self.devices[self.active_heater]['name'].get_style_context().add_class("button_active")
 
         if "keypad" not in self.labels:
