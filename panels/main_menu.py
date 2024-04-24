@@ -317,8 +317,9 @@ class Panel(MenuPanel):
 
         if "keypad" not in self.labels:
             self.labels["keypad"] = Keypad(self._screen, self.change_target_temp, self.pid_calibrate, self.hide_numpad)
+        heater_name = "hotend" + self.active_heater.replace("extruder", "") if self.active_heater.startswith("extruder") else self.active_heater
         can_pid = self._printer.state not in ("printing", "paused") \
-            and self._screen.printer.config[self.active_heater]['control'] == 'pid'
+            and self._screen.printer.config[heater_name]['control'] == 'pid'
         self.labels["keypad"].show_pid(can_pid)
         self.labels["keypad"].clear()
 
