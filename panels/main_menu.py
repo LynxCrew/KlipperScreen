@@ -300,19 +300,17 @@ class Panel(MenuPanel):
         self._screen.base_panel.set_control_sensitive(False, control='back')
 
     def process_update(self, action, data):
+        logging.info("DATA ZEANON")
+        logging.info(data)
         if action != "notify_status_update":
             return
         for x in self._printer.get_temp_devices():
-            logging.info("DATA ZEANON")
-            logging.info(data)
             if x in data:
-                logging.info("HOOZe")
-                logging.info(x)
                 self.update_temp(
                     x,
-                    self._printer.get_stat(x, "temperature"),
-                    self._printer.get_stat(x, "target"),
-                    self._printer.get_stat(x, "power"),
+                    self._printer.get_dev_stat(x, "temperature"),
+                    self._printer.get_dev_stat(x, "target"),
+                    self._printer.get_dev_stat(x, "power"),
                 )
 
     def show_numpad(self, widget, device):
