@@ -304,6 +304,8 @@ class Panel(MenuPanel):
             return
         for x in self._printer.get_temp_devices():
             if x in data:
+                logging.info("HOOZe")
+                logging.info(x)
                 self.update_temp(
                     x,
                     self._printer.get_dev_stat(x, "temperature"),
