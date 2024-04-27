@@ -303,8 +303,6 @@ class Panel(MenuPanel):
         if action != "notify_status_update":
             return
         for x in self._printer.get_temp_devices():
-            logging.info("DATA ZEANON")
-            logging.info(data)
             if x in data:
                 logging.info("HOOZe")
                 logging.info(x)
