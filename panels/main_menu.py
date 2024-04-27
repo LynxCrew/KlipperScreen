@@ -84,7 +84,7 @@ class Panel(MenuPanel):
         logging.info(f"Adding device: {device}")
 
         temperature = self._printer.get_dev_stat(device, "temperature")
-        if temperature is None and device != "temperature_sensor beacon_coil":
+        if temperature is None:
             return False
 
         devname = device.split()[1] if len(device.split()) > 1 else device
