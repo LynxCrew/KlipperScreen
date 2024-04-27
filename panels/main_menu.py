@@ -84,7 +84,7 @@ class Panel(MenuPanel):
         logging.info(f"Adding device: {device}")
 
         temperature = self._printer.get_dev_stat(device, "temperature")
-        if temperature is None:
+        if temperature is None and device != "temperature_sensor beacon_coil":
             return False
 
         devname = device.split()[1] if len(device.split()) > 1 else device
@@ -114,8 +114,8 @@ class Panel(MenuPanel):
             image = "heater"
             class_name = f"graph_label_heater_generic_{index}"
             dev_type = "heater_generic"
-        elif device.startswith("temperature_fan") \
-                or device.startswith("controller_temperature_fan"):
+        elif (device.startswith("temperature_fan")
+                or device.startswith("controller_temperature_fan")):
             self.f += 1
             index = self.f
             max_indices = len(self._screen.get_style_options()['graph_colors']['fan']['colors'])
