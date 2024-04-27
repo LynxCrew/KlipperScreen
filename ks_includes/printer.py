@@ -56,11 +56,11 @@ class Printer:
                     "temperature": 0,
                     "target": 0
                 }
-            if x == 'heater_bed' \
-                    or x.startswith('heater_generic ') \
-                    or x.startswith('temperature_sensor ') \
-                    or x.startswith('temperature_fan ') \
-                    or x.startswith('controller_temperature_fan'):
+            if (x == 'heater_bed'
+                    or x.startswith('heater_generic ')
+                    or x.startswith('temperature_sensor ')
+                    or x.startswith('temperature_fan ')
+                    or x.startswith('controller_temperature_fan')):
                 self.devices[x] = {"temperature": 0}
                 if not x.startswith('temperature_sensor '):
                     self.devices[x]["target"] = 0
@@ -68,6 +68,8 @@ class Printer:
                 name = x.split()[1] if len(x.split()) > 1 else x
                 if not name.startswith("_"):
                     self.tempdevcount += 1
+            if x == 'beacon':
+                self.devices['temperature_sensor beacon_coil'] = {"temperature": 0}
             if x == 'fan' \
                     or x.startswith('controller_fan ') \
                     or x.startswith('heater_fan ') \
