@@ -953,7 +953,6 @@ class KlipperScreen(Gtk.Window):
                 self.lighting_output_pins[pair[0]] = pair[1]
 
             if printer_config.getboolean("enable_home_full", False):
-                logging.info("home_full")
                 self.printer.enable_home_full()
         self.base_panel.set_ks_printer_cfg(self.connected_printer)
 
