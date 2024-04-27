@@ -310,9 +310,9 @@ class Panel(MenuPanel):
                 logging.info(x)
                 self.update_temp(
                     x,
-                    self._printer.get_stat(x, "temperature"),
-                    self._printer.get_stat(x, "target"),
-                    self._printer.get_stat(x, "power"),
+                    self._printer.get_dev_stat(x, "temperature"),
+                    self._printer.get_dev_stat(x, "target"),
+                    self._printer.get_dev_stat(x, "power"),
                 )
 
     def show_numpad(self, widget, device):
