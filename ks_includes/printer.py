@@ -232,8 +232,6 @@ class Printer:
         temps_sensors = self.get_config_section_list("temperature_sensor ")
         if self.get_config_section("beacon"):
             temps_sensors.append("temperature_sensor beacon_coil")
-        logging.info("TEMP_SENSORS_ZEANON")
-        logging.info(temps_sensors)
         return temps_sensors
 
     def get_filament_sensors(self):
