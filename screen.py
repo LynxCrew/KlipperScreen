@@ -287,7 +287,6 @@ class KlipperScreen(Gtk.Window):
                 "screws_tilt_adjust": ['results', 'error'],
             }
         }
-        logging.info("TEMP FANS")
         logging.info(self.printer.get_temp_fans())
         for extruder in self.printer.get_tools():
             requested_updates['objects'][extruder] = [
