@@ -383,8 +383,6 @@ class Printer:
                 if not device.startswith('extruder_stepper')
             ]
             self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
-            logging.info("HOOZA")
-            logging.info(self.temp_devices)
         return self.temp_devices
 
     def get_tools(self):
