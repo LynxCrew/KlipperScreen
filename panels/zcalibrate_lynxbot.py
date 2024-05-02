@@ -140,7 +140,8 @@ class Panel(ScreenPanel):
         if "Z_ENDSTOP_CALIBRATE" in self._printer.available_commands:
             self._add_button("Endstop", "endstop", pobox)
             self.functions.append("endstop")
-        if "PROBE_CALIBRATE" in self._printer.available_commands:
+        if ("PROBE_CALIBRATE" in self._printer.available_commands
+                or "BEACON_CALIBRATE" in self._printer.available_commands):
             self._add_button("Probe", "probe", pobox)
             self.functions.append("probe")
         if "BED_MESH_CALIBRATE" in self._printer.available_commands:
