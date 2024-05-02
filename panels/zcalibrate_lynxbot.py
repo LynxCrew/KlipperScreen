@@ -71,9 +71,14 @@ class Panel(ScreenPanel):
         self.bed_mesh_calibrate = (["LEVEL_AUTO", False]
                                    if "LEVEL_AUTO" in self._printer.available_commands
                                    else ["BED_MESH_CALIBRATE", True])
-        self.probe_calibrate = (["CALIBRATE_PROBE", False]
-                                if "CALIBRATE_PROBE" in self._printer.available_commands
-                                else ["PROBE_CALIBRATE", True])
+        if "BEACON_CALIBRATE" in self._printer.available_commands:
+            self.probe_calibrate = (["CALIBRATE_BEACON", False]
+                                    if "CALIBRATE_BEACON" in self._printer.available_commands
+                                    else ["BEACON_CALIBRATE", True])
+        else:
+            self.probe_calibrate = (["CALIBRATE_PROBE", False]
+                                    if "CALIBRATE_PROBE" in self._printer.available_commands
+                                    else ["PROBE_CALIBRATE", True])
         self.endstop_calibrate = (["CALIBRATE_Z_ENDSTOP", False]
                                   if "CALIBRATE_Z_ENDSTOP" in self._printer.available_commands
                                   else ["Z_ENDSTOP_CALIBRATE", True])
