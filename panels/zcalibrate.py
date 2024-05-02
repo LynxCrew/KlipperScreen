@@ -62,6 +62,10 @@ class Panel(ScreenPanel):
 
         self.labels['popover'] = Gtk.Popover(position=Gtk.PositionType.BOTTOM)
 
+        self.probe_calibrate = ("BEACON_CALIBRATE"
+                                if "BEACON_CALIBRATE" in self._printer.available_commands
+                                else "PROBE_CALIBRATE")
+
         self.set_functions()
 
         distgrid = Gtk.Grid()
@@ -169,7 +173,7 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.gcode_script("BED_MESH_CLEAR")
             if method == "probe":
                 self._move_to_position(*self._get_probe_location())
-                self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
+                self._screen._ws.klippy.gcode_script(self.probe_calibrate)
             elif method == "delta":
                 self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
             elif method == "delta_manual":
