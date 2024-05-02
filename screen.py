@@ -936,6 +936,35 @@ class KlipperScreen(Gtk.Window):
             self.reinit_count += 1
             return False
         self._ws.initial_connect()
+        printer_config = (self
+                          ._config
+                          .get_printer_config(self.connected_printer))
+        if printer_config is None:
+            self.z_calibrate_panel = "zcalibrate"
+            self.extrude_panel = "extrude"
+            self.lighting_output_pins = {"caselight": 1.0}
+        else:
+            self.z_calibrate_panel = (printer_config
+                                      .get("z_calibrate_panel", "zcalibrate"))
+            self.extrude_panel = (printer_config
+                                  .get("extrude_panel", "extrude"))
+            self.lighting_output_pins = {}
+            for element in printer_config.get("lighting_output_pins", "caselight: 1.0").split(','):
+                pair = [p.strip() for p in element.strip().split(':')]
+                if len(pair) == 1:
+                    pair.append(1.0)
+                elif len(pair) == 2:
+                    if not pair[1].replace(".", "").isnumeric():
+                        logging.error(f"[{pair[1]}] in lighting_output_pins is not a number")
+                        continue
+                    pair[1] = float(pair[1])
+                else:
+                    logging.error(f"lighting_output_pin [{element}] is not valid.")
+                    continue
+                self.lighting_output_pins[pair[0]] = pair[1]
+
+            if printer_config.getboolean("enable_home_full", False):
+                self.printer.enable_home_full()
         return False
 
     def init_moonraker_components(self):
