@@ -239,7 +239,7 @@ class Printer:
         return self.sensors
 
     def get_probe(self):
-        probe_types = ["probe", "bltouch", "smart_effector", "dockable_probe"]
+        probe_types = ["probe", "bltouch", "smart_effector", "dockable_probe", "beacon"]
         for probe_type in probe_types:
             if self.config_section_exists(probe_type):
                 logging.info(f"Probe type: {probe_type}")

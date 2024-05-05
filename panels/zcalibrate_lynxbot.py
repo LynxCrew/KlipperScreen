@@ -71,14 +71,12 @@ class Panel(ScreenPanel):
         self.bed_mesh_calibrate = (["LEVEL_AUTO", False]
                                    if "LEVEL_AUTO" in self._printer.available_commands
                                    else ["BED_MESH_CALIBRATE", True])
-        if "BEACON_CALIBRATE" in self._printer.available_commands:
-            self.probe_calibrate = (["CALIBRATE_BEACON", False]
-                                    if "CALIBRATE_BEACON" in self._printer.available_commands
-                                    else ["BEACON_CALIBRATE", True])
-        else:
-            self.probe_calibrate = (["CALIBRATE_PROBE", False]
-                                    if "CALIBRATE_PROBE" in self._printer.available_commands
-                                    else ["PROBE_CALIBRATE", True])
+        self.probe_calibrate = (["CALIBRATE_PROBE", False]
+                                if "CALIBRATE_PROBE" in self._printer.available_commands
+                                else ["PROBE_CALIBRATE", True])
+        self.beacon_calibrate = (["CALIBRATE_BEACON", False]
+                                 if "CALIBRATE_BEACON" in self._printer.available_commands
+                                 else ["BEACON_CALIBRATE", True])
         self.endstop_calibrate = (["CALIBRATE_Z_ENDSTOP", False]
                                   if "CALIBRATE_Z_ENDSTOP" in self._printer.available_commands
                                   else ["Z_ENDSTOP_CALIBRATE", True])
@@ -140,10 +138,12 @@ class Panel(ScreenPanel):
         if "Z_ENDSTOP_CALIBRATE" in self._printer.available_commands:
             self._add_button("Endstop", "endstop", pobox)
             self.functions.append("endstop")
-        if ("PROBE_CALIBRATE" in self._printer.available_commands
-                or "BEACON_CALIBRATE" in self._printer.available_commands):
+        if "PROBE_CALIBRATE" in self._printer.available_commands:
             self._add_button("Probe", "probe", pobox)
             self.functions.append("probe")
+        if "BEACON_CALIBRATE" in self._printer.available_commands:
+            self._add_button("Beacon", "beacon", pobox)
+            self.functions.append("beacon")
         if "BED_MESH_CALIBRATE" in self._printer.available_commands:
             mesh = self._printer.get_config_section("bed_mesh")
             logging.info(f"Mesh: {mesh}")
@@ -211,6 +211,12 @@ class Panel(ScreenPanel):
                     self._screen._ws.klippy.gcode_script("G28")
                     self._move_to_position(*self._get_probe_location())
                 self._screen._ws.klippy.gcode_script(self.probe_calibrate[0])
+            elif method == "beacon":
+                if self.beacon_calibrate[1] and self._printer.get_stat(
+                        "toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                    self._move_to_position(*self._get_probe_location())
+                self._screen._ws.klippy.gcode_script(self.beacon_calibrate[0])
             elif method == "delta":
                 if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                     self._screen._ws.klippy.gcode_script("G28")
