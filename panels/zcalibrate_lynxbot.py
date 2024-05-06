@@ -145,9 +145,11 @@ class Panel(ScreenPanel):
             self._add_button("Probe", "probe", pobox)
             self.functions.append("probe")
         if "BEACON_CALIBRATE" in self._printer.available_commands:
+            logging.info("CALIBRATE")
             self._add_button("Beacon", "beacon", pobox)
             self.functions.append("beacon")
         if "BEACON_AUTO_CALIBRATE" in self._printer.available_commands:
+            logging.info("AUTO_CALIBRATE")
             self._add_button("Beacon Auto Calibrate", "beacon_auto", pobox)
             self.functions.append("beacon_auto")
         if "BED_MESH_CALIBRATE" in self._printer.available_commands:
