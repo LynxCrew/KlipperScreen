@@ -177,6 +177,9 @@ class KlipperScreen(Gtk.Window):
         callback()
         return False
 
+    def get_style_options(self):
+        return self.style_options
+
     def initial_connection(self):
         self.printers = self._config.get_printers()
         state_callbacks = {
