@@ -145,11 +145,9 @@ class Panel(ScreenPanel):
             self._add_button("Probe", "probe", pobox)
             self.functions.append("probe")
         if "BEACON_CALIBRATE" in self._printer.available_commands:
-            logging.info("CALIBRATE")
             self._add_button("Beacon", "beacon", pobox)
             self.functions.append("beacon")
         if "BEACON_AUTO_CALIBRATE" in self._printer.available_commands:
-            logging.info("AUTO_CALIBRATE")
             self._add_button("Beacon Auto Calibrate", "beacon_auto", pobox)
             self.functions.append("beacon_auto")
         if "BED_MESH_CALIBRATE" in self._printer.available_commands:
@@ -165,7 +163,7 @@ class Panel(ScreenPanel):
                 self.mesh_max = self._csv_to_array(mesh['mesh_max'])
             if 'zero_reference_position' in self._printer.get_config_section("bed_mesh"):
                 self.zero_ref = self._csv_to_array(mesh['zero_reference_position'])
-            if "probe" not in self.functions:
+            if "probe" not in self.functions and "beacon" not in self.functions:
                 # This is used to do a manual bed mesh if there is no probe
                 self._add_button("Bed mesh", "mesh", pobox)
                 self.functions.append("mesh")

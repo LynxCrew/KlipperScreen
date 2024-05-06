@@ -301,12 +301,6 @@ class Panel(MenuPanel):
             return
         for x in self._printer.get_temp_devices():
             if x in data:
-                logging.info("ZEANON_DEBUG")
-                logging.info(x)
-                logging.info(self._printer.get_stat(x, "temperature"))
-                logging.info(self._printer.get_stat(x, "target"))
-                logging.info(self._printer.get_stat(x, "power"))
-
                 self.update_temp(
                     x,
                     self._printer.get_stat(x, "temperature"),
