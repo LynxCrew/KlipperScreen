@@ -184,10 +184,10 @@ class Panel(ScreenPanel):
     def process_update(self, action, data):
         can_extrude = self._printer.get_stat("extruder")["can_extrude"]
         if action == "notify_gcode_response":
-            if "action:resumed" in data or not can_extrude:
-                self.enable_buttons(False)
-            elif "action:cancel" in data or "action:paused" in data:
+            if "action:cancel" in data or "action:paused" in data:
                 self.enable_buttons(True)
+            elif "action:resumed" in data:
+                self.enable_buttons(False)
             return
         if action != "notify_status_update":
             return
