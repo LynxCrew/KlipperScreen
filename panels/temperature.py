@@ -423,8 +423,8 @@ class Panel(ScreenPanel):
             self._screen._ws.klippy.set_bed_temp(temp)
         elif self.active_heater.startswith('heater_generic '):
             self._screen._ws.klippy.set_heater_temp(name, temp)
-        elif self.active_heater.startswith('temperature_fan ') \
-                or self.active_heater.startswith('controller_temperature_fan '):
+        elif (self.active_heater.startswith('temperature_fan ')
+                or self.active_heater.startswith('controller_temperature_fan ')):
             self._screen._ws.klippy.set_temp_fan_temp(name, temp)
         else:
             logging.info(f"Unknown heater: {self.active_heater}")
@@ -432,9 +432,7 @@ class Panel(ScreenPanel):
 
     def verify_max_temp(self, temp):
         temp = int(temp)
-        heater_name = ("hotend" + self.active_heater.replace("extruder", "")
-                       if self.active_heater.startswith("extruder")
-                       else self.active_heater)
+        heater_name = self.active_heater
         max_temp = int(float(self._printer.get_config_section(heater_name)['max_temp']))
         logging.debug(f"{temp}/{max_temp}")
         if temp > max_temp:
@@ -554,9 +552,7 @@ class Panel(ScreenPanel):
 
         if "keypad" not in self.labels:
             self.labels["keypad"] = Keypad(self._screen, self.change_target_temp, self.pid_calibrate, self.hide_numpad)
-        heater_name = ("hotend" + self.active_heater.replace("extruder", "")
-                       if self.active_heater.startswith("extruder")
-                       else self.active_heater)
+        heater_name = self.active_heater
         can_pid = self._printer.state not in ("printing", "paused") \
             and self._screen.printer.config[heater_name]['control'] == 'pid'
         self.labels["keypad"].show_pid(can_pid)

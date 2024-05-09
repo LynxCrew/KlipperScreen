@@ -219,14 +219,14 @@ class Panel(MenuPanel):
         if temp is False:
             return
 
-        if self.active_heater.startswith('extruder'):
+        if self.active_heater.startswith('extruder') or self.active_heater.startswith('hotend'):
             self._screen._ws.klippy.set_tool_temp(self._printer.get_tool_number(self.active_heater), temp)
         elif self.active_heater == "heater_bed":
             self._screen._ws.klippy.set_bed_temp(temp)
         elif self.active_heater.startswith('heater_generic '):
             self._screen._ws.klippy.set_heater_temp(name, temp)
-        elif self.active_heater.startswith('temperature_fan ') \
-                or self.active_heater.startswith('controller_temperature_fan '):
+        elif (self.active_heater.startswith('temperature_fan ')
+                or self.active_heater.startswith('controller_temperature_fan ')):
             self._screen._ws.klippy.set_temp_fan_temp(name, temp)
         else:
             logging.info(f"Unknown heater: {self.active_heater}")
