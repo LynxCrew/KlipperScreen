@@ -63,11 +63,11 @@ class KlipperScreenConfig:
                 self.defined_config = configparser.ConfigParser()
                 self.defined_config.read_string(user_def)
 
+                self.exclude_from_config(self.defined_config)
+
                 includes = [i[8:] for i in self.defined_config.sections() if i.startswith("include ")]
                 for include in includes:
                     self._include_config("/".join(self.config_path.split("/")[:-1]), include)
-
-                self.exclude_from_config(self.defined_config)
 
                 self.log_config(self.defined_config)
                 if self.validate_config(self.defined_config, string=user_def):
