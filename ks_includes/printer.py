@@ -12,7 +12,6 @@ class Printer:
         self.state = "disconnected"
         self.state_cb = state_cb
         self.state_callbacks = state_callbacks
-        self.devices = {}
         self.power_devices = {}
         self.tools = []
         self.extrudercount = 0
@@ -28,11 +27,11 @@ class Printer:
         self.spoolman = False
         self.home_full = False
         self.temp_devices = self.sensors = None
+        self.system_info = {}
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
         self.data = data
-        self.devices.clear()
         self.tools.clear()
         self.extrudercount = 0
         self.tempdevcount = 0
@@ -44,32 +43,22 @@ class Printer:
         self.available_commands.clear()
         self.temp_devices = self.sensors = None
         self.stop_tempstore_updates()
+        self.system_info.clear()
 
         for x in self.config.keys():
             if x[:8] == "extruder":
                 self.tools.append(x)
                 self.tools = sorted(self.tools)
                 self.extrudercount += 1
-                if x.startswith('extruder_stepper'):
-                    continue
-                self.devices[x] = {
-                    "temperature": 0,
-                    "target": 0
-                }
-            if (x == 'heater_bed'
-                    or x.startswith('heater_generic ')
-                    or x.startswith('temperature_sensor ')
-                    or x.startswith('temperature_fan ')
-                    or x.startswith('controller_temperature_fan')):
-                self.devices[x] = {"temperature": 0}
-                if not x.startswith('temperature_sensor '):
-                    self.devices[x]["target"] = 0
+            if x == 'heater_bed' \
+                    or x.startswith('heater_generic ') \
+                    or x.startswith('temperature_sensor ') \
+                    or x.startswith('temperature_fan ') \
+                    or x.startswith('controller_temperature_fan'):
                 # Support for hiding devices by name
                 name = x.split()[1] if len(x.split()) > 1 else x
                 if not name.startswith("_"):
                     self.tempdevcount += 1
-            if x == 'beacon':
-                self.devices['temperature_sensor beacon_coil'] = {"temperature": 0}
             if x == 'fan' \
                     or x.startswith('controller_fan ') \
                     or x.startswith('heater_fan ') \
@@ -217,7 +206,7 @@ class Printer:
 
     def get_heaters(self):
         heaters = self.get_config_section_list("heater_generic ")
-        if "heater_bed" in self.devices:
+        if "heater_bed" in self.config:
             heaters.insert(0, "heater_bed")
         return heaters
 
@@ -344,10 +333,10 @@ class Printer:
         return list(self.tempstore)
 
     def device_has_target(self, device):
-        return "target" in self.devices[device]
+        return "target" in self.data[device]
 
     def device_has_power(self, device):
-        return "power" in self.devices[device]
+        return "power" in self.data[device]
 
     def get_temp_store(self, device, section=False, results=0):
         if device not in self.tempstore:
