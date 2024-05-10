@@ -384,8 +384,8 @@ class KlipperScreenConfig:
         if self.defined_config and not self.defined_config.getboolean('main', "use_default_menu", fallback=True):
             logging.info("Using custom menu, removing default menu entries.")
             exclude_list.extend(('menu __main', 'menu __print', 'menu __splashscreen'))
-        if not self.defined_config.getboolean('main', "use_default_move_menu",
-                                              fallback=True):
+        if self.defined_config and not self.defined_config.getboolean('main', "use_default_move_menu",
+                                                                      fallback=True):
             logging.info("Using custom move menu, removing default move menu entries.")
             exclude_list.extend(('menu move'))
         for i in exclude_list:
