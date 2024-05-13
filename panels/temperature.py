@@ -401,7 +401,7 @@ class Panel(ScreenPanel):
             "visible": visible,
         }
 
-        devices = sorted(self.devices)
+        devices = self._printer.sort_devices(self.devices)
         pos = devices.index(device) + 1
 
         self.labels["devices"].insert_row(pos)

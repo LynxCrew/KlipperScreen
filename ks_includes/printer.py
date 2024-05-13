@@ -369,6 +369,26 @@ class Printer:
             self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
         return self.temp_devices
 
+    def sort_devices(self, devices):
+        result = []
+        sorted_devices = sorted(devices)
+        for device in sorted_devices:
+            if devices[device]["dev_type"] == "extruder":
+                result.append(device)
+        for device in sorted_devices:
+            if devices[device]["dev_type"] == "bed":
+                result.append(device)
+        for device in sorted_devices:
+            if devices[device]["dev_type"] == "heater_generic":
+                result.append(device)
+        for device in sorted_devices:
+            if devices[device]["dev_type"] == "fan":
+                result.append(device)
+        for device in sorted_devices:
+            if devices[device]["dev_type"] == "sensor":
+                result.append(device)
+        return result
+
     def get_tools(self):
         return self.tools
 

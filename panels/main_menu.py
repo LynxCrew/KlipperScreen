@@ -171,7 +171,7 @@ class Panel(MenuPanel):
         return True
 
     def show_devices(self):
-        devices = self._sort_devices()
+        devices = self._printer.sort_devices(self.devices)
 
         for device in devices:
             pos = devices.index(device) + 1
@@ -180,26 +180,6 @@ class Panel(MenuPanel):
             self.labels['devices'].attach(self.devices[device]["name"], 0, pos, 1, 1)
             self.labels['devices'].attach(self.devices[device]["temp"], 1, pos, 1, 1)
             self.labels['devices'].show_all()
-
-    def _sort_devices(self):
-        result = []
-        devices = sorted(self.devices)
-        for device in devices:
-            if self.devices[device]["dev_type"] == "extruder":
-                result.append(device)
-        for device in devices:
-            if self.devices[device]["dev_type"] == "bed":
-                result.append(device)
-        for device in devices:
-            if self.devices[device]["dev_type"] == "heater_generic":
-                result.append(device)
-        for device in devices:
-            if self.devices[device]["dev_type"] == "fan":
-                result.append(device)
-        for device in devices:
-            if self.devices[device]["dev_type"] == "sensor":
-                result.append(device)
-        return result
 
     def toggle_visibility(self, widget, device):
         self.devices[device]['visible'] ^= True
