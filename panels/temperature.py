@@ -400,6 +400,7 @@ class Panel(ScreenPanel):
             "class": class_name,
             "dev_type": dev_type,
             "name": name,
+            "name_button": name,
             "temp": temp,
             "can_target": can_target,
             "visible": visible
