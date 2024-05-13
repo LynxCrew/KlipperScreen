@@ -63,7 +63,7 @@ class Panel(ScreenPanel):
         self.buttons['complete'].connect("clicked", self.accept)
         self.buttons['cancel'].connect("clicked", self.abort)
 
-        self.labels['popover'] = Gtk.Popover(position=Gtk.PositionType.BOTTOM)
+        self.popover = Gtk.Popover(position=Gtk.PositionType.BOTTOM)
 
         self.start_handler = None
         self.continue_handler = None
@@ -178,7 +178,7 @@ class Panel(ScreenPanel):
             self._add_button("Twist Compensation", "twist_compensation", pobox)
             self.functions.append("twist_compensation")
 
-        self.labels['popover'].add(pobox)
+        self.popover.add(pobox)
         logging.info(f"Available functions for calibration: {self.functions}")
 
     @staticmethod
@@ -194,11 +194,11 @@ class Panel(ScreenPanel):
         if self.twist_compensate_running:
             self.continue_(None)
         else:
-            self.labels['popover'].set_relative_to(widget)
-            self.labels['popover'].show_all()
+            self.popover.set_relative_to(widget)
+            self.popover.show_all()
 
     def start_calibration(self, widget, method):
-        self.labels['popover'].popdown()
+        self.popover.popdown()
 
         self.disable_start_button()
 

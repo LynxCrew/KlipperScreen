@@ -226,12 +226,6 @@ class Panel(ScreenPanel):
         self.labels[boxname].show_all()
         return setting
 
-    def back(self):
-        if len(self.menu) > 1:
-            self.unload_menu()
-            return True
-        return False
-
     def home(self, widget):
         if "delta" in self._printer.get_config_section("printer")['kinematics']:
             self._screen._send_action(widget, "printer.gcode.script", {"script": 'G28'})
