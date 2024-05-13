@@ -363,6 +363,8 @@ class Panel(ScreenPanel):
 
         rgb = self._gtk.get_temp_color(dev_type)
 
+        can_target = self._printer.device_has_target(device)
+
         name = self._gtk.Button(
             image, self.prettify(devname), None, self.bts, Gtk.PositionType.LEFT, 1
         )
@@ -396,19 +398,24 @@ class Panel(ScreenPanel):
 
         self.devices[device] = {
             "class": class_name,
-            "name_button": name,
+            "dev_type": dev_type,
+            "name": name,
             "temp": temp,
-            "visible": visible,
+            "can_target": can_target,
+            "visible": visible
         }
-
-        devices = self._printer.sort_devices(self.devices)
-        pos = devices.index(device) + 1
-
-        self.labels["devices"].insert_row(pos)
-        self.labels["devices"].attach(name, 0, pos, 1, 1)
-        self.labels["devices"].attach(temp, 1, pos, 1, 1)
-        self.labels["devices"].show_all()
         return True
+
+    def show_devices(self):
+        devices = self._printer.sort_devices(self.devices)
+
+        for device in devices:
+            pos = devices.index(device) + 1
+
+            self.labels['devices'].insert_row(pos)
+            self.labels['devices'].attach(self.devices[device]["name"], 0, pos, 1, 1)
+            self.labels['devices'].attach(self.devices[device]["temp"], 1, pos, 1, 1)
+            self.labels['devices'].show_all()
 
     def name_pressed(self, widget, event, device):
         self.popover_device = device
@@ -537,6 +544,8 @@ class Panel(ScreenPanel):
 
         for d in self._printer.get_temp_devices():
             self.add_device(d)
+
+        self.show_devices()
 
         return self.left_panel
 
