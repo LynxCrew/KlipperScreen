@@ -538,8 +538,6 @@ class Panel(ScreenPanel):
         for d in self._printer.get_temp_devices():
             self.add_device(d)
 
-        self.show_devices()
-
         return self.left_panel
 
     def hide_numpad(self, widget=None):
