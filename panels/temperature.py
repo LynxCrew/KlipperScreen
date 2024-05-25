@@ -604,12 +604,18 @@ class Panel(ScreenPanel):
             return
         for x in self._printer.get_temp_devices():
             if x in data:
-                self.update_temp(
-                    x,
-                    self._printer.get_stat(x, "temperature"),
-                    self._printer.get_stat(x, "target"),
-                    self._printer.get_stat(x, "power"),
-                )
+                if x.startswith("controller_temperature_fan "):
+                    self.update_temp(
+                        x,
+                        self._printer.get_stat(x, "temperature"),
+                    )
+                else:
+                    self.update_temp(
+                        x,
+                        self._printer.get_stat(x, "temperature"),
+                        self._printer.get_stat(x, "target"),
+                        self._printer.get_stat(x, "power"),
+                    )
 
     def show_numpad(self, widget, device=None):
         for d in self.active_heaters:
