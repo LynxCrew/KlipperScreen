@@ -322,6 +322,8 @@ class Printer:
         if self.data is None or stat not in self.data:
             return {}
         if substat is not None:
+            if substat not in self.data[stat]:
+                return {}
             return self.data.get(stat, {}).get(substat, {})
         else:
             return self.data.get(stat, {})
@@ -362,9 +364,6 @@ class Printer:
         return list(self.tempstore)
 
     def device_has_target(self, device):
-        logging.info("ZEANON_TARGET")
-        logging.info(device)
-        logging.info(self.data[device])
         return device in self.data and "target" in self.data[device]
 
     def device_has_power(self, device):
