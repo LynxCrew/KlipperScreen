@@ -66,7 +66,9 @@ class Printer:
                 "controller_temperature_fan",
             ):
                 self.data[x] = {"temperature": 0}
-                if section != "temperature_sensor":
+                if (section != "temperature_sensor"
+                        and section != "controller_temperature_fan"
+                ):
                     self.data[x]["target"] = 0
                 self.tempdevcount += 1
             elif section in (
