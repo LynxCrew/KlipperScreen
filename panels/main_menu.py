@@ -288,12 +288,20 @@ class Panel(MenuPanel):
             return
         for x in self._printer.get_temp_devices():
             if x in data:
-                self.update_temp(
-                    x,
-                    self._printer.get_stat(x, "temperature"),
-                    self._printer.get_stat(x, "target"),
-                    self._printer.get_stat(x, "power"),
-                )
+                if x.startswith("controller_temperature_fan "):
+                    self.update_temp(
+                        x,
+                        self._printer.get_stat(x, "temperature"),
+                        None,
+                        None,
+                    )
+                else:
+                    self.update_temp(
+                        x,
+                        self._printer.get_stat(x, "temperature"),
+                        self._printer.get_stat(x, "target"),
+                        self._printer.get_stat(x, "power"),
+                    )
                 logging.info("ZEANON_TEMP_UPDATE")
                 logging.info(x)
                 logging.info(self._printer.get_stat(x, "target"))

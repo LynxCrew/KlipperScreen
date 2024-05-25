@@ -610,6 +610,8 @@ class Panel(ScreenPanel):
                     self.update_temp(
                         x,
                         self._printer.get_stat(x, "temperature"),
+                        None,
+                        None,
                     )
                 else:
                     self.update_temp(
