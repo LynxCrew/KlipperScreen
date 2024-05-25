@@ -322,8 +322,6 @@ class Printer:
         if self.data is None or stat not in self.data:
             return {}
         if substat is not None:
-            if substat not in self.data[stat]:
-                return {}
             return self.data.get(stat, {}).get(substat, {})
         else:
             return self.data.get(stat, {})
