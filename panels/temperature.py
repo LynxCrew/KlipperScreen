@@ -604,8 +604,6 @@ class Panel(ScreenPanel):
             return
         for x in self._printer.get_temp_devices():
             if x in data:
-                logging.info("ZEANON_TEMP_DEVICE")
-                logging.info(x)
                 if x.startswith("controller_temperature_fan "):
                     self.update_temp(
                         x,
