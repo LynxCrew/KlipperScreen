@@ -71,6 +71,7 @@ class Printer:
                         and section != "controller_temperature_fan"
                 ):
                     self.data[x]["target"] = 0
+                    logging.info("has_target")
                 logging.info("ZEANON_TEMP_DEVICE:")
                 logging.info(x)
                 logging.info(section)
