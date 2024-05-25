@@ -71,10 +71,6 @@ class Printer:
                         and section != "controller_temperature_fan"
                 ):
                     self.data[x]["target"] = 0
-                    logging.info("has_target")
-                logging.info("ZEANON_TEMP_DEVICE:")
-                logging.info(x)
-                logging.info(section)
                 self.tempdevcount += 1
             elif section in (
                 "fan",
@@ -366,6 +362,9 @@ class Printer:
         return list(self.tempstore)
 
     def device_has_target(self, device):
+        logging.info("ZEANON_TARGET")
+        logging.info(device)
+        logging.info(self.data[device])
         return device in self.data and "target" in self.data[device]
 
     def device_has_power(self, device):
