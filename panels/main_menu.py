@@ -294,6 +294,9 @@ class Panel(MenuPanel):
                     self._printer.get_stat(x, "target"),
                     self._printer.get_stat(x, "power"),
                 )
+                logging.info("ZEANON_TEMP_UPDATE")
+                logging.info(x)
+                logging.info(self._printer.get_stat(x, "target"))
 
     def show_numpad(self, widget, device):
 
