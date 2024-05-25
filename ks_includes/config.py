@@ -55,7 +55,7 @@ class KlipperScreenConfig:
             self.config.read(self.default_config_path)
             includes = [i[8:] for i in self.config.sections() if i.startswith("include ")]
             for include in includes:
-                self._include_config("/".join(self.default_config_path.split("/")[:-1]), include)
+                self._include_config("/".join(self.default_config_path.split("/")[:-1]), include, log=False)
             # In case a user altered defaults.conf
             self.validate_config(self.config)
             if self.config_path != self.default_config_path:
@@ -95,7 +95,7 @@ class KlipperScreenConfig:
             self.errors.append(msg)
 
         printers = [i for i in self.config.sections() if i.startswith("printer ")]
-        if len(printers) == 0:
+        if not printers:
             printers.append("Printer Printer")
         self.printers = [
             {printer[8:]: {
@@ -203,11 +203,12 @@ class KlipperScreenConfig:
             for key in config[section]:
                 if key not in bools and key not in strs and key not in numbers:
                     msg = f'Option "{key}" not recognized for section "[{section}]"'
-                    if key == "gcode" and section.startswith("menu"):
+                    if section.startswith("menu"):
                         msg = (
                             msg + "\n\n"
-                            + "The 'gcode' option is not part of KlipperScreen syntax\n"
-                            + "it's meant for text/graphical LCDs (usually blue) controlled by Klipper itself\n"
+                            + "KlipperScreen menu uses different options than Klipper\n"
+                            + "Syntax meant for text/graphical LCDs (usually blue)\n"
+                            + "will not work with KlipperScreen\n"
                             + "please consult KlipperScreen documentation."
                         )
                     # if key == "camera_url":
@@ -359,9 +360,9 @@ class KlipperScreenConfig:
             if hour > 0:
                 name = f'{hour} ' + ngettext("hour", "hours", hour)
             elif minute > 0:
-                name = f'{minute:.0f} ' + ngettext("minute", "minutes", minute)
+                name = f'{minute} ' + ngettext("minute", "minutes", minute)
             else:
-                name = f'{second:.0f} ' + ngettext("second", "seconds", second)
+                name = f'{second} ' + ngettext("second", "seconds", second)
             self.configurable_options[i1]['screen_blanking']['options'].append({
                 "name": name,
                 "value": f"{num}"
@@ -395,7 +396,7 @@ class KlipperScreenConfig:
                         if k.startswith(i):
                             del self.config[k]
 
-    def _include_config(self, directory, filepath):
+    def _include_config(self, directory, filepath, log=True):
         full_path = filepath if filepath[0] == "/" else f"{directory}/{filepath}"
         parse_files = []
 
@@ -403,7 +404,7 @@ class KlipperScreenConfig:
             parent_dir = "/".join(full_path.split("/")[:-1])
             file = full_path.split("/")[-1]
             if not os.path.exists(parent_dir):
-                logging.info(f"Config Error: Directory {parent_dir} does not exist")
+                logging.error(f"Config Error: Directory {parent_dir} does not exist")
                 return
             files = os.listdir(parent_dir)
             regex = f"^{file.replace('*', '.*')}$"
@@ -411,7 +412,7 @@ class KlipperScreenConfig:
 
         else:
             if not os.path.exists(os.path.join(full_path)):
-                logging.info(f"Config Error: {full_path} does not exist")
+                logging.error(f"Config Error: {full_path} does not exist")
                 return
             parse_files.append(full_path)
 
@@ -423,7 +424,8 @@ class KlipperScreenConfig:
             for include in includes:
                 self._include_config("/".join(full_path.split("/")[:-1]), include)
             self.exclude_from_config(config)
-            self.log_config(config)
+            if log:
+                self.log_config(config)
             with open(file, 'r') as f:
                 string = f.read()
                 if self.validate_config(config, string=string):
@@ -466,8 +468,7 @@ class KlipperScreenConfig:
         directories = [printer_data_config, xdg_config, klipperscreendir]
 
         for directory in directories:
-            path = self.check_path_exists(directory, self.configfile_name)
-            if path:
+            if path := self.check_path_exists(directory, self.configfile_name):
                 return path
 
         # fallback
