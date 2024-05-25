@@ -70,6 +70,7 @@ class Printer:
                         section != "temperature_sensor"
                         and section != "controller_temperature_fan"
                 ):
+                    logging.info(x)
                     self.data[x]["target"] = 0
                 self.tempdevcount += 1
             elif section in (
