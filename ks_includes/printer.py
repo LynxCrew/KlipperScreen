@@ -242,8 +242,11 @@ class Printer:
 
     def get_temp_fans(self):
         temp_fans = self.get_config_section_list("temperature_fan ")
-        temp_fans.extend(iter(self.get_config_section_list("controller_temperature_fan ")))
         return temp_fans
+
+    def get_temp_controller_fans(self):
+        temp_controller_fans = self.get_config_section_list("controller_temperature_fan ")
+        return temp_controller_fans
 
     def get_temp_sensors(self):
         temps_sensors = self.get_config_section_list("temperature_sensor ")
@@ -396,7 +399,7 @@ class Printer:
                 for device in self.tools
                 if not device.startswith('extruder_stepper')
             ]
-            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans()
+            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans() + self.get_temp_controller_fans()
         return self.temp_devices
 
     def sort_devices(self, devices):
