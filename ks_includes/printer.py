@@ -395,7 +395,11 @@ class Printer:
                 for device in self.tools
                 if not device.startswith('extruder_stepper')
             ]
-            self.temp_devices = devices + self.get_heaters() + self.get_temp_sensors() + self.get_temp_fans() + self.get_temp_controller_fans()
+            self.temp_devices = (devices
+                                 + self.get_heaters()
+                                 + self.get_temp_sensors()
+                                 + self.get_temp_fans()
+                                 + self.get_temp_controller_fans())
         return self.temp_devices
 
     def sort_devices(self, devices):
