@@ -132,7 +132,7 @@ class Panel(ScreenPanel):
                          halign=Gtk.Align.START, valign=Gtk.Align.CENTER)
         labels.add(name)
         labels.add(info)
-        icon = self._gtk.Image('wifi_weak')
+        icon = self._gtk.Image()
 
         self.network_rows[bssid] = Gtk.Box(spacing=5, hexpand=True, vexpand=False)
         self.network_rows[bssid].get_style_context().add_class("frame-item")
@@ -345,8 +345,10 @@ class Panel(ScreenPanel):
                     self._gtk.Button_busy(self.reload_button, True)
                     self.sdbus_nm.rescan()
                     self.load_networks()
+                self.update_all_networks()
                 self.update_timeout = GLib.timeout_add_seconds(5, self.update_all_networks)
             else:
+                self.update_single_network_info()
                 self.update_timeout = GLib.timeout_add_seconds(5, self.update_single_network_info)
 
     def deactivate(self):
