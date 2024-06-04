@@ -122,6 +122,9 @@ class KlippyGtk:
         pixbuf = self.PixbufFromIcon(image_name, width, height)
         return Gtk.Image.new_from_pixbuf(pixbuf) if pixbuf is not None else Gtk.Image()
 
+    def update_themedir(self, theme):
+        self.themedir = os.path.join(pathlib.Path(__file__).parent.resolve().parent, "styles", theme, "images")
+
     def PixbufFromIcon(self, filename, width=None, height=None):
         width = width if width is not None else self.img_width
         height = height if height is not None else self.img_height
@@ -162,6 +165,7 @@ class KlippyGtk:
         if label is not None:
             b.set_label(label.replace("\n", " "))
         if image_name is not None:
+            b.set_name(image_name)
             if scale is None:
                 scale = self.button_image_scale
             if label is None:
