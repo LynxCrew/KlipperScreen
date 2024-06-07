@@ -761,7 +761,7 @@ class KlipperScreen(Gtk.Window):
     def state_paused(self):
         self.state_printing()
         if self._config.get_main_config().getboolean("auto_open_extrude", fallback=True):
-            self.show_panel(self.extrude_panel)
+            self.show_panel(self.extrude_panel, _("Extrude"))
 
     def state_printing(self):
         for dialog in self.dialogs:
@@ -834,7 +834,7 @@ class KlipperScreen(Gtk.Window):
         elif action == "notify_status_update" and self.printer.state != "shutdown":
             self.printer.process_update(data)
             if 'manual_probe' in data and data['manual_probe']['is_active'] and 'zcalibrate' not in self._cur_panels:
-                self.show_panel(self.z_calibrate_panel)
+                self.show_panel(self.z_calibrate_panell, _('Z Calibrate'))
             if "screws_tilt_adjust" in data and 'bed_level' not in self._cur_panels:
                 self.show_panel("bed_level")
         elif action == "notify_filelist_changed":
