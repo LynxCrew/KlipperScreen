@@ -2,6 +2,8 @@ import logging
 import re
 import gi
 
+from ks_includes.KlippyGtk import find_widget
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Pango
 from ks_includes.KlippyGcodes import KlippyGcodes
@@ -196,7 +198,6 @@ class Panel(ScreenPanel):
                     self._printer.get_stat(x, "temperature"),
                     self._printer.get_stat(x, "target"),
                     self._printer.get_stat(x, "power"),
-                    lines=2,
                 )
         if "current_extruder" in self.labels:
             self.labels["current_extruder"].set_label(self.labels[self.current_extruder].get_label())
@@ -275,3 +276,14 @@ class Panel(ScreenPanel):
         else:
             self.labels[x]['box'].get_style_context().remove_class("filament_sensor_detected")
             self.labels[x]['box'].get_style_context().add_class("filament_sensor_empty")
+
+    def update_temp(self, extruder, temp, target, power):
+        if not temp:
+            return
+        new_label_text = f"{temp or 0:.0f}"
+        if target:
+            new_label_text += f"/{target:.0f}"
+        new_label_text += "°\n"
+        if self._show_heater_power and power:
+            new_label_text += f" {power * 100:.0f}%"
+        find_widget(self.labels[extruder], Gtk.Label).set_text(new_label_text)

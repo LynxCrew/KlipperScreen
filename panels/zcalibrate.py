@@ -219,28 +219,8 @@ class Panel(ScreenPanel):
         self._screen._ws.klippy.gcode_script("BED_MESH_CLEAR")
         if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
             self._screen._ws.klippy.gcode_script("G28")
-        self._screen._ws.klippy.gcode_script("SET_GCODE_OFFSET Z=0")
-        if method == "mesh":
-            self._screen._ws.klippy.gcode_script("BED_MESH_CALIBRATE")
-        else:
-            self._screen._ws.klippy.gcode_script("BED_MESH_CLEAR")
-            if method == "probe":
-                self._move_to_position(*self._get_probe_location())
-                self._screen._ws.klippy.gcode_script("PROBE_CALIBRATE")
-            elif method == "beacon":
-                self._move_to_position(*self._get_probe_location())
-                self._screen._ws.klippy.gcode_script("BEACON_CALIBRATE")
-            elif method == "beacon_auto":
-                self._move_to_position(*self._get_probe_location())
-                self._screen._ws.klippy.gcode_script("BEACON_AUTO_CALIBRATE")
-            elif method == "delta":
-                self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
-            elif method == "delta_manual":
-                self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
-            elif method == "endstop":
-                self._screen._ws.klippy.gcode_script("Z_ENDSTOP_CALIBRATE")
-            elif method == "axis_twist":
-                self._screen._ws.klippy.gcode_script("AXIS_TWIST_COMPENSATION_CALIBRATE")
+        self._move_to_position(*self._get_calibration_location())
+        self._screen._ws.klippy.gcode_script(command)
 
     def _move_to_position(self, x, y):
         if not x or not y:
