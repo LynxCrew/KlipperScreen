@@ -1,11 +1,12 @@
-import logging
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Pango, GLib
+from gi.repository import Gtk
+
+from ks_includes.KlippyGcodes import KlippyGcodes
 from ks_includes.screen_panel import ScreenPanel
-from ks_includes.KlippyGtk import find_widget
-from datetime import datetime
+
+import logging
 
 
 class Panel(ScreenPanel):
@@ -14,13 +15,59 @@ class Panel(ScreenPanel):
     distance = distances[-2]
 
     def __init__(self, screen, title):
-        title = title or _("Z Calibrate")
         super().__init__(screen, title)
         self.running = False
         self.calibrating = False
         self.twist_compensate_running = False
+        self.mesh_min = []
+        self.mesh_max = []
+        self.mesh_radius = None
+        self.mesh_origin = [0, 0]
+        self.zero_ref = []
+        self.z_hop_speed = 15.0
+        self.z_hop = 5.0
+        self.probe = self._printer.get_probe()
+        if self.probe:
+            self.x_offset = float(self.probe['x_offset']) if "x_offset" in self.probe else 0.0
+            self.y_offset = float(self.probe['y_offset']) if "y_offset" in self.probe else 0.0
+            self.z_offset = float(self.probe['z_offset']) if "z_offset" in self.probe else None
+            if "sample_retract_dist" in self.probe:
+                self.z_hop = float(self.probe['sample_retract_dist'])
+            if "speed" in self.probe:
+                self.z_hop_speed = float(self.probe['speed'])
+        else:
+            self.x_offset = 0.0
+            self.y_offset = 0.0
+            self.z_offset = 0.0
+        logging.info(f"Offset X:{self.x_offset} Y:{self.y_offset} Z:{self.z_offset}")
+        self.widgets['zposition'] = Gtk.Label(label="Z: ?")
+
+        pos = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
+        pos.attach(self.widgets['zposition'], 0, 1, 2, 1)
+        if self.z_offset is not None:
+            self.widgets['zoffset'] = Gtk.Label(label="?")
+            pos.attach(Gtk.Label(_("Probe Offset") + ": "), 0, 2, 2, 1)
+            pos.attach(Gtk.Label(_("Saved")), 0, 3, 1, 1)
+            pos.attach(Gtk.Label(_("New")), 1, 3, 1, 1)
+            pos.attach(Gtk.Label(f"{self.z_offset:.3f}"), 0, 4, 1, 1)
+            pos.attach(self.widgets['zoffset'], 1, 4, 1, 1)
+        self.buttons = {
+            'zpos': self._gtk.Button('z-farther', _("Raise Nozzle"), 'color4'),
+            'zneg': self._gtk.Button('z-closer', _("Lower Nozzle"), 'color1'),
+            'start': self._gtk.Button('resume', _("Start"), 'color3'),
+            'complete': self._gtk.Button('complete', _('Accept'), 'color3'),
+            'cancel': self._gtk.Button('cancel', _('Abort'), 'color2'),
+        }
+        self.buttons['zpos'].connect("clicked", self.move, "+")
+        self.buttons['zneg'].connect("clicked", self.move, "-")
+        self.buttons['complete'].connect("clicked", self.accept)
+        self.buttons['cancel'].connect("clicked", self.abort)
+
+        self.popover = Gtk.Popover(position=Gtk.PositionType.BOTTOM)
+
         self.start_handler = None
         self.continue_handler = None
+
         self.bed_mesh_calibrate = (["LEVEL_AUTO", False]
                                    if "LEVEL_AUTO" in self._printer.available_commands
                                    else ["BED_MESH_CALIBRATE", True])
@@ -36,9 +83,7 @@ class Panel(ScreenPanel):
         self.endstop_calibrate = (["CALIBRATE_Z_ENDSTOP", False]
                                   if "CALIBRATE_Z_ENDSTOP" in self._printer.available_commands
                                   else ["Z_ENDSTOP_CALIBRATE", True])
-        self.twist_compensation_calibrate = (["CALIBRATE_AXIS_TWIST_COMPENSATION", False]
-                                             if "CALIBRATE_AXIS_TWIST_COMPENSATION" in self._printer.available_commands
-                                             else ["AXIS_TWIST_COMPENSATION_CALIBRATE", True])
+
         self.wait_for_continue = False
         if "axis_twist_compensation" in self._printer.get_config_section_list():
             twist_compensation = self._printer.get_config_section(
@@ -48,97 +93,10 @@ class Panel(ScreenPanel):
                     and twist_compensation['wait_for_continue'] == 'true'):
                 self.wait_for_continue = True
 
-        self.last_drop_time = datetime.now()
-        self.initialize_mesh_params()
-        self.initialize_probe_params()
-        self.setup_ui()
-
-    def initialize_mesh_params(self):
-        self.mesh_min = []
-        self.mesh_max = []
-        self.mesh_radius = None
-        self.mesh_origin = [0, 0]
-        self.zero_ref = []
-        if "BED_MESH_CALIBRATE" not in self._printer.available_commands:
-            return
-        mesh = self._printer.get_config_section("bed_mesh")
-        if 'mesh_radius' in mesh:
-            self.mesh_radius = float(mesh['mesh_radius'])
-            if 'mesh_origin' in mesh:
-                self.mesh_origin = self._csv_to_array(mesh['mesh_origin'])
-        elif 'mesh_min' in mesh and 'mesh_max' in mesh:
-            self.mesh_min = self._csv_to_array(mesh['mesh_min'])
-            self.mesh_max = self._csv_to_array(mesh['mesh_max'])
-        elif 'min_x' in mesh and 'min_y' in mesh and 'max_x' in mesh and 'max_y' in mesh:
-            self.mesh_min = [float(mesh['min_x']), float(mesh['min_y'])]
-            self.mesh_max = [float(mesh['max_x']), float(mesh['max_y'])]
-        if 'zero_reference_position' in self._printer.get_config_section("bed_mesh"):
-            self.zero_ref = self._csv_to_array(mesh['zero_reference_position'])
-
-    def initialize_probe_params(self):
-        self.z_hop_speed = 15.0
-        self.z_hop = 5.0
-        self.probe = self._printer.get_probe()
-        if self.probe:
-            self.x_offset = float(self.probe.get('x_offset', 0.0))
-            self.y_offset = float(self.probe.get('y_offset', 0.0))
-            self.z_offset = float(self.probe.get('z_offset', 0.0))
-            if "sample_retract_dist" in self.probe:
-                self.z_hop = float(self.probe['sample_retract_dist'])
-            if "speed" in self.probe:
-                self.z_hop_speed = float(self.probe['speed'])
-        else:
-            self.x_offset = 0.0
-            self.y_offset = 0.0
-            self.z_offset = 0.0
-        logging.info(f"Offset X:{self.x_offset} Y:{self.y_offset} Z:{self.z_offset}")
-
-    def setup_ui(self):
-        self.widgets['zposition'] = Gtk.Label(label="Z: ?")
-        self.widgets['zoffset'] = Gtk.Label(label="?")
-
-        pos = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
-        pos.attach(self.widgets['zposition'], 0, 1, 2, 1)
-
-        if self.probe:
-            pos.attach(Gtk.Label(label=_("Probe Offset") + ": "), 0, 2, 2, 1)
-            pos.attach(Gtk.Label(label=_("Saved")), 0, 3, 1, 1)
-            pos.attach(Gtk.Label(label=_("New")), 1, 3, 1, 1)
-            pos.attach(Gtk.Label(label=f"{self.z_offset:.3f}"), 0, 4, 1, 1)
-            pos.attach(self.widgets['zoffset'], 1, 4, 1, 1)
-
-        for label in pos.get_children():
-            if isinstance(label, Gtk.Label):
-                label.set_ellipsize(Pango.EllipsizeMode.END)
-
-        self.buttons = {
-            'zpos': self._gtk.Button('z-farther', _("Raise Nozzle"), 'color4'),
-            'zneg': self._gtk.Button('z-closer', _("Lower Nozzle"), 'color1'),
-            'start': self._gtk.Button('resume', _("Start"), 'color3'),
-            'complete': self._gtk.Button('complete', _('Accept'), 'color3'),
-            'cancel': self._gtk.Button('cancel', _('Abort'), 'color2'),
-        }
-
-        self.buttons['zpos'].connect("clicked", self.move, "+")
-        self.buttons['zneg'].connect("clicked", self.move, "-")
-        self.buttons['complete'].connect("clicked", self.accept)
-        self.buttons['cancel'].connect(
-            "clicked",
-            self._screen._confirm_send_action,
-            ("Are you sure you want to stop the calibration?"),
-            self.abort
-        )
+        self.functions = []
+        self.set_functions()
 
         self.reset_states()
-
-        self.dropdown = Gtk.ComboBox.new_with_model(self.set_commands())
-        self.dropdown.connect("changed", self.on_dropdown_change)
-        self.dropdown.connect("notify::popup-shown", self.on_popup_shown)
-        renderer_text = Gtk.CellRendererText()
-        renderer_text.set_property("ellipsize", Pango.EllipsizeMode.END)
-        self.dropdown.pack_start(renderer_text, True)
-        self.dropdown.add_attribute(renderer_text, "text", 0)
-        self.dropdown.set_active(0)
 
         distgrid = Gtk.Grid()
         for j, i in enumerate(self.distances):
@@ -156,110 +114,150 @@ class Panel(ScreenPanel):
         distances.pack_start(self.widgets['move_dist'], True, True, 0)
         distances.pack_start(distgrid, True, True, 0)
 
-        start_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        start_box.pack_start(self.buttons['start'], True, True, 0)
-        start_box.pack_start(self.dropdown, True, True, 0)
+        self.buttons_not_calibrating()
 
         grid = Gtk.Grid(column_homogeneous=True)
         if self._screen.vertical_mode:
-            zpos_row, zneg_row = (2, 1) if self._config.get_config()["main"].getboolean("invert_z", False) else (1, 2)
-            grid.attach(self.buttons['zpos'], 0, zpos_row, 1, 1)
-            grid.attach(self.buttons['zneg'], 0, zneg_row, 1, 1)
-            grid.attach(start_box, 0, 0, 1, 1)
+            grid.attach(self.buttons['zpos'], 0, 1, 1, 1)
+            grid.attach(self.buttons['zneg'], 0, 2, 1, 1)
+            grid.attach(self.buttons['start'], 0, 0, 1, 1)
             grid.attach(pos, 1, 0, 1, 1)
             grid.attach(self.buttons['complete'], 1, 1, 1, 1)
             grid.attach(self.buttons['cancel'], 1, 2, 1, 1)
             grid.attach(distances, 0, 3, 2, 1)
         else:
-            zpos_row, zneg_row = (1, 0) if self._config.get_config()["main"].getboolean("invert_z", False) else (0, 1)
-            grid.attach(self.buttons['zpos'], 0, zpos_row, 1, 1)
-            grid.attach(self.buttons['zneg'], 0, zneg_row, 1, 1)
-            grid.attach(start_box, 1, 0, 1, 1)
+            grid.attach(self.buttons['zpos'], 0, 0, 1, 1)
+            grid.attach(self.buttons['zneg'], 0, 1, 1, 1)
+            grid.attach(self.buttons['start'], 1, 0, 1, 1)
             grid.attach(pos, 1, 1, 1, 1)
             grid.attach(self.buttons['complete'], 2, 0, 1, 1)
             grid.attach(self.buttons['cancel'], 2, 1, 1, 1)
             grid.attach(distances, 0, 2, 3, 1)
-
         self.content.add(grid)
 
-    def on_dropdown_change(self, dropdown):
-        iterable = dropdown.get_active_iter()
-        if iterable is None:
-            self._screen.show_popup_message("Unknown error with dropdown")
-            return
-        model = dropdown.get_model()
-        logging.debug(f"Selected {model[iterable][0]}")
+    def set_functions(self):
+        pobox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
-    def on_popup_shown(self, combo_box, param):
-        if combo_box.get_property("popup-shown"):
-            logging.debug("Dropdown popup show")
-            self.last_drop_time = datetime.now()
-        else:
-            elapsed = (datetime.now() - self.last_drop_time).total_seconds()
-            if elapsed < 0.2:
-                logging.debug(f"Dropdown closed too fast ({elapsed}s)")
-                GLib.timeout_add(50, self.dropdown_keep_open)
-                return
-            logging.debug("Dropdown popup close")
-
-    def dropdown_keep_open(self):
-        self.dropdown.popup()
-        return False
-
-    def set_commands(self):
-        commands = Gtk.ListStore(str)
-
-        if "PROBE_CALIBRATE" in self._printer.available_commands:
-            commands.append(self.probe_calibrate)
-        if "BEACON_CALIBRATE" in self._printer.available_commands:
-            commands.append(self.beacon_calibrate)
-        if "BEACON_AUTO_CALIBRATE" in self._printer.available_commands:
-            commands.append(self.beacon_auto_calibrate)
         if "Z_ENDSTOP_CALIBRATE" in self._printer.available_commands:
-            commands.append({self.endstop_calibrate})
+            self._add_button("Endstop", "endstop", pobox)
+            self.functions.append("endstop")
+        if "PROBE_CALIBRATE" in self._printer.available_commands:
+            self._add_button("Probe", "probe", pobox)
+            self.functions.append("probe")
+        if "BEACON_CALIBRATE" in self._printer.available_commands:
+            self._add_button("Beacon", "beacon", pobox)
+            self.functions.append("beacon")
+        if "BEACON_AUTO_CALIBRATE" in self._printer.available_commands:
+            self._add_button("Beacon Auto Calibrate", "beacon_auto", pobox)
+            self.functions.append("beacon_auto")
         if "BED_MESH_CALIBRATE" in self._printer.available_commands:
-            commands.append(["BED_MESH_CALIBRATE METHOD=manual", True])
+            mesh = self._printer.get_config_section("bed_mesh")
+            logging.info(f"Mesh: {mesh}")
+            if 'mesh_radius' in mesh:
+                self.mesh_radius = float(mesh['mesh_radius'])
+                if 'mesh_origin' in mesh:
+                    self.mesh_origin = self._csv_to_array(mesh['mesh_origin'])
+                logging.info(f"Mesh Radius: {self.mesh_radius} Origin: {self.mesh_origin}")
+            else:
+                self.mesh_min = self._csv_to_array(mesh['mesh_min'])
+                self.mesh_max = self._csv_to_array(mesh['mesh_max'])
+            if 'zero_reference_position' in self._printer.get_config_section("bed_mesh"):
+                self.zero_ref = self._csv_to_array(mesh['zero_reference_position'])
+            if "probe" not in self.functions and "beacon" not in self.functions:
+                # This is used to do a manual bed mesh if there is no probe
+                self._add_button("Bed mesh", "mesh", pobox)
+                self.functions.append("mesh")
         if "DELTA_CALIBRATE" in self._printer.available_commands:
-            commands.append(["DELTA_CALIBRATE", True])
-            commands.append(["DELTA_CALIBRATE METHOD=manual", True])
+            if "probe" in self.functions:
+                self._add_button("Delta Automatic", "delta", pobox)
+                self.functions.append("delta")
+            # Since probes may not be accturate enough for deltas, always show the manual method
+            self._add_button("Delta Manual", "delta_manual", pobox)
+            self.functions.append("delta_manual")
         if "AXIS_TWIST_COMPENSATION_CALIBRATE" in self._printer.available_commands:
-            commands.append(self.twist_compensation_calibrate)
+            self._add_button("Twist Compensation", "twist_compensation", pobox)
+            self.functions.append("twist_compensation")
 
-        # Custom commands
-        if self.ks_printer_cfg is not None:
-            if custom_config := self.ks_printer_cfg.get("zcalibrate_custom_commands", None):
-                custom_commands = [str(i.strip()) for i in custom_config.split(',')]
-                for command in custom_commands:
-                    commands.append([f"{command}", True])
-
-        logging.info(f"Available commands for calibration: {[row[0] for row in commands]}")
-        return commands
+        self.popover.add(pobox)
+        logging.info(f"Available functions for calibration: {self.functions}")
 
     @staticmethod
     def _csv_to_array(string):
         return [float(i.strip()) for i in string.split(',')]
 
-    def start_calibration(self, widget):
-        iterable = self.dropdown.get_active_iter()
-        if iterable is None:
-            self._screen.show_popup_message("Unknown error with dropdown")
-            return
-        model = self.dropdown.get_model()
-        command = model[iterable][0]
+    def _add_button(self, label, method, pobox):
+        popover_button = self._gtk.Button(label=label)
+        popover_button.connect("clicked", self.start_calibration, method)
+        pobox.pack_start(popover_button, True, True, 5)
+
+    def on_popover_clicked(self, widget):
+        if self.twist_compensate_running:
+            self.continue_(None)
+        else:
+            self.popover.set_relative_to(widget)
+            self.popover.show_all()
+
+    def start_calibration(self, widget, method):
+        self.popover.popdown()
 
         self.disable_start_button()
 
         self.running = True
 
-        self.dropdown.set_sensitive(False)
-
-        self._screen._ws.klippy.gcode_script("SET_GCODE_OFFSET Z=0")
         self._screen._ws.klippy.gcode_script("BED_MESH_CLEAR")
-        if command[1]:
-            if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
+        self._screen._ws.klippy.gcode_script("SET_GCODE_OFFSET Z=0")
+        if method == "mesh":
+            if self.bed_mesh_calibrate[1] and self._printer.get_stat("toolhead", "homed_axes") != "xyz":
                 self._screen._ws.klippy.gcode_script("G28")
-            self._move_to_position(*self._get_calibration_location())
-        self._screen._ws.klippy.gcode_script(command)
+            self._screen._ws.klippy.gcode_script(self.bed_mesh_calibrate[0])
+        else:
+            if method == "probe":
+                if self.probe_calibrate[1] and self._printer.get_stat(
+                        "toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                    self._move_to_position(*self._get_probe_location())
+                self._screen._ws.klippy.gcode_script(self.probe_calibrate[0])
+            elif method == "beacon":
+                if self.beacon_calibrate[1] and self._printer.get_stat(
+                        "toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                    self._move_to_position(*self._get_probe_location())
+                self._screen._ws.klippy.gcode_script(self.beacon_calibrate[0])
+            elif method == "beacon_auto":
+                if self.beacon_auto_calibrate[1] and self._printer.get_stat(
+                        "toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                    self._move_to_position(*self._get_probe_location())
+                self._screen._ws.klippy.gcode_script(self.beacon_auto_calibrate[0])
+            elif method == "delta":
+                if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE")
+            elif method == "delta_manual":
+                if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                self._screen._ws.klippy.gcode_script("DELTA_CALIBRATE METHOD=manual")
+            elif method == "endstop":
+                if self.endstop_calibrate[1] and self._printer.get_stat(
+                        "toolhead", "homed_axes") != "xyz":
+                    self._screen._ws.klippy.gcode_script("G28")
+                self._screen._ws.klippy.gcode_script(self.endstop_calibrate[0])
+            elif method == "twist_compensation":
+                if self.wait_for_continue:
+                    if self.start_handler is not None:
+                        self.buttons['start'].set_label('Continue')
+                        self.buttons['start'].disconnect(self.start_handler)
+                        self.start_handler = None
+                    if self.continue_handler is None:
+                        self.continue_handler = self.buttons['start'].connect(
+                            "clicked",
+                            self
+                            .continue_
+                        )
+                self.twist_compensate_running = True
+                self._screen._ws.klippy.gcode_script(
+                    "AXIS_TWIST_COMPENSATION_CALIBRATE"
+                )
 
     def _move_to_position(self, x, y):
         if not x or not y:
@@ -270,7 +268,7 @@ class Panel(ScreenPanel):
         logging.info(f"Moving to X:{x} Y:{y}")
         self._screen._ws.klippy.gcode_script(f'G90\nG0 X{x} Y{y} F3000')
 
-    def _get_calibration_location(self):
+    def _get_probe_location(self):
         if self.ks_printer_cfg is not None:
             x = self.ks_printer_cfg.getfloat("calibrate_x_position", None)
             y = self.ks_printer_cfg.getfloat("calibrate_y_position", None)
@@ -363,8 +361,7 @@ class Panel(ScreenPanel):
             elif "continue" in data and "unknown command:" not in data:
                 self.buttons_not_calibrating()
             elif ("fail" in data and "use testz" in data):
-                self._screen.show_popup_message(
-                    _("Failed, adjust position first"))
+                self._screen.show_popup_message(_("Failed, adjust position first"))
                 self.reset_states()
                 self.buttons_not_calibrating()
                 logging.info(data)
@@ -406,7 +403,6 @@ class Panel(ScreenPanel):
         self.calibrating = True
         self.buttons['start'].get_style_context().remove_class('color3')
         self.buttons['start'].set_sensitive(False)
-        self.dropdown.set_sensitive(False)
 
         self.buttons['zpos'].set_sensitive(True)
         self.buttons['zpos'].get_style_context().add_class('color4')
@@ -421,7 +417,6 @@ class Panel(ScreenPanel):
         self.calibrating = False
         self.buttons['start'].get_style_context().add_class('color3')
         self.buttons['start'].set_sensitive(True)
-        self.dropdown.set_sensitive(True)
 
         self.buttons['zpos'].set_sensitive(False)
         self.buttons['zpos'].get_style_context().remove_class('color4')
@@ -441,7 +436,10 @@ class Panel(ScreenPanel):
             self.buttons['start'].disconnect(self.continue_handler)
             self.continue_handler = None
         if self.start_handler is None:
-            self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration)
+            if len(self.functions) > 1:
+                self.start_handler = self.buttons['start'].connect("clicked", self.on_popover_clicked)
+            else:
+                self.start_handler = self.buttons['start'].connect("clicked", self.start_calibration, self.functions[0])
 
     def disable_start_button(self):
         self.buttons['start'].set_sensitive(False)
