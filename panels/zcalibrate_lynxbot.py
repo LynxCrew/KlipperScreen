@@ -210,27 +210,27 @@ class Panel(ScreenPanel):
         commands = Gtk.ListStore(str)
 
         if "PROBE_CALIBRATE" in self._printer.available_commands:
-            commands.append({self.probe_calibrate})
+            commands.append(self.probe_calibrate)
         if "BEACON_CALIBRATE" in self._printer.available_commands:
-            commands.append({self.beacon_calibrate})
+            commands.append(self.beacon_calibrate)
         if "BEACON_AUTO_CALIBRATE" in self._printer.available_commands:
-            commands.append({self.beacon_auto_calibrate})
+            commands.append(self.beacon_auto_calibrate)
         if "Z_ENDSTOP_CALIBRATE" in self._printer.available_commands:
             commands.append({self.endstop_calibrate})
         if "BED_MESH_CALIBRATE" in self._printer.available_commands:
-            commands.append({["BED_MESH_CALIBRATE METHOD=manual", True]})
+            commands.append(["BED_MESH_CALIBRATE METHOD=manual", True])
         if "DELTA_CALIBRATE" in self._printer.available_commands:
-            commands.append({["DELTA_CALIBRATE", True]})
-            commands.append({["DELTA_CALIBRATE METHOD=manual", True]})
+            commands.append(["DELTA_CALIBRATE", True])
+            commands.append(["DELTA_CALIBRATE METHOD=manual", True])
         if "AXIS_TWIST_COMPENSATION_CALIBRATE" in self._printer.available_commands:
-            commands.append({self.twist_compensation_calibrate})
+            commands.append(self.twist_compensation_calibrate)
 
         # Custom commands
         if self.ks_printer_cfg is not None:
             if custom_config := self.ks_printer_cfg.get("zcalibrate_custom_commands", None):
                 custom_commands = [str(i.strip()) for i in custom_config.split(',')]
                 for command in custom_commands:
-                    commands.append({f"{command}"})
+                    commands.append([f"{command}", True])
 
         logging.info(f"Available commands for calibration: {[row[0] for row in commands]}")
         return commands
