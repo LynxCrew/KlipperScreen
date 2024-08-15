@@ -67,7 +67,7 @@ class KlipperScreenConfig:
                 for include in includes:
                     self._include_config("/".join(self.config_path.split("/")[:-1]), include)
 
-                self.exclude_from_config(self.defined_config, True)
+                self.exclude_from_config(self.defined_config, False)
 
                 self.log_config(self.defined_config)
                 if self.validate_config(self.defined_config, string=user_def):
