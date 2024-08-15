@@ -52,12 +52,6 @@ class KlipperScreenConfig:
         self.langs = {}
 
         try:
-            self.config.read(self.default_config_path)
-            includes = [i[8:] for i in self.config.sections() if i.startswith("include ")]
-            for include in includes:
-                self._include_config("/".join(self.default_config_path.split("/")[:-1]), include, log=False)
-            # In case a user altered defaults.conf
-            self.validate_config(self.config)
             if self.config_path != self.default_config_path:
                 user_def, saved_def = self.separate_saved_config(self.config_path)
                 self.defined_config = configparser.ConfigParser()
@@ -66,6 +60,23 @@ class KlipperScreenConfig:
                 includes = [i[8:] for i in self.defined_config.sections() if i.startswith("include ")]
                 for include in includes:
                     self._include_config("/".join(self.config_path.split("/")[:-1]), include)
+
+                self.config.read(self.default_config_path)
+
+                if not (self.defined_config and not self.defined_config.getboolean('main', "use_default_menu", fallback=True)):
+                    for include in ("main_menu.conf", "splash_menu.conf", "print_menu.conf"):
+                        self._include_config(
+                            "/".join(self.default_config_path.split("/")[:-1]),
+                            include,
+                            log=False)
+                if not (self.defined_config and not self.defined_config.getboolean(
+                        'main', "use_default_move_menu",
+                        fallback=True)):
+                    self._include_config(
+                        "/".join(self.default_config_path.split("/")[:-1]),
+                        "move_menu.conf",
+                        log=False)
+
 
                 self.exclude_from_config(self.defined_config)
 
@@ -80,6 +91,8 @@ class KlipperScreenConfig:
                         logging.info(f"====== Saved Def ======\n{saved_def}\n=======================")
             # This is the final config
             # self.log_config(self.config)
+            else:
+                self.read_default_config()
         except KeyError as Kerror:
             msg = f"Error reading config: {self.config_path}\n{Kerror}"
             logging.exception(msg)
@@ -115,6 +128,17 @@ class KlipperScreenConfig:
 
         self.create_translations()
         self._create_configurable_options(screen)
+
+    def read_default_config(self):
+        self.config.read(self.default_config_path)
+        includes = [i[8:] for i in self.config.sections() if
+                    i.startswith("include ")]
+        for include in includes:
+            self._include_config(
+                "/".join(self.default_config_path.split("/")[:-1]), include,
+                log=False)
+        # In case a user altered defaults.conf
+        self.validate_config(self.config)
 
     def create_translations(self):
         lang_path = os.path.join(klipperscreendir, "ks_includes", "locales")
@@ -381,6 +405,9 @@ class KlipperScreenConfig:
                 self.config.set(vals['section'], name, vals['value'])
 
     def exclude_from_config(self, config):
+        pass
+
+    def _exclude_from_config(self, config):
         exclude_list = ['preheat']
         if self.defined_config and not self.defined_config.getboolean('main', "use_default_menu", fallback=True):
             logging.info("Using custom menu, removing default menu entries.")
