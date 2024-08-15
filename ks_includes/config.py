@@ -55,7 +55,7 @@ class KlipperScreenConfig:
             self.config.read(self.default_config_path)
             includes = [i[8:] for i in self.config.sections() if i.startswith("include ")]
             for include in includes:
-                self._include_config("/".join(self.default_config_path.split("/")[:-1]), include, log=False)
+                self._include_config("/".join(self.default_config_path.split("/")[:-1]), include, log=False, default_config=True)
             # In case a user altered defaults.conf
             self.validate_config(self.config)
             if self.config_path != self.default_config_path:
@@ -397,7 +397,7 @@ class KlipperScreenConfig:
                             if k.startswith(i):
                                 del self.config[k]
 
-    def _include_config(self, directory, filepath, log=True):
+    def _include_config(self, directory, filepath, log=True, default_config=False):
         full_path = filepath if filepath[0] == "/" else f"{directory}/{filepath}"
         parse_files = []
 
