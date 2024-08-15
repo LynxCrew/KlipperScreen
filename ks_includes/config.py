@@ -56,7 +56,7 @@ class KlipperScreenConfig:
             includes = [i[8:] for i in self.config.sections() if i.startswith("include ")]
             for include in includes:
                 self._include_config("/".join(self.default_config_path.split("/")[:-1]), include, log=False)
-            self.exclude_from_config(self.defined_config, True)
+            self.exclude_from_config(self.config, True)
             # In case a user altered defaults.conf
             self.validate_config(self.config)
             if self.config_path != self.default_config_path:
