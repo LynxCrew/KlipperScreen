@@ -424,7 +424,7 @@ class KlipperScreenConfig:
             includes = [i[8:] for i in config.sections() if i.startswith("include ")]
             for include in includes:
                 self._include_config("/".join(full_path.split("/")[:-1]), include)
-            self.exclude_from_config(config)
+            self.exclude_from_config(config, default_config)
             if log:
                 self.log_config(config)
             with open(file, 'r') as f:
