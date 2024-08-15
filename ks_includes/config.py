@@ -67,7 +67,7 @@ class KlipperScreenConfig:
                 for include in includes:
                     self._include_config("/".join(self.config_path.split("/")[:-1]), include)
 
-                self.exclude_from_config(self.defined_config)
+                self.exclude_from_config(self.defined_config, True)
 
                 self.log_config(self.defined_config)
                 if self.validate_config(self.defined_config, string=user_def):
@@ -380,7 +380,7 @@ class KlipperScreenConfig:
             if name not in list(self.config[vals['section']]):
                 self.config.set(vals['section'], name, vals['value'])
 
-    def exclude_from_config(self, config):
+    def exclude_from_config(self, config, default_config=False):
         exclude_list = ['preheat']
         if self.defined_config and not self.defined_config.getboolean('main', "use_default_menu", fallback=True):
             logging.info("Using custom menu, removing default menu entries.")
@@ -389,12 +389,13 @@ class KlipperScreenConfig:
                                                                       fallback=True):
             logging.info("Using custom move menu, removing default move menu entries.")
             exclude_list.extend(('menu move'))
-        for i in exclude_list:
-            for j in config.sections():
-                if j.startswith(i):
-                    for k in list(self.config.sections()):
-                        if k.startswith(i):
-                            del self.config[k]
+        if default_config:
+            for i in exclude_list:
+                for j in config.sections():
+                    if j.startswith(i):
+                        for k in list(self.config.sections()):
+                            if k.startswith(i):
+                                del self.config[k]
 
     def _include_config(self, directory, filepath, log=True):
         full_path = filepath if filepath[0] == "/" else f"{directory}/{filepath}"
