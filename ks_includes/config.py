@@ -59,9 +59,7 @@ class KlipperScreenConfig:
                 self.defined_config = configparser.ConfigParser()
                 self.defined_config.read_string(user_def)
 
-                includes = self.resolve_includes(self.config_path, [i[8:] for i in self.defined_config.sections() if i.startswith("include ")])
-                for include in includes:
-                    self._include_config("/".join(self.config_path.split("/")[:-1]), include)
+                self.resolve_includes(self.config_path, [i[8:] for i in self.defined_config.sections() if i.startswith("include ")])
 
                 self.config.read(self.default_config_path)
 
@@ -93,13 +91,8 @@ class KlipperScreenConfig:
             # self.log_config(self.config)
             else:
                 self.config.read(self.default_config_path)
-                includes = self.resolve_includes(self.default_config_path, [i[8:] for i in self.config.sections() if
-                            i.startswith("include ")])
-                for include in includes:
-                    self._include_config(
-                        "/".join(self.default_config_path.split("/")[:-1]),
-                        include,
-                        log=False)
+                self.resolve_includes(self.default_config_path, [i[8:] for i in self.config.sections() if
+                            i.startswith("include ")], log=False)
                 # In case a user altered defaults.conf
                 self.validate_config(self.config)
         except KeyError as Kerror:
@@ -138,11 +131,8 @@ class KlipperScreenConfig:
         self.create_translations()
         self._create_configurable_options(screen)
 
-    def resolve_includes(self, source_filename, includes):
-        logging.info("WOOF")
-        logging.info(includes)
+    def resolve_includes(self, source_filename, includes, log=True):
         dirname = os.path.dirname(source_filename)
-        results = []
         for include in includes:
             include_spec = include.strip()
             include_glob = os.path.join(dirname, include_spec)
@@ -150,10 +140,9 @@ class KlipperScreenConfig:
                 include_filenames = glob.glob(include_glob, recursive=True)
             else:
                 include_filenames = glob.glob(include_glob)
-            results.extend(include_filenames)
-            logging.info("MEOW")
-            logging.info(include_filenames)
-        return results
+            for filename in include_filenames:
+                self._include_config("/".join(source_filename.split("/")[:-1]),
+                                     filename, log)
 
     def create_translations(self):
         lang_path = os.path.join(klipperscreendir, "ks_includes", "locales")
@@ -443,9 +432,7 @@ class KlipperScreenConfig:
         for file in parse_files:
             config = configparser.ConfigParser()
             config.read(file)
-            includes = self.resolve_includes(full_path, [i[8:] for i in config.sections() if i.startswith("include ")])
-            for include in includes:
-                self._include_config("/".join(full_path.split("/")[:-1]), include)
+            self.resolve_includes(full_path, [i[8:] for i in config.sections() if i.startswith("include ")])
             if log:
                 self.log_config(config)
             with open(file, 'r') as f:
