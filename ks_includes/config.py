@@ -143,6 +143,11 @@ class KlipperScreenConfig:
                 include_filenames = glob.glob(include_glob, recursive=True)
             else:
                 include_filenames = glob.glob(include_glob)
+            if not include_filenames and not glob.has_magic(include_glob):
+                # Empty set is OK if wildcard but not for direct file reference
+                self.errors.append("Include file '%s' does not exist" % (include_glob,))
+                logging.error('Invalid configuration detected !!!')
+                return False
             for filename in include_filenames:
                 self._include_config("/".join(source_filename.split("/")[:-1]),
                                      filename, log)
