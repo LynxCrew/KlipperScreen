@@ -149,6 +149,7 @@ class KlipperScreenConfig:
             else:
                 include_filenames = glob.glob(include_glob)
             results.extend(include_filenames)
+            logging.info(include_filenames)
         return results
 
     def create_translations(self):
