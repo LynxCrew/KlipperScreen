@@ -139,6 +139,8 @@ class KlipperScreenConfig:
         self._create_configurable_options(screen)
 
     def resolve_includes(self, source_filename, includes):
+        logging.info("WOOF")
+        logging.info(includes)
         dirname = os.path.dirname(source_filename)
         results = []
         for include in includes:
@@ -149,6 +151,7 @@ class KlipperScreenConfig:
             else:
                 include_filenames = glob.glob(include_glob)
             results.extend(include_filenames)
+            logging.info("MEOW")
             logging.info(include_filenames)
         return results
 
