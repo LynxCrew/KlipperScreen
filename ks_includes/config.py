@@ -59,7 +59,9 @@ class KlipperScreenConfig:
                 self.defined_config = configparser.ConfigParser()
                 self.defined_config.read_string(user_def)
 
-                self.resolve_includes(self.config_path, [i[8:] for i in self.defined_config.sections() if i.startswith("include ")])
+                self.resolve_includes(self.config_path,
+                                      [i[8:] for i in self.defined_config.sections() if
+                                       i.startswith("include ")])
 
                 self.config.read(self.default_config_path)
 
@@ -91,8 +93,9 @@ class KlipperScreenConfig:
             # self.log_config(self.config)
             else:
                 self.config.read(self.default_config_path)
-                self.resolve_includes(self.default_config_path, [i[8:] for i in self.config.sections() if
-                            i.startswith("include ")], log=False)
+                self.resolve_includes(self.default_config_path,
+                                      [i[8:] for i in self.config.sections() if
+                                       i.startswith("include ")], log=False)
                 # In case a user altered defaults.conf
                 self.validate_config(self.config)
         except KeyError as Kerror:
@@ -432,7 +435,9 @@ class KlipperScreenConfig:
         for file in parse_files:
             config = configparser.ConfigParser()
             config.read(file)
-            self.resolve_includes(full_path, [i[8:] for i in config.sections() if i.startswith("include ")])
+            self.resolve_includes(full_path,
+                                  [i[8:] for i in config.sections() if
+                                   i.startswith("include ")])
             if log:
                 self.log_config(config)
             with open(file, 'r') as f:
