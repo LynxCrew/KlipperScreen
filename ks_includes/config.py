@@ -93,8 +93,8 @@ class KlipperScreenConfig:
             # self.log_config(self.config)
             else:
                 self.config.read(self.default_config_path)
-                includes = [i[8:] for i in self.config.sections() if
-                            i.startswith("include ")]
+                includes = self.resolve_includes(self.default_config_path, [i[8:] for i in self.config.sections() if
+                            i.startswith("include ")])
                 for include in includes:
                     self._include_config(
                         "/".join(self.default_config_path.split("/")[:-1]),
@@ -443,7 +443,7 @@ class KlipperScreenConfig:
         for file in parse_files:
             config = configparser.ConfigParser()
             config.read(file)
-            includes = [i[8:] for i in config.sections() if i.startswith("include ")]
+            includes = self.resolve_includes(full_path, [i[8:] for i in config.sections() if i.startswith("include ")])
             for include in includes:
                 self._include_config("/".join(full_path.split("/")[:-1]), include)
             if log:
