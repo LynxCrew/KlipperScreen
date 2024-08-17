@@ -65,14 +65,14 @@ class KlipperScreenConfig:
 
                 self.config.read(self.default_config_path)
 
-                if not (self.defined_config and not self.defined_config.getboolean('main', "use_default_menu", fallback=True)):
+                if not (self.config and not self.config.getboolean('main', "use_default_menu", fallback=True)):
                     for include in ("main_menu.conf", "splash_menu.conf", "print_menu.conf"):
                         self._include_config(
                             "/".join(self.default_config_path.split("/")[:-1]),
                             include,
                             log=False)
 
-                if not (self.defined_config and not self.defined_config.getboolean(
+                if not (self.config and not self.config.getboolean(
                         'main', "use_default_move_menu",
                         fallback=True)):
                     self._include_config(
