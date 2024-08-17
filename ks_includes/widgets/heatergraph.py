@@ -60,7 +60,13 @@ class HeaterGraph(Gtk.DrawingArea):
             "rgb": rgb
         }})
 
-    def get_max_num(self, data_points=0):
+    def get_max_num(self):
+        mnum = [0, 315]
+        for device in self.printer.get_temp_devices():
+            mnum.append(self._printer.get_config_section(device)["max_temp"])
+        return max(mnum)
+
+    def _get_max_num(self, data_points=0):
         mnum = [0, 315]
         for device in self.store:
             if self.store[device]['show']:
@@ -90,7 +96,8 @@ class HeaterGraph(Gtk.DrawingArea):
         graph_width = gsize[1][0] - gsize[0][0]
         points_per_pixel = self.printer.get_tempstore_size() / graph_width
         data_points = int(round(graph_width * points_per_pixel, 0))
-        max_num = math.ceil(self.get_max_num(data_points) * 1.1 / 10) * 10
+        # max_num = math.ceil(self.get_max_num(data_points) * 1.1 / 10) * 10
+        max_num = math.ceil(self.get_max_num()) + 10
         if points_per_pixel == 0:
             logging.info(f"Data points: {data_points}")
             return
