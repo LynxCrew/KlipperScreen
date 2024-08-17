@@ -351,11 +351,11 @@ class KlipperScreenConfig:
             {"auto_open_extrude": {"section": "main", "name": _("Auto-open Extrude On Pause"), "type": "binary",
                                    "value": "True", "callback": screen.reload_panels}},
             {"auto_scale_temp_chart": {"section": "main", "name": _("Auto-adjust Temperature-Chart scaling"), "type": "binary",
-                                       "value": "True", "callback": screen.adjust_temp_chart_scaling}},
+                                       "value": "True", "callback": screen.reload_panels}},
+            {"auto_adjust_temp_chart_indices": {"section": "main", "name": _("Auto-adjust Temperature-Chart indices"), "type": "binary",
+                                                "value": "True", "callback": screen.reload_panels}},
             # {"": {"section": "main", "name": _(""), "type": ""}}
         ]
-
-        screen.reload_configurable_options()
 
         # Options that are in panels and shouldn't be added to the main settings
         panel_options = [
