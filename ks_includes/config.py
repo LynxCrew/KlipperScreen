@@ -352,12 +352,12 @@ class KlipperScreenConfig:
                                    "value": "True", "callback": screen.reload_panels}},
             {"auto_scale_temp_chart": {"section": "main", "name": _("Auto-adjust Temperature-Chart scaling"), "type": "binary",
                                        "value": "True", "callback": screen.reload_panels}},
-            {"auto_adjust_temp_chart_indices": {"section": "main", "name": _("Auto-adjust Temperature-Chart indices"), "type": "binary",
-                                                "value": "True", "callback": screen.reload_panels}},
-
-
             # {"": {"section": "main", "name": _(""), "type": ""}}
         ]
+
+        if self.config and self.config.getboolean('main', "auto_scale_temp_chart", fallback=True):
+            self.configurable_options.append({"auto_adjust_temp_chart_indices": {"section": "main", "name": _("Auto-adjust Temperature-Chart indices"), "type": "binary",
+                                                "value": "True", "callback": screen.reload_panels}})
 
         # Options that are in panels and shouldn't be added to the main settings
         panel_options = [
