@@ -546,6 +546,21 @@ class KlipperScreen(Gtk.Window):
     def reload_icon_theme(self):
         self.panels_reinit = list(self.panels)
         self.base_panel.reload_icons()
+        
+    def adjust_temp_chart_scaling(self):
+        self.reload_panels()
+        self.reload_configurable_options()
+
+    def reload_configurable_options(self):
+        auto_adjust_temp_chart_indices = {
+            "auto_adjust_temp_chart_indices": {"section": "main", "name": _("Auto-adjust Temperature-Chart indices"), "type": "binary",
+                                               "value": "True", "callback": self.reload_panels}}
+        if (self._config and not self._config.get_config()["main"].getboolean("auto_scale_temp_chart", True)
+                and auto_adjust_temp_chart_indices not in self._config.configurable_options):
+            self._config.configurable_options.append(auto_adjust_temp_chart_indices)
+        else:
+            if auto_adjust_temp_chart_indices in self._config.configurable_options:
+                self._config.configurable_options.remove(auto_adjust_temp_chart_indices)
 
     def _go_to_submenu(self, widget, name):
         logging.info(f"#### Go to submenu {name}")
