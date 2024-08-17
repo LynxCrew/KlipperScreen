@@ -63,7 +63,7 @@ class HeaterGraph(Gtk.DrawingArea):
     def get_max_num(self):
         mnum = [0, 315]
         for device in self.printer.get_temp_devices():
-            mnum.append(self.printer.get_config_section(device)["max_temp"])
+            mnum.append(float(self.printer.get_config_section(device)["max_temp"]))
         return max(mnum)
 
     def _get_max_num(self, data_points=0):
