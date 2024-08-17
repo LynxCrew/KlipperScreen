@@ -355,7 +355,7 @@ class KlipperScreenConfig:
             # {"": {"section": "main", "name": _(""), "type": ""}}
         ]
 
-        if self.config and self.config.getboolean('main', "auto_scale_temp_chart", fallback=True):
+        if self.config and not self.config.getboolean('main', "auto_scale_temp_chart", fallback=True):
             self.configurable_options.append({"auto_adjust_temp_chart_indices": {"section": "main", "name": _("Auto-adjust Temperature-Chart indices"), "type": "binary",
                                                 "value": "True", "callback": screen.reload_panels}})
 

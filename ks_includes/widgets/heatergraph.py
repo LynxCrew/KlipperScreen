@@ -149,7 +149,8 @@ class HeaterGraph(Gtk.DrawingArea):
             ctx.stroke()
 
     def graph_lines(self, ctx: cairoContext, gsize, max_num):
-        if self.config.get_config()["main"].getboolean("auto_adjust_temp_chart_indices", True):
+        if (self.config.get_config()["main"].getboolean("auto_scale_temp_chart", True)
+                or self.config.get_config()["main"].getboolean("auto_adjust_temp_chart_indices", True)):
             nscale = 10
             while (max_num / nscale) > 5:
                 nscale += 10
