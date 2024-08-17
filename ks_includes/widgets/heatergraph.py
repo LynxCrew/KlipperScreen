@@ -10,7 +10,7 @@ from cairo import Context as cairoContext
 
 
 class HeaterGraph(Gtk.DrawingArea):
-    def __init__(self, screen, printer, font_size, fullscreen=False, store=None):
+    def __init__(self, screen, printer, config, font_size, fullscreen=False, store=None):
         super().__init__()
         self._gtk = screen.gtk
         self.set_hexpand(True)
@@ -18,6 +18,7 @@ class HeaterGraph(Gtk.DrawingArea):
         self.get_style_context().add_class('heatergraph')
         self._screen = screen
         self.printer = printer
+        self.config = config
         self.store = {} if store is None else store
         self.connect('draw', self.draw_graph)
         self.add_events(Gdk.EventMask.TOUCH_MASK)
@@ -35,7 +36,7 @@ class HeaterGraph(Gtk.DrawingArea):
         return self.fullscreen
 
     def show_fullscreen_graph(self):
-        self.fs_graph = HeaterGraph(self._screen, self.printer, self.font_size * 2, fullscreen=True, store=self.store)
+        self.fs_graph = HeaterGraph(self._screen, self.printer, self.config, self.font_size * 2, fullscreen=True, store=self.store)
         self._gtk.Dialog(_("Temperature"), None, self.fs_graph, self.close_fullscreen_graph)
 
     def close_fullscreen_graph(self, dialog, response_id):
@@ -60,21 +61,23 @@ class HeaterGraph(Gtk.DrawingArea):
             "rgb": rgb
         }})
 
-    def get_max_num(self):
-        mnum = [0, 315]
-        for device in self.printer.get_temp_devices():
-            mnum.append(float(self.printer.get_config_section(device)["max_temp"]))
-        return max(mnum)
-
-    def _get_max_num(self, data_points=0):
-        mnum = [0, 315]
-        for device in self.store:
-            if self.store[device]['show']:
-                if temp := self.printer.get_temp_store(device, "temperatures", data_points):
-                    mnum.append(max(temp))
-                if target := self.printer.get_temp_store(device, "targets", data_points):
-                    mnum.append(max(target))
-        return max(mnum)
+    def get_max_num(self, data_points=0):
+        mnum = [0]
+        if self.config.get_config()["main"].getboolean("auto_scale_temp_chart", True):
+            for device in self.store:
+                if self.store[device]['show']:
+                    if temp := self.printer.get_temp_store(device,
+                                                           "temperatures",
+                                                           data_points):
+                        mnum.append(max(temp))
+                    if target := self.printer.get_temp_store(device, "targets",
+                                                             data_points):
+                        mnum.append(max(target))
+            return math.ceil(max(mnum) * 1.1 / 10) * 10
+        else:
+            for device in self.printer.get_temp_devices():
+                mnum.append(float(self.printer.get_config_section(device)["max_temp"]))
+            return max(mnum) + 10
 
     def draw_graph(self, da: Gtk.DrawingArea, ctx: cairoContext):
         if not self.printer.tempstore:
@@ -96,8 +99,7 @@ class HeaterGraph(Gtk.DrawingArea):
         graph_width = gsize[1][0] - gsize[0][0]
         points_per_pixel = self.printer.get_tempstore_size() / graph_width
         data_points = int(round(graph_width * points_per_pixel, 0))
-        # max_num = math.ceil(self.get_max_num(data_points) * 1.1 / 10) * 10
-        max_num = math.ceil(self.get_max_num()) + 10
+        max_num = self.get_max_num(data_points)
         if points_per_pixel == 0:
             logging.info(f"Data points: {data_points}")
             return
@@ -147,7 +149,12 @@ class HeaterGraph(Gtk.DrawingArea):
             ctx.stroke()
 
     def graph_lines(self, ctx: cairoContext, gsize, max_num):
-        nscale = 50
+        if self.config.get_config()["main"].getboolean("auto_adjust_temp_chart_indices", True):
+            nscale = 10
+            while (max_num / nscale) > 5:
+                nscale += 10
+        else:
+            nscale = 50
         max_num = min(max_num, 999)
         r = int(max_num / nscale) + 1
         hscale = (gsize[1][1] - gsize[0][1]) / (r * nscale)

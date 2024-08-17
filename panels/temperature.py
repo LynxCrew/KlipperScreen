@@ -527,7 +527,7 @@ class Panel(ScreenPanel):
         self.labels["devices"].attach(temp, 1, 0, 1, 1)
 
         self.labels["da"] = HeaterGraph(
-            self._screen, self._printer, self._gtk.font_size
+            self._screen, self._printer, self._config, self._gtk.font_size
         )
 
         scroll = self._gtk.ScrolledWindow(steppers=False)
