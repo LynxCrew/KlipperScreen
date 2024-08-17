@@ -147,10 +147,8 @@ class HeaterGraph(Gtk.DrawingArea):
             ctx.stroke()
 
     def graph_lines(self, ctx: cairoContext, gsize, max_num):
-        nscale = 10
+        nscale = 50
         max_num = min(max_num, 999)
-        while (max_num / nscale) > 5:
-            nscale += 10
         r = int(max_num / nscale) + 1
         hscale = (gsize[1][1] - gsize[0][1]) / (r * nscale)
         ctx.set_font_size(self.font_size)
