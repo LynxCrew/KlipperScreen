@@ -103,8 +103,7 @@ class HeaterGraph(Gtk.DrawingArea):
             return
         d_width = 1 / points_per_pixel
 
-        # d_height_scale = self.graph_lines(ctx, gsize, max_num)
-        d_height_scale = 10
+        d_height_scale = self.graph_lines(ctx, gsize, max_num) + 10
         self.graph_time(ctx, gsize, points_per_pixel)
 
         for name in self.store:
