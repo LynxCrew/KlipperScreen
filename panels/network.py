@@ -419,8 +419,6 @@ class Panel(ScreenPanel):
                     self.update_timeout = GLib.timeout_add_seconds(5, self.update_single_network_info)
 
     def deactivate(self):
-        if self.sdbus_nm is None:
-            return
         if self.update_timeout is not None:
             GLib.source_remove(self.update_timeout)
             self.update_timeout = None
