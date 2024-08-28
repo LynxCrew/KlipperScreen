@@ -30,7 +30,9 @@ class Panel(ScreenPanel):
         if self.probe:
             self.x_offset = float(self.probe['x_offset']) if "x_offset" in self.probe else 0.0
             self.y_offset = float(self.probe['y_offset']) if "y_offset" in self.probe else 0.0
-            self.z_offset = float(self.probe['z_offset'])
+            self.z_offset = float(self.probe['z_offset']) if "z_offset" in self.probe else None
+            if self.z_offset is None:
+                self.z_offset = float(self.probe['model_offset']) if "model_offset" in self.probe else 0.0
             if "sample_retract_dist" in self.probe:
                 self.z_hop = float(self.probe['sample_retract_dist'])
             if "speed" in self.probe:
