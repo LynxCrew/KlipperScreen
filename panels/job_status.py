@@ -339,7 +339,7 @@ class Panel(ScreenPanel):
 
         self.buttons = {
             'cancel': self._gtk.Button("stop", _("Cancel"), "color2"),
-            'control': self._gtk.Button("settings", _(self._config.get_menu_name("__print")), "color3"),
+            'control': self._gtk.Button("settings", _("Control"), "color3"),
             'fine_tune': self._gtk.Button("fine-tune", _("Fine Tuning"), "color4"),
             'menu': self._gtk.Button("complete", _("Main Menu"), "color4"),
             'pause': self._gtk.Button("pause", _("Pause"), "color1"),
