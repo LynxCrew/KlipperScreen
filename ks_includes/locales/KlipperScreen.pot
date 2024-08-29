@@ -683,7 +683,7 @@ msgid "Print"
 msgstr ""
 
 msgid "Print Control"
-msgstr ""
+msgstr "Control"
 
 msgid "Printer"
 msgstr ""
