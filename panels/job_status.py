@@ -5,6 +5,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk, Pango
+from jinja2 import Environment
 from math import pi, sqrt, trunc
 from statistics import median
 from time import time
@@ -339,7 +340,7 @@ class Panel(ScreenPanel):
 
         self.buttons = {
             'cancel': self._gtk.Button("stop", _("Cancel"), "color2"),
-            'control': self._gtk.Button("settings", _("Control"), "color3"),
+            'control': self._gtk.Button("settings", _(self.get_control_button_name()), "color3"),
             'fine_tune': self._gtk.Button("fine-tune", _("Fine Tuning"), "color4"),
             'menu': self._gtk.Button("complete", _("Main Menu"), "color4"),
             'pause': self._gtk.Button("pause", _("Pause"), "color1"),
@@ -358,6 +359,12 @@ class Panel(ScreenPanel):
         self.buttons['resume'].connect("clicked", self.resume)
         self.buttons['save_offset_probe'].connect("clicked", self.save_offset, "probe")
         self.buttons['save_offset_endstop'].connect("clicked", self.save_offset, "endstop")
+
+    def get_control_button_name(self):
+        env = Environment(extensions=["jinja2.ext.i18n"], autoescape=True)
+        env.install_gettext_translations(self._config.get_lang())
+        j2_temp = env.from_string(self._config.config[f"menu __print"].get("display_name", "Control"))
+        return j2_temp.render()
 
     def save_offset(self, widget, device):
         sign = "+" if self.zoffset > 0 else "-"
