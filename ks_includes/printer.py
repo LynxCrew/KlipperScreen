@@ -214,6 +214,16 @@ class Printer:
             macros.append(macro)
         return macros
 
+    def get_gcode_macros_extended(self):
+        macros = {}
+        for macro in self.get_config_section_list("gcode_macro "):
+            macro = macro[12:].strip()
+            if self.get_macro(macro) and "rename_existing" in self.get_macro(macro):
+                continue
+            variables = self.get_stat(macro)
+            macros[macro] = variables
+        return macros
+
     def get_heaters(self):
         heaters = self.get_config_section_list("heater_generic ")
         if "heater_bed" in self.config:
@@ -260,7 +270,9 @@ class Printer:
                 "fans": {"count": self.fancount},
                 "output_pins": {"count": self.output_pin_count},
                 "pwm_tools": {"count": self.pwm_tools_count},
-                "gcode_macros": {"count": len(self.get_gcode_macros()), "list": self.get_gcode_macros()},
+                "gcode_macros": {"count": len(self.get_gcode_macros()),
+                                 "list": self.get_gcode_macros(),
+                                 "variables": self.get_gcode_macros_extended()},
                 "leds": {"count": self.ledcount},
                 "home_full": self.home_full,
                 "config_sections": list(self.config.keys()),
