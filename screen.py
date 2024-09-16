@@ -971,9 +971,9 @@ class KlipperScreen(Gtk.Window):
         self.printer_initializing(msg, go_to_splash)
         self.initializing = False
         if self._ws.connected and not self._ws.closing:
-            GLib.timeout_add_seconds(4, self.init_klipper)
+            GLib.timeout_add_seconds(10, self.init_klipper)
         else:
-            GLib.timeout_add_seconds(4, self.connect_to_moonraker)
+            GLib.timeout_add_seconds(10, self.connect_to_moonraker)
 
     def connect_to_moonraker(self):
         if self.initializing:
