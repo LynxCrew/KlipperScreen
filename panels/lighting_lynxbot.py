@@ -29,6 +29,8 @@ class Panel(ScreenPanel):
 
     def load_pins(self):
         output_pins = self._printer.get_output_pins()
+        output_pins.extend(self._printer.get_pwm_tools())
+        output_pins.extend(self._printer.get_pwm_cycle_times())
         for pin in output_pins:
             # Support for hiding devices by name
             name = pin.split()[1]
@@ -37,7 +39,6 @@ class Panel(ScreenPanel):
             self.add_pin(pin)
 
     def add_pin(self, pin):
-
         logging.info(f"Adding pin: {pin}")
         name = Gtk.Label()
         name.set_markup(f'\n<big><b>{" ".join(pin.split(" ")[1:])}</b></big>\n')

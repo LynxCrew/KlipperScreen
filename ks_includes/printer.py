@@ -203,6 +203,9 @@ class Printer:
     def get_output_pins(self):
         return self.get_config_section_list("output_pin ")
 
+    def get_pwm_cycle_times(self):
+        return self.get_config_section_list("pwm_cycle_time ")
+
     def get_gcode_macros(self):
         macros = []
         for macro in self.get_config_section_list("gcode_macro "):
