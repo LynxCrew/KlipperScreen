@@ -32,7 +32,6 @@ class Panel(ScreenPanel):
         output_pins.extend(self._printer.get_pwm_tools())
         output_pins.extend(self._printer.get_pwm_cycle_times())
         for pin in output_pins:
-            # Support for hiding devices by name
             name = pin.split()[1]
             if name not in self.screen.lighting_output_pins:
                 continue
