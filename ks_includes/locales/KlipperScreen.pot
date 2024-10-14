@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,9 +67,6 @@ msgid "Are you sure do you want to exclude the object?"
 msgstr ""
 
 msgid "Are you sure you want to run Emergency Stop?"
-msgstr ""
-
-msgid "Are you sure you want to stop the calibration?"
 msgstr ""
 
 msgid "Are you sure you wish to cancel this print?"
@@ -193,6 +190,9 @@ msgstr ""
 msgid "Couldn't add network"
 msgstr ""
 
+msgid "Current"
+msgstr ""
+
 msgid "Current percentage and graph line"
 msgstr ""
 
@@ -200,6 +200,9 @@ msgid "DPMS has failed to load and has been disabled"
 msgstr ""
 
 msgid "Date"
+msgstr ""
+
+msgid "Delete"
 msgstr ""
 
 msgid "Delete Directory?"
@@ -242,9 +245,6 @@ msgstr ""
 msgid "Do you want to forget or disconnect %s?"
 msgstr ""
 
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr ""
-
 #, python-format
 msgid "Do you want to recover %s?"
 msgstr ""
@@ -280,6 +280,9 @@ msgid "Estimated Time"
 msgstr ""
 
 msgid "Estimated Time Method"
+msgstr ""
+
+msgid "Example"
 msgstr ""
 
 msgid "Exclude Object"
@@ -357,6 +360,9 @@ msgstr ""
 msgid "Font Size"
 msgstr ""
 
+msgid "For mouse control or to verify touchscreen accuracy"
+msgstr ""
+
 msgid "Forget"
 msgstr ""
 
@@ -379,9 +385,6 @@ msgid "Hide"
 msgstr ""
 
 msgid "Hide sensors in Temp."
-msgstr ""
-
-msgid "Hide temp."
 msgstr ""
 
 msgid "Home"
@@ -423,9 +426,6 @@ msgstr ""
 msgid "Input Shaper"
 msgstr ""
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -436,6 +436,9 @@ msgid "Invalid"
 msgstr ""
 
 msgid "Invalid password"
+msgstr ""
+
+msgid "Invalid temperature"
 msgstr ""
 
 msgid "Inversely affects the icon size"
@@ -454,6 +457,9 @@ msgid "It may take more than 5 minutes depending on the heater power."
 msgstr ""
 
 msgid "It's possible that the configuration is not correct"
+msgstr ""
+
+msgid "Job Status"
 msgstr ""
 
 msgid "Klipper Restart"
@@ -482,6 +488,9 @@ msgid "Language"
 msgstr ""
 
 msgid "Large"
+msgstr ""
+
+msgid "Last Duration"
 msgstr ""
 
 msgid "Last Used"
@@ -559,9 +568,6 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-msgid "Mesh calibrate"
-msgstr ""
-
 msgid "Minimum Cruise Ratio"
 msgstr ""
 
@@ -607,6 +613,9 @@ msgstr ""
 msgid "No elegible macros:"
 msgstr ""
 
+msgid "No info available"
+msgstr ""
+
 msgid "No mesh has been loaded"
 msgstr ""
 
@@ -628,14 +637,14 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+msgid "Nozzle diameter"
+msgstr ""
+
 msgid "Only for the move panel"
 msgstr ""
 
 #, python-format
 msgid "Outdated by %d"
-msgstr ""
-
-msgid "PSK for"
 msgstr ""
 
 msgid "Package will be updated"
@@ -644,6 +653,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "Part Fan"
+msgstr ""
+
+msgid "Password"
 msgstr ""
 
 msgid "Password saved"
@@ -673,10 +685,13 @@ msgstr ""
 msgid "Power On Printer"
 msgstr ""
 
+msgid "Pressure Advance"
+msgstr ""
+
 msgid "Pressure Advance:"
 msgstr ""
 
-msgid "Pressure Advance"
+msgid "Pressure advance"
 msgstr ""
 
 msgid "Print"
@@ -809,6 +824,9 @@ msgstr ""
 msgid "Show Scrollbars Buttons"
 msgstr ""
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr ""
 
@@ -825,6 +843,9 @@ msgid "Slicer:"
 msgstr ""
 
 msgid "Small"
+msgstr ""
+
+msgid "Smooth time"
 msgstr ""
 
 msgid "Speed (mm/s)"
@@ -875,6 +896,9 @@ msgstr ""
 msgid "Temperature"
 msgstr ""
 
+msgid "Temperature too low to extrude"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
@@ -917,13 +941,16 @@ msgstr ""
 msgid "Updating"
 msgstr ""
 
-msgid "Uploaded"
-msgstr ""
-
 msgid "Useful for un-responsive touchscreens"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
+msgstr ""
+
+msgid "Working"
 msgstr ""
 
 msgid "XY Move Speed (mm/s)"
@@ -957,6 +984,9 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "g"
+msgstr ""
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
@@ -983,6 +1013,9 @@ msgid "mm/s²"
 msgstr ""
 
 msgid "mm³/s"
+msgstr ""
+
+msgid "s"
 msgstr ""
 
 msgid "second"

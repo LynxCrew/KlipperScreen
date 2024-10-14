@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
 "PO-Revision-Date: 2024-05-07 02:10+0000\n"
 "Last-Translator: Rui Menezes <ruizivo.menezes@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -69,9 +69,6 @@ msgstr "Tem certeza de que quer excluir o objeto?"
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Tem certeza de que quer executar uma Parada de Emergência?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr "Tem certeza de que deseja interromper a calibração?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Tem certeza de que deseja cancelar essa impressão?"
@@ -194,6 +191,9 @@ msgstr "Resfriando"
 msgid "Couldn't add network"
 msgstr ""
 
+msgid "Current"
+msgstr ""
+
 msgid "Current percentage and graph line"
 msgstr "Porcentagem atual e linha do gráfico"
 
@@ -202,6 +202,9 @@ msgstr "O carregamento do DPMS falhou e esse foi desabilitado"
 
 msgid "Date"
 msgstr "Data"
+
+msgid "Delete"
+msgstr ""
 
 msgid "Delete Directory?"
 msgstr "Deletar Diretório?"
@@ -223,9 +226,6 @@ msgstr "Distância (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
 msgstr ""
 
 #, python-format
@@ -264,6 +264,9 @@ msgstr ""
 
 msgid "Estimated Time Method"
 msgstr "Método de Tempo Estimado"
+
+msgid "Example"
+msgstr ""
 
 msgid "Exclude Object"
 msgstr "Excluir Objeto"
@@ -340,6 +343,9 @@ msgstr "Taxa de fluxo:"
 msgid "Font Size"
 msgstr "Tamanho da Fonte"
 
+msgid "For mouse control or to verify touchscreen accuracy"
+msgstr ""
+
 msgid "Forget"
 msgstr ""
 
@@ -363,9 +369,6 @@ msgstr "Esconder"
 
 msgid "Hide sensors in Temp."
 msgstr "Esconder sensores em Temp."
-
-msgid "Hide temp."
-msgstr "Esconder temp."
 
 msgid "Home"
 msgstr "Posicionar na Origem"
@@ -406,9 +409,6 @@ msgstr "Iniciar calibração PID para:"
 msgid "Input Shaper"
 msgstr "Modelagem de Entrada (Input Shaper)"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -420,6 +420,11 @@ msgstr "Inválido"
 
 msgid "Invalid password"
 msgstr "Senha Inválida"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Temperatura"
 
 msgid "Inversely affects the icon size"
 msgstr "Afeta inversamente o tamanho do ícone"
@@ -438,6 +443,9 @@ msgstr "Pode demorar mais de 5 minutos dependendo da potência do aquecedor."
 
 msgid "It's possible that the configuration is not correct"
 msgstr "É possível que a configuração não esteja correta"
+
+msgid "Job Status"
+msgstr ""
 
 msgid "Klipper Restart"
 msgstr "Reiniciar Klipper"
@@ -468,6 +476,9 @@ msgstr "Língua"
 
 msgid "Large"
 msgstr "Grande"
+
+msgid "Last Duration"
+msgstr ""
 
 msgid "Last Used"
 msgstr "Usado pela Última Vez"
@@ -544,9 +555,6 @@ msgstr ""
 msgid "Menu"
 msgstr "Menu"
 
-msgid "Mesh calibrate"
-msgstr "Calibração de Malha"
-
 msgid "Minimum Cruise Ratio"
 msgstr "Taxa Mínima de Deslocamento"
 
@@ -592,6 +600,9 @@ msgstr "Novo"
 msgid "No elegible macros:"
 msgstr "Macros não aceitas:"
 
+msgid "No info available"
+msgstr ""
+
 msgid "No mesh has been loaded"
 msgstr "Nenhuma malha foi carregada"
 
@@ -613,15 +624,15 @@ msgstr "Registro de notificação vazio"
 msgid "Notifications"
 msgstr "Notificações"
 
+msgid "Nozzle diameter"
+msgstr ""
+
 msgid "Only for the move panel"
 msgstr ""
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Desatualizado por %d"
-
-msgid "PSK for"
-msgstr "PSK para"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -630,6 +641,11 @@ msgstr[1] "Os pacotes serão atualizados"
 
 msgid "Part Fan"
 msgstr "Ventilador da Peça"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Senha salva"
 
 msgid "Password saved"
 msgstr "Senha salva"
@@ -658,11 +674,14 @@ msgstr "Ligar"
 msgid "Power On Printer"
 msgstr "Ligar Impressora"
 
+msgid "Pressure Advance"
+msgstr "Pressão de Avanço"
+
 msgid "Pressure Advance:"
 msgstr "Pressão de Avanço (Pressure Advance):"
 
-msgid "Pressure Advance"
-msgstr "Pressão de Avanço"
+msgid "Pressure advance"
+msgstr ""
 
 msgid "Print"
 msgstr "Imprimir"
@@ -794,6 +813,9 @@ msgstr "Mostrar Potência do Aquecedor"
 msgid "Show Scrollbars Buttons"
 msgstr "Mostrar Botões das Barras de Rolagem"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr "Mostrar apenas dispositivos que podem ser configurados"
 
@@ -811,6 +833,9 @@ msgstr "Fatiador:"
 
 msgid "Small"
 msgstr "Pequeno"
+
+msgid "Smooth time"
+msgstr ""
 
 msgid "Speed (mm/s)"
 msgstr "Velocidade (mm/s)"
@@ -860,6 +885,9 @@ msgstr "Temp (°C)"
 msgid "Temperature"
 msgstr "Temperatura"
 
+msgid "Temperature too low to extrude"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
@@ -902,14 +930,17 @@ msgstr "Atualizar"
 msgid "Updating"
 msgstr "Atualizando"
 
-msgid "Uploaded"
-msgstr "Carregado"
-
 msgid "Useful for un-responsive touchscreens"
 msgstr "Útil para telas sensíveis ao toque não responsivas"
 
+msgid "User"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC não é suportado pelo backend de transmissão"
+
+msgid "Working"
+msgstr ""
 
 msgid "XY Move Speed (mm/s)"
 msgstr "Velocidade de Movimentação XY (mm/s)"
@@ -942,6 +973,9 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "g"
+msgstr ""
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hora"
@@ -970,10 +1004,28 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr ""
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Hide temp."
+#~ msgstr "Esconder temp."
+
+#~ msgid "PSK for"
+#~ msgstr "PSK para"
+
+#~ msgid "Are you sure you want to stop the calibration?"
+#~ msgstr "Tem certeza de que deseja interromper a calibração?"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Calibração de Malha"
+
+#~ msgid "Uploaded"
+#~ msgstr "Carregado"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Suporte oficial finalizado em Junho de 2023"

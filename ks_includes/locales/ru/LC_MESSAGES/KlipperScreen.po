@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-04-13 16:48+0000\n"
-"Last-Translator: Dr_Perry_Coke <dr.perrycoke@gmail.com>\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-07-05 19:09+0000\n"
+"Last-Translator: Артем <gaz70rus@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/ru/>\n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 "X-Poedit-Flags-xgettext: --add-comments\n"
 
 #, python-format
@@ -25,10 +25,10 @@ msgid "%s will be updated to version"
 msgstr "%s будет обновлен до версии"
 
 msgid "(default)"
-msgstr "(дефолт)"
+msgstr "(стандартный)"
 
 msgid "24 Hour Time"
-msgstr "24-часовой формат"
+msgstr "24-x часовой формат"
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "Выполните перезагрузку прошивки, чтобы попытаться исправить проблему."
@@ -56,11 +56,11 @@ msgstr "Применить"
 
 #, python-format
 msgid "Apply %s%.3f offset to Endstop?"
-msgstr "Применить смещение %s%.3f к Endstop?"
+msgstr "Применить смещение %s%.3f к концевикам?"
 
 #, python-format
 msgid "Apply %s%.3f offset to Probe?"
-msgstr "Применить смещение %s%.3f к зонду?"
+msgstr "Применить смещение %s%.3f к пробе?"
 
 msgid "Archived"
 msgstr "Архивные"
@@ -69,10 +69,7 @@ msgid "Are you sure do you want to exclude the object?"
 msgstr "Вы уверены, что хотите исключить объект?"
 
 msgid "Are you sure you want to run Emergency Stop?"
-msgstr "Вы уверены, что хотите запустить аварийную остановку?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr ""
+msgstr "Вы уверены, что хотите совершить аварийную остановку?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Вы хотите отменить эту печать?"
@@ -87,7 +84,7 @@ msgid "Are you sure you wish to shutdown the system?"
 msgstr "Вы хотите выключить принтер?"
 
 msgid "Asks for confirmation before stopping"
-msgstr ""
+msgstr "Запросить подтверждение перед остановкой"
 
 msgid "Auto"
 msgstr "Авто"
@@ -138,22 +135,24 @@ msgid "Cancelled"
 msgstr "Отменено"
 
 msgid "Cancelling"
-msgstr "Отменить"
+msgstr "Отмена"
 
 msgid "Cannot connect to Moonraker"
 msgstr "Не удается подключиться к Moonraker"
 
+#, fuzzy
 msgid "Changes how the interface looks"
-msgstr ""
+msgstr "Изменение внешнего вида интерфейса"
 
+#, fuzzy
 msgid "Changes how the time remaining is calculated"
-msgstr ""
+msgstr "Редактировать расчет оставшегося времени"
 
 msgid "Channel"
 msgstr "Канал"
 
 msgid "Check ADXL Wiring"
-msgstr "Проверьте проводку ADXL"
+msgstr "Проверьте подключение ADXL"
 
 msgid "Checking for updates, please wait..."
 msgstr "Проверка обновлений, подождите..."
@@ -177,14 +176,14 @@ msgid "Connected"
 msgstr "Подключено"
 
 msgid "Connecting"
-msgstr ""
+msgstr "Подключение"
 
 #, python-format
 msgid "Connecting to %s"
 msgstr "Подключён к %s"
 
 msgid "Connection failed"
-msgstr ""
+msgstr "Подключение отклонено"
 
 msgid "Console"
 msgstr "Консоль"
@@ -193,16 +192,23 @@ msgid "Cooldown"
 msgstr "Остудить"
 
 msgid "Couldn't add network"
-msgstr ""
+msgstr "Не удалось добавить сеть"
 
+msgid "Current"
+msgstr "Текущий"
+
+#, fuzzy
 msgid "Current percentage and graph line"
-msgstr ""
+msgstr "Текущий процент и линия графика"
 
 msgid "DPMS has failed to load and has been disabled"
 msgstr "DPMS не загрузилась и была отключена"
 
 msgid "Date"
 msgstr "Дата"
+
+msgid "Delete"
+msgstr "Удалить"
 
 msgid "Delete Directory?"
 msgstr "Удалить каталог?"
@@ -211,10 +217,10 @@ msgid "Delete File?"
 msgstr "Удалить Файл?"
 
 msgid "Disable Motors"
-msgstr "Откл. моторы"
+msgstr "Отключить моторы"
 
 msgid "Disable for 12hs with am / pm"
-msgstr ""
+msgstr "Отключить 12 часовой формат"
 
 msgid "Disconnect"
 msgstr "Отключить"
@@ -224,10 +230,7 @@ msgstr "Расстояние (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr ""
+msgstr "Вы хотите забыть или отключиться %s?"
 
 #, python-format
 msgid "Do you want to recover %s?"
@@ -237,7 +240,7 @@ msgid "Elapsed:"
 msgstr "Прошло:"
 
 msgid "Emergency Stop"
-msgstr ""
+msgstr "Аварийная остановка"
 
 msgid "Enable screen power management"
 msgstr ""
@@ -245,8 +248,9 @@ msgstr ""
 msgid "Error"
 msgstr "Ошибка"
 
+#, fuzzy
 msgid "Error clearing active spool"
-msgstr ""
+msgstr "Ошибка при очистке активной катушки"
 
 msgid "Error getting active spool"
 msgstr ""
@@ -261,10 +265,13 @@ msgid "Error: Couldn't get a position to probe"
 msgstr ""
 
 msgid "Estimated Time"
-msgstr ""
+msgstr "Расчетное время"
 
 msgid "Estimated Time Method"
 msgstr "Расчётное время"
+
+msgid "Example"
+msgstr "Пример"
 
 msgid "Exclude Object"
 msgstr "Исключить Объект"
@@ -279,10 +286,10 @@ msgid "Extruders"
 msgstr ""
 
 msgid "Extrusion +"
-msgstr "Экструзия +"
+msgstr "Поток +"
 
 msgid "Extrusion -"
-msgstr "Экструзия -"
+msgstr "Поток -"
 
 msgid "Failed to delete connection"
 msgstr ""
@@ -297,7 +304,7 @@ msgid "Fan"
 msgstr "Обдув"
 
 msgid "Filament"
-msgstr ""
+msgstr "Филамент"
 
 msgid "Filament Used"
 msgstr "Использование филамента"
@@ -341,17 +348,20 @@ msgstr "Расход:"
 msgid "Font Size"
 msgstr "Размер шрифта"
 
-msgid "Forget"
+msgid "For mouse control or to verify touchscreen accuracy"
 msgstr ""
+
+msgid "Forget"
+msgstr "Забыть"
 
 msgid "Full Update"
 msgstr "Обновить всё"
 
 msgid "Gcodes"
-msgstr ""
+msgstr "G-коды"
 
 msgid "Getting IP address"
-msgstr ""
+msgstr "Получение IP адреса"
 
 msgid "Go Back"
 msgstr "Назад"
@@ -364,9 +374,6 @@ msgstr "Скрывать"
 
 msgid "Hide sensors in Temp."
 msgstr "Скрыть датчики в Temp."
-
-msgid "Hide temp."
-msgstr "Скрыть температуру."
 
 msgid "Home"
 msgstr "Парковка"
@@ -399,15 +406,12 @@ msgid "Icon Theme"
 msgstr "Темы"
 
 msgid "Initializing printer..."
-msgstr "Принтер стартует..."
+msgstr "Принтер запускается..."
 
 msgid "Initiate a PID calibration for:"
 msgstr "Запустить калибровку ПИД-регулятора для:"
 
 msgid "Input Shaper"
-msgstr "Входной шейпер"
-
-msgid "Insufficient priviledges detected"
 msgstr ""
 
 msgid "Insufficient privileges"
@@ -421,6 +425,11 @@ msgstr "Неверный"
 
 msgid "Invalid password"
 msgstr "Неверный пароль"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Tемпература"
 
 msgid "Inversely affects the icon size"
 msgstr ""
@@ -438,6 +447,9 @@ msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "В зависимости от мощности нагревателя это может занять более 5 минут."
 
 msgid "It's possible that the configuration is not correct"
+msgstr ""
+
+msgid "Job Status"
 msgstr ""
 
 msgid "Klipper Restart"
@@ -469,6 +481,9 @@ msgstr "Язык"
 msgid "Large"
 msgstr "Большой"
 
+msgid "Last Duration"
+msgstr ""
+
 msgid "Last Used"
 msgstr "Последнее использование"
 
@@ -485,7 +500,7 @@ msgid "Left:"
 msgstr "Осталось:"
 
 msgid "Limits"
-msgstr "Лимиты"
+msgstr "Ограничения"
 
 msgid "Load"
 msgstr "Загрузить"
@@ -497,7 +512,7 @@ msgid "Lost Connection to Moonraker"
 msgstr ""
 
 msgid "Lower Nozzle"
-msgstr "Опустить сопло"
+msgstr "Поднять стол"
 
 msgid "Macro shortcut on sidebar"
 msgstr "Показать макросы в панели"
@@ -518,7 +533,7 @@ msgid "Max Acceleration"
 msgstr "Максимальное ускорение"
 
 msgid "Max Velocity"
-msgstr "Скорость"
+msgstr "Максимальная скорость"
 
 msgid "Max:"
 msgstr ""
@@ -539,13 +554,10 @@ msgid "Medium"
 msgstr "Средний"
 
 msgid "Memory"
-msgstr ""
+msgstr "Память"
 
 msgid "Menu"
 msgstr "Меню"
-
-msgid "Mesh calibrate"
-msgstr "Калибровка сетки"
 
 msgid "Minimum Cruise Ratio"
 msgstr ""
@@ -575,13 +587,13 @@ msgid "Network"
 msgstr "Сеть"
 
 msgid "Network connected"
-msgstr ""
+msgstr "Сеть подключена"
 
 msgid "Network disconnected"
-msgstr ""
+msgstr "Сеть отключена"
 
 msgid "Network not found"
-msgstr ""
+msgstr "Сеть не найдена"
 
 msgid "Never"
 msgstr "Никогда"
@@ -592,14 +604,17 @@ msgstr "Новый"
 msgid "No elegible macros:"
 msgstr "Нет понятных макросов:"
 
-msgid "No mesh has been loaded"
+msgid "No info available"
 msgstr ""
+
+msgid "No mesh has been loaded"
+msgstr "Сетка стола не загружена"
 
 msgid "No wireless interface has been found"
-msgstr ""
+msgstr "Сетевые интерфейсы не обнаружены"
 
 msgid "Not all screens support this"
-msgstr ""
+msgstr "Не все экраны поддерживают это"
 
 msgid "Not working or not configured"
 msgstr "Не работает или не настроено"
@@ -613,15 +628,15 @@ msgstr "Журнал уведомлений пуст"
 msgid "Notifications"
 msgstr "Уведомления"
 
+msgid "Nozzle diameter"
+msgstr "Диаметр сопла"
+
 msgid "Only for the move panel"
 msgstr ""
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Устарело на %d"
-
-msgid "PSK for"
-msgstr "PSK для"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -631,6 +646,11 @@ msgstr[2] "Пакеты будут обновляться"
 
 msgid "Part Fan"
 msgstr "Вентилятор обдува детали"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Пароль сохранен"
 
 msgid "Password saved"
 msgstr "Пароль сохранен"
@@ -651,7 +671,7 @@ msgid "Please recompile and flash the micro-controller."
 msgstr "Прошейте заново микроконтроллер."
 
 msgid "Please wait"
-msgstr ""
+msgstr "Пожалуйста подождите"
 
 msgid "Power"
 msgstr "Питание"
@@ -659,11 +679,14 @@ msgstr "Питание"
 msgid "Power On Printer"
 msgstr "Включить принтер"
 
-msgid "Pressure Advance:"
-msgstr "Повышение давления:"
-
 msgid "Pressure Advance"
-msgstr "Повышение давления"
+msgstr ""
+
+msgid "Pressure Advance:"
+msgstr ""
+
+msgid "Pressure advance"
+msgstr ""
 
 msgid "Print"
 msgstr "Печать"
@@ -684,7 +707,7 @@ msgid "Printing"
 msgstr "Печатается"
 
 msgid "Probe Offset"
-msgstr "Смещение зонда"
+msgstr "Смещение пробы"
 
 msgid "Profile Name:"
 msgstr "Имя профиля:"
@@ -696,7 +719,7 @@ msgid "Quad Gantry Level"
 msgstr "Уровень Quad Gantry"
 
 msgid "Raise Nozzle"
-msgstr "Поднять сопло"
+msgstr "Опустить стол"
 
 msgid "Recover"
 msgstr "Восстановить"
@@ -763,7 +786,7 @@ msgstr "Сохранено"
 
 #, python-format
 msgid "Saved offset: %s"
-msgstr "Сохраненный офсет: %s"
+msgstr "Сохраненный оффсет: %s"
 
 msgid "Screen DPMS"
 msgstr "Экран DPMS"
@@ -795,6 +818,9 @@ msgstr "Показать мощность нагрева"
 msgid "Show Scrollbars Buttons"
 msgstr "Показать полосу прокрутки"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr ""
 
@@ -812,6 +838,9 @@ msgstr "Слайсер:"
 
 msgid "Small"
 msgstr "Маленький"
+
+msgid "Smooth time"
+msgstr ""
 
 msgid "Speed (mm/s)"
 msgstr "Скорость (мм/с)"
@@ -861,6 +890,9 @@ msgstr "Температура (°С)"
 msgid "Temperature"
 msgstr "Tемпература"
 
+msgid "Temperature too low to extrude"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
@@ -903,15 +935,18 @@ msgstr "Обновить"
 msgid "Updating"
 msgstr "Обновление"
 
-msgid "Uploaded"
-msgstr "Загружено"
-
 msgid "Useful for un-responsive touchscreens"
+msgstr ""
+
+msgid "User"
 msgstr ""
 
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr ""
 "Отсутствует поддержка WebRTC у бэкенда, который пытается передать поток"
+
+msgid "Working"
+msgstr ""
 
 msgid "XY Move Speed (mm/s)"
 msgstr "Скорость перемещения по осям XY (мм/с)"
@@ -946,6 +981,9 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
+msgid "g"
+msgstr ""
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "час"
@@ -976,11 +1014,26 @@ msgstr "мм/с²"
 msgid "mm³/s"
 msgstr "мм³/с"
 
+msgid "s"
+msgstr ""
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+#~ msgid "Hide temp."
+#~ msgstr "Скрыть температуру."
+
+#~ msgid "PSK for"
+#~ msgstr "Пароль для"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Калибровка сетки"
+
+#~ msgid "Uploaded"
+#~ msgstr "Загружено"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Официальная поддержка прекращена в июне 2023 г"
@@ -995,7 +1048,7 @@ msgstr[2] ""
 #~ msgstr "Время печати"
 
 #~ msgid "Starting WiFi Association"
-#~ msgstr "Запуск ассоциации WiFi"
+#~ msgstr "Запуск WiFi"
 
 #~ msgid "Warning"
 #~ msgstr "Предупреждение"
@@ -1007,7 +1060,7 @@ msgstr[2] ""
 #~ msgstr "Отменить выбор"
 
 #~ msgid "Select"
-#~ msgstr "Выбирать"
+#~ msgstr "Выбрать"
 
 #~ msgid "Bed screw configuration:"
 #~ msgstr "Конфигурация винтов кровати:"
@@ -1093,9 +1146,6 @@ msgstr[2] ""
 #~ msgid "Retry #%s"
 #~ msgstr "Повторная попытка #%s"
 
-#~ msgid "Delete"
-#~ msgstr "Удалить"
-
 #~ msgid "Off"
 #~ msgstr "Выкл."
 
@@ -1132,9 +1182,6 @@ msgstr[2] ""
 
 #~ msgid "IPv6"
 #~ msgstr "IPv6"
-
-#~ msgid "Duration Only"
-#~ msgstr "Продолжительность печати"
 
 #~ msgid "Klipper Version"
 #~ msgstr "Версия Klipper"

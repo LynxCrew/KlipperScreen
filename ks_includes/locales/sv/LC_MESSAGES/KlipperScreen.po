@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
 "PO-Revision-Date: 2024-04-13 16:48+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/klipperscreen/"
@@ -69,9 +69,6 @@ msgstr "Är du säker på att du vill utesluta objektet?"
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Är du säker på att du vill köra Nödstopp?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr ""
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Är du säker på att du vill avbryta denna utskrift?"
@@ -194,6 +191,9 @@ msgstr "Nedkylning"
 msgid "Couldn't add network"
 msgstr ""
 
+msgid "Current"
+msgstr ""
+
 msgid "Current percentage and graph line"
 msgstr ""
 
@@ -202,6 +202,9 @@ msgstr "DPMS kunde inte laddas och har inaktiverats"
 
 msgid "Date"
 msgstr "Datum"
+
+msgid "Delete"
+msgstr "Radera"
 
 msgid "Delete Directory?"
 msgstr "Ta bort katalogen?"
@@ -223,9 +226,6 @@ msgstr "Avstånd (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
 msgstr ""
 
 #, python-format
@@ -264,6 +264,9 @@ msgstr ""
 
 msgid "Estimated Time Method"
 msgstr "Beräknad tidsmetod"
+
+msgid "Example"
+msgstr ""
 
 msgid "Exclude Object"
 msgstr "Exkludera objekt"
@@ -340,6 +343,9 @@ msgstr "Flödeshastighet:"
 msgid "Font Size"
 msgstr "Textstorlek"
 
+msgid "For mouse control or to verify touchscreen accuracy"
+msgstr ""
+
 msgid "Forget"
 msgstr ""
 
@@ -363,9 +369,6 @@ msgstr "Dölj"
 
 msgid "Hide sensors in Temp."
 msgstr "Dölj sensorer i Temp."
-
-msgid "Hide temp."
-msgstr "Dölj temp."
 
 msgid "Home"
 msgstr "Hem"
@@ -406,9 +409,6 @@ msgstr "Initiera en PID-kalibrering för:"
 msgid "Input Shaper"
 msgstr "Input Shaper"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
 msgstr ""
 
@@ -420,6 +420,11 @@ msgstr "Ogiltig"
 
 msgid "Invalid password"
 msgstr "Felaktigt lösenord"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Temperatur"
 
 msgid "Inversely affects the icon size"
 msgstr ""
@@ -437,6 +442,9 @@ msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "Det kan ta mer än 5 minuter beroende på värmarens effekt."
 
 msgid "It's possible that the configuration is not correct"
+msgstr ""
+
+msgid "Job Status"
 msgstr ""
 
 msgid "Klipper Restart"
@@ -467,6 +475,9 @@ msgstr "Språk"
 
 msgid "Large"
 msgstr "Stor"
+
+msgid "Last Duration"
+msgstr ""
 
 msgid "Last Used"
 msgstr "Senast använd"
@@ -543,9 +554,6 @@ msgstr ""
 msgid "Menu"
 msgstr "Meny"
 
-msgid "Mesh calibrate"
-msgstr "Mesh kalibrera"
-
 msgid "Minimum Cruise Ratio"
 msgstr ""
 
@@ -591,6 +599,9 @@ msgstr "Ny"
 msgid "No elegible macros:"
 msgstr "Inga kvalificerade makron:"
 
+msgid "No info available"
+msgstr ""
+
 msgid "No mesh has been loaded"
 msgstr "Ingen mesh har laddats"
 
@@ -612,15 +623,15 @@ msgstr "Aviseringsloggen tom"
 msgid "Notifications"
 msgstr "Aviseringar"
 
+msgid "Nozzle diameter"
+msgstr ""
+
 msgid "Only for the move panel"
 msgstr ""
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Föråldrad av %d"
-
-msgid "PSK for"
-msgstr "PSK för"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -629,6 +640,11 @@ msgstr[1] "Paketen kommer att uppdateras"
 
 msgid "Part Fan"
 msgstr "Del Fläkt"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Lösenordet har sparats"
 
 msgid "Password saved"
 msgstr "Lösenordet har sparats"
@@ -657,11 +673,14 @@ msgstr "Ström"
 msgid "Power On Printer"
 msgstr "Slå på skrivaren"
 
+msgid "Pressure Advance"
+msgstr "Tryckförflyttning"
+
 msgid "Pressure Advance:"
 msgstr "Tryckförflyttning:"
 
-msgid "Pressure Advance"
-msgstr "Tryckförflyttning"
+msgid "Pressure advance"
+msgstr ""
 
 msgid "Print"
 msgstr "Skriv ut"
@@ -793,6 +812,9 @@ msgstr "Visa kraft värmare"
 msgid "Show Scrollbars Buttons"
 msgstr "Visa rullningslistknappar"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr ""
 
@@ -810,6 +832,9 @@ msgstr "Slicer:"
 
 msgid "Small"
 msgstr "Liten"
+
+msgid "Smooth time"
+msgstr ""
 
 msgid "Speed (mm/s)"
 msgstr "Hastighet (mm/s)"
@@ -859,6 +884,9 @@ msgstr "Temperatur (°C)"
 msgid "Temperature"
 msgstr "Temperatur"
 
+msgid "Temperature too low to extrude"
+msgstr ""
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
 
@@ -901,14 +929,17 @@ msgstr "Uppdatera"
 msgid "Updating"
 msgstr "Uppdaterar"
 
-msgid "Uploaded"
-msgstr "Uppladdad"
-
 msgid "Useful for un-responsive touchscreens"
+msgstr ""
+
+msgid "User"
 msgstr ""
 
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC stöds inte av backend provar Stream"
+
+msgid "Working"
+msgstr ""
 
 msgid "XY Move Speed (mm/s)"
 msgstr "XY rörelsehastighet (mm/s)"
@@ -941,6 +972,9 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "g"
+msgstr ""
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "timme"
@@ -969,10 +1003,25 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr ""
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Hide temp."
+#~ msgstr "Dölj temp."
+
+#~ msgid "PSK for"
+#~ msgstr "PSK för"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Mesh kalibrera"
+
+#~ msgid "Uploaded"
+#~ msgstr "Uppladdad"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Avslutade officiellt stöd i juni 2023"
@@ -1065,9 +1114,6 @@ msgstr[1] ""
 
 #~ msgid "Initializing"
 #~ msgstr "Initierar"
-
-#~ msgid "Delete"
-#~ msgstr "Radera"
 
 #~ msgid "Off"
 #~ msgstr "Avstängd"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Czech\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-06-03 19:09+0000\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-10-10 07:43+0000\n"
 "Last-Translator: Miloslav Kos <kos.m@post.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -69,9 +69,6 @@ msgstr "Opravdu chceš vyjmout objekt?"
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Opravdu okamžitě zastavit?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr "Opravdu chcete kalibraci zastavit?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Opravdu chcete zrušit tisk?"
@@ -194,6 +191,9 @@ msgstr "Zchladit"
 msgid "Couldn't add network"
 msgstr "Nepodařilo se přidat síť"
 
+msgid "Current"
+msgstr "Aktuální"
+
 msgid "Current percentage and graph line"
 msgstr "Aktuální procento a linie grafu"
 
@@ -202,6 +202,9 @@ msgstr "DPMS se nepodařilo načíst a byl deaktivován"
 
 msgid "Date"
 msgstr "Datum"
+
+msgid "Delete"
+msgstr "Smazat"
 
 msgid "Delete Directory?"
 msgstr "Smazat adresář?"
@@ -224,9 +227,6 @@ msgstr "Vzdálenost (mm)"
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
 msgstr "Chcete zapomenout nebo se odpojit %s?"
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr "Chcete nechat KlipperScreen, aby se pokusil problém vyřešit?"
 
 #, python-format
 msgid "Do you want to recover %s?"
@@ -264,6 +264,9 @@ msgstr "Odhadovaný čas"
 
 msgid "Estimated Time Method"
 msgstr "Výpočet doby tisku"
+
+msgid "Example"
+msgstr "Příklad"
 
 msgid "Exclude Object"
 msgstr "Vyloučit objekt"
@@ -340,6 +343,9 @@ msgstr "Rychlost toku:"
 msgid "Font Size"
 msgstr "Velikost fontu"
 
+msgid "For mouse control or to verify touchscreen accuracy"
+msgstr "ro ovládání myší nebo ověření přesnosti dotykového displeje"
+
 msgid "Forget"
 msgstr "Zapomenout"
 
@@ -363,9 +369,6 @@ msgstr "Skrýt"
 
 msgid "Hide sensors in Temp."
 msgstr "Skrýt senzory v Temp."
-
-msgid "Hide temp."
-msgstr "Skrýt teplotu"
 
 msgid "Home"
 msgstr "Domů"
@@ -406,9 +409,6 @@ msgstr "Spustit PID kalibraci:"
 msgid "Input Shaper"
 msgstr "Kompenzace rezonancí"
 
-msgid "Insufficient priviledges detected"
-msgstr "Zjištěna nedostatečná oprávnění"
-
 msgid "Insufficient privileges"
 msgstr "Nedostatečná oprávnění"
 
@@ -420,6 +420,9 @@ msgstr "Špatně"
 
 msgid "Invalid password"
 msgstr "Špatné heslo"
+
+msgid "Invalid temperature"
+msgstr "Chybná teplota"
 
 msgid "Inversely affects the icon size"
 msgstr "Inverzně ovlivňuje velikost ikony"
@@ -438,6 +441,9 @@ msgstr "V závislosti na výkonu ohřívače to může trvat déle než 5 minut.
 
 msgid "It's possible that the configuration is not correct"
 msgstr "Je možné, že konfigurace není správná"
+
+msgid "Job Status"
+msgstr "Stav úlohy"
 
 msgid "Klipper Restart"
 msgstr "Klipper Restart"
@@ -467,6 +473,9 @@ msgstr "Jazyk"
 
 msgid "Large"
 msgstr "Velký"
+
+msgid "Last Duration"
+msgstr "Poslední doba trvání"
 
 msgid "Last Used"
 msgstr "Munulý"
@@ -543,9 +552,6 @@ msgstr "Paměť"
 msgid "Menu"
 msgstr "Menu"
 
-msgid "Mesh calibrate"
-msgstr "Kalibrace sítě"
-
 msgid "Minimum Cruise Ratio"
 msgstr "Minimální cestovní poměr"
 
@@ -591,6 +597,9 @@ msgstr "Nový"
 msgid "No elegible macros:"
 msgstr "Žádná použitelná makra:"
 
+msgid "No info available"
+msgstr "Nejsou k dispozici žádné informace"
+
 msgid "No mesh has been loaded"
 msgstr "Nebyla načtena žádná síť"
 
@@ -612,15 +621,15 @@ msgstr "Protokol oznámení je prázdný"
 msgid "Notifications"
 msgstr "Oznámení"
 
+msgid "Nozzle diameter"
+msgstr "Průměr trysky"
+
 msgid "Only for the move panel"
 msgstr "Pouze pro panel pohybů"
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Zastaralý %d"
-
-msgid "PSK for"
-msgstr "PSK pro"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -630,6 +639,9 @@ msgstr[2] "Balíčky budou aktualizovány"
 
 msgid "Part Fan"
 msgstr "Částečný ofuk"
+
+msgid "Password"
+msgstr "Heslo"
 
 msgid "Password saved"
 msgstr "Heslo uloženo"
@@ -658,11 +670,14 @@ msgstr "Zdroj"
 msgid "Power On Printer"
 msgstr "Zapni tiskárnu"
 
+msgid "Pressure Advance"
+msgstr "Pressure Advance"
+
 msgid "Pressure Advance:"
 msgstr "Pressure Advance:"
 
-msgid "Pressure Advance"
-msgstr "Pressure Advance"
+msgid "Pressure advance"
+msgstr "Předstih tlaku"
 
 msgid "Print"
 msgstr "Tisk"
@@ -794,6 +809,9 @@ msgstr "Ukaž odběr topení"
 msgid "Show Scrollbars Buttons"
 msgstr "Ukaž rolovací tlačítka"
 
+msgid "Show cursor"
+msgstr "Zobrazit kurzor"
+
 msgid "Show only devices that are able to be set"
 msgstr "Zobrazit pouze zařízení, která lze nastavit"
 
@@ -811,6 +829,9 @@ msgstr "Slicer:"
 
 msgid "Small"
 msgstr "Malý"
+
+msgid "Smooth time"
+msgstr "Plynulý čas"
 
 msgid "Speed (mm/s)"
 msgstr "Rychlost (mm/s)"
@@ -860,6 +881,9 @@ msgstr "Teplota (°C)"
 msgid "Temperature"
 msgstr "Teplota"
 
+msgid "Temperature too low to extrude"
+msgstr "Příliš nízká teplota pro extruzi"
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr "Systém nesplňuje minimální požadavky"
 
@@ -902,14 +926,17 @@ msgstr "Aktualizuj"
 msgid "Updating"
 msgstr "Aktualizuji"
 
-msgid "Uploaded"
-msgstr "Nahrané"
-
 msgid "Useful for un-responsive touchscreens"
 msgstr "Užitečné pro nereagující dotykové obrazovky"
 
+msgid "User"
+msgstr "Uživatel"
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC není podporováno backendem, který se pokouší spustit Stream"
+
+msgid "Working"
+msgstr "Pracovní"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "Rychlost pohybu XY (mm/s)"
@@ -944,6 +971,9 @@ msgstr[0] "den"
 msgstr[1] "dny"
 msgstr[2] "dny"
 
+msgid "g"
+msgstr "g"
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hodina"
@@ -974,11 +1004,35 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr "s"
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekunda"
 msgstr[1] "sekundy"
 msgstr[2] "sekundy"
+
+#~ msgid "Hide temp."
+#~ msgstr "Skrýt teplotu"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK pro"
+
+#~ msgid "Are you sure you want to stop the calibration?"
+#~ msgstr "Opravdu chcete kalibraci zastavit?"
+
+#~ msgid "Do you want to let KlipperScreen try to solve the issue?"
+#~ msgstr "Chcete nechat KlipperScreen, aby se pokusil problém vyřešit?"
+
+#~ msgid "Insufficient priviledges detected"
+#~ msgstr "Zjištěna nedostatečná oprávnění"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Kalibrace sítě"
+
+#~ msgid "Uploaded"
+#~ msgstr "Nahrané"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Oficiální podpora ukončena v červnu 2023"

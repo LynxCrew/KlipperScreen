@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 24-05-17 16.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
 "PO-Revision-Date: 2024-05-12 16:39+0300\n"
 "Last-Translator: Andrii Komarovskyi\n"
 "Language-Team: Andrii Komarovskyi\n"
@@ -69,9 +69,6 @@ msgstr "Ви впевнені, що бажаєте виключити об’є�
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Ви впевнені, що хочете зробити аварійну зупинку?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr "Ви впевнені, що хочете припинити калібрування?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Ви впевнені, що хочете скасувати друк?"
@@ -176,14 +173,14 @@ msgid "Connected"
 msgstr "Підключено"
 
 msgid "Connecting"
-msgstr ""
+msgstr "Відбувається підключення"
 
 #, python-format
 msgid "Connecting to %s"
 msgstr "Підключення до %s"
 
 msgid "Connection failed"
-msgstr ""
+msgstr "Підключення невдале"
 
 msgid "Console"
 msgstr "Консоль"
@@ -192,7 +189,10 @@ msgid "Cooldown"
 msgstr "Охолодження"
 
 msgid "Couldn't add network"
-msgstr ""
+msgstr "Неможливо додати мережу"
+
+msgid "Current"
+msgstr "Поточний"
 
 msgid "Current percentage and graph line"
 msgstr "Поточний відсоток і лінія графіка"
@@ -202,6 +202,9 @@ msgstr "DPMS не вдалося завантажити, і його було в
 
 msgid "Date"
 msgstr "Дата"
+
+msgid "Delete"
+msgstr "Видалити"
 
 msgid "Delete Directory?"
 msgstr "Видалити Теку?"
@@ -216,17 +219,14 @@ msgid "Disable for 12hs with am / pm"
 msgstr "Вимкнути на 12 годин за допомогою am / pm"
 
 msgid "Disconnect"
-msgstr ""
+msgstr "Від'єднатись"
 
 msgid "Distance (mm)"
 msgstr "Відстань (мм)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr ""
+msgstr "Забути або від'єднатись від %s?"
 
 #, python-format
 msgid "Do you want to recover %s?"
@@ -260,10 +260,13 @@ msgid "Error: Couldn't get a position to probe"
 msgstr "Помилка: не вдалося отримати позицію для проби"
 
 msgid "Estimated Time"
-msgstr ""
+msgstr "Розрахований час"
 
 msgid "Estimated Time Method"
 msgstr "Метод розрахунку часу"
+
+msgid "Example"
+msgstr "Приклад"
 
 msgid "Exclude Object"
 msgstr "Виключити об’єкт"
@@ -284,10 +287,10 @@ msgid "Extrusion -"
 msgstr "Втягнути -"
 
 msgid "Failed to delete connection"
-msgstr ""
+msgstr "Не вдалося видалити з'єднання"
 
 msgid "Failed to initialize"
-msgstr ""
+msgstr "Не вдалося ініціалізувати"
 
 msgid "Failed, adjust position first"
 msgstr "Не вдалося, спочатку відрегулюйте положення"
@@ -296,7 +299,7 @@ msgid "Fan"
 msgstr "Вентилятор"
 
 msgid "Filament"
-msgstr ""
+msgstr "Пруток"
 
 msgid "Filament Used"
 msgstr "Використання Прутка"
@@ -340,17 +343,20 @@ msgstr "Швидкість потоку:"
 msgid "Font Size"
 msgstr "Розмір шрифту"
 
-msgid "Forget"
+msgid "For mouse control or to verify touchscreen accuracy"
 msgstr ""
+
+msgid "Forget"
+msgstr "Забути"
 
 msgid "Full Update"
 msgstr "Повне оновлення"
 
 msgid "Gcodes"
-msgstr ""
+msgstr "G-коди"
 
 msgid "Getting IP address"
-msgstr ""
+msgstr "Отримання IP адреси"
 
 msgid "Go Back"
 msgstr "Назад"
@@ -363,9 +369,6 @@ msgstr "Сховати"
 
 msgid "Hide sensors in Temp."
 msgstr "Сховати датчик t°."
-
-msgid "Hide temp."
-msgstr "Приховати темп."
 
 msgid "Home"
 msgstr "Домашня сторінка"
@@ -406,11 +409,8 @@ msgstr "Почати калібрування PID для:"
 msgid "Input Shaper"
 msgstr "Input Shaper"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
-msgstr ""
+msgstr "Недостатні привілеї"
 
 msgid "Interface"
 msgstr "Інтерфейс"
@@ -420,6 +420,11 @@ msgstr "Недійсний"
 
 msgid "Invalid password"
 msgstr "Недійсний пароль"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Температура"
 
 msgid "Inversely affects the icon size"
 msgstr "Зворотно впливає на розмір іконки"
@@ -438,6 +443,9 @@ msgstr "Залежно від потужності обігрівача це м�
 
 msgid "It's possible that the configuration is not correct"
 msgstr "Можливо, конфігурація неправильна"
+
+msgid "Job Status"
+msgstr "Стан завдання"
 
 msgid "Klipper Restart"
 msgstr "Перезапуск Klipper"
@@ -469,11 +477,14 @@ msgstr "Мова"
 msgid "Large"
 msgstr "Великий"
 
+msgid "Last Duration"
+msgstr "Остання тривалість"
+
 msgid "Last Used"
 msgstr "Останнє Використання"
 
 msgid "Layer Height"
-msgstr ""
+msgstr "Висота шару"
 
 msgid "Layer:"
 msgstr "Шар:"
@@ -521,7 +532,7 @@ msgid "Max Velocity"
 msgstr "Макс. швидкість"
 
 msgid "Max:"
-msgstr ""
+msgstr "Макс:"
 
 msgid "Maximum"
 msgstr "Максимум"
@@ -539,19 +550,16 @@ msgid "Medium"
 msgstr "Середній"
 
 msgid "Memory"
-msgstr ""
+msgstr "Пам'ять"
 
 msgid "Menu"
 msgstr "Меню"
-
-msgid "Mesh calibrate"
-msgstr "Калібрування сітки столу"
 
 msgid "Minimum Cruise Ratio"
 msgstr "Мінімальний крейсерський коефіцієнт"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Мінімум:"
 
 msgid "Modified"
 msgstr "Змінено"
@@ -575,13 +583,13 @@ msgid "Network"
 msgstr "Мережа"
 
 msgid "Network connected"
-msgstr ""
+msgstr "Під'єднано до мережі"
 
 msgid "Network disconnected"
-msgstr ""
+msgstr "Від'єднано від мережі"
 
 msgid "Network not found"
-msgstr ""
+msgstr "Мережу не знайдено"
 
 msgid "Never"
 msgstr "Ніколи"
@@ -591,6 +599,9 @@ msgstr "Новий"
 
 msgid "No elegible macros:"
 msgstr "Непридатний макрос:"
+
+msgid "No info available"
+msgstr "Немає інформації"
 
 msgid "No mesh has been loaded"
 msgstr "Не завантажено жодної сітки"
@@ -613,15 +624,15 @@ msgstr "Журнал сповіщень порожній"
 msgid "Notifications"
 msgstr "Сповіщення"
 
+msgid "Nozzle diameter"
+msgstr "Діаметр сопла"
+
 msgid "Only for the move panel"
-msgstr ""
+msgstr "Лише для панелі переміщення"
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Застаріло на %d"
-
-msgid "PSK for"
-msgstr "PSK для"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -631,6 +642,11 @@ msgstr[2] "Пакети будуть оновлені"
 
 msgid "Part Fan"
 msgstr "Охолодження моделі"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Пароль збережено"
 
 msgid "Password saved"
 msgstr "Пароль збережено"
@@ -651,7 +667,7 @@ msgid "Please recompile and flash the micro-controller."
 msgstr "Будь ласка, перекомпілюйте та перепрошійте мікроконтролер."
 
 msgid "Please wait"
-msgstr ""
+msgstr "Очікуйте, будь ласка"
 
 msgid "Power"
 msgstr "Живлення"
@@ -659,10 +675,13 @@ msgstr "Живлення"
 msgid "Power On Printer"
 msgstr "Увімкнути принтер"
 
+msgid "Pressure Advance"
+msgstr "Випередження тиску"
+
 msgid "Pressure Advance:"
 msgstr "Випередження тиску:"
 
-msgid "Pressure Advance"
+msgid "Pressure advance"
 msgstr "Випередження тиску"
 
 msgid "Print"
@@ -714,7 +733,7 @@ msgid "Refresh"
 msgstr "Оновити"
 
 msgid "Remove network"
-msgstr ""
+msgstr "Вийняти мережу"
 
 msgid "Rename/Move:"
 msgstr "Перейменувати/перемістити:"
@@ -795,6 +814,9 @@ msgstr "Показати Потужність Нагрівача"
 msgid "Show Scrollbars Buttons"
 msgstr "Показати кнопку смуги прокрутки"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr "Показувати лише пристрої, які можна налаштувати"
 
@@ -812,6 +834,9 @@ msgstr "Слайсер:"
 
 msgid "Small"
 msgstr "Малий"
+
+msgid "Smooth time"
+msgstr "Час згладжування (PA)"
 
 msgid "Speed (mm/s)"
 msgstr "Швидкість (мм/с)"
@@ -842,6 +867,8 @@ msgstr "Початок оновлення для"
 
 msgid "Swaps buttons if they are on top of each other, affects other panels"
 msgstr ""
+"Міняти місцями кнопки, якщо вони розташовані одна поверх іншої. Впливає на "
+"решту панелей"
 
 msgid "System"
 msgstr "Системна"
@@ -853,7 +880,7 @@ msgid "System Shutdown"
 msgstr "Вимкнення системи"
 
 msgid "System:"
-msgstr ""
+msgstr "Система:"
 
 msgid "Temp (°C)"
 msgstr "Teмп (°C)"
@@ -861,20 +888,23 @@ msgstr "Teмп (°C)"
 msgid "Temperature"
 msgstr "Температура"
 
-msgid "The system doesn't meet the minimum requirement"
+msgid "Temperature too low to extrude"
 msgstr ""
+
+msgid "The system doesn't meet the minimum requirement"
+msgstr "Система не відповідає мінімальним вимогам"
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Ця панель підтримує до 9 гвинтів у сітці 3x3"
 
 msgid "This will affect screw positions and mesh graph"
-msgstr ""
+msgstr "Це вплине на позиції гвинтів та графік сітки"
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "Тайм-аут для затемнення екрана або вимкнення живлення"
 
 msgid "Timeout for screen black-out or power-off during printing"
-msgstr ""
+msgstr "Тайм-аут для затемнення екрана або вимкнення живлення під час друку"
 
 msgid "Total:"
 msgstr "Всього:"
@@ -883,7 +913,7 @@ msgid "Unknown Heater"
 msgstr "Невідомий нагрівач"
 
 msgid "Unknown security type"
-msgstr ""
+msgstr "Невідомий тип безпеки"
 
 msgid "Unload"
 msgstr "Вийняти"
@@ -903,14 +933,17 @@ msgstr "Оновити"
 msgid "Updating"
 msgstr "Оновлення"
 
-msgid "Uploaded"
-msgstr "Завантажено"
-
 msgid "Useful for un-responsive touchscreens"
 msgstr "Корисно для сенсорних екранів, які не реагують"
 
+msgid "User"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC не підтримується бекендом, який намагається використати Stream"
+
+msgid "Working"
+msgstr "Працює"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "Швидкість переміщення XY (мм/с)"
@@ -935,21 +968,24 @@ msgstr "Зміщення по Z:"
 
 msgid "commit"
 msgid_plural "commits"
-msgstr[0] "коментар"
-msgstr[1] "коментарі"
-msgstr[2] "коментарі"
+msgstr[0] "коміт"
+msgstr[1] "коміти"
+msgstr[2] "комітів"
 
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "день"
+msgstr[1] "дні"
+msgstr[2] "днів"
+
+msgid "g"
+msgstr "г"
 
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "година"
-msgstr[1] "годин"
-msgstr[2] "години"
+msgstr[1] "години"
+msgstr[2] "годин"
 
 msgid "macros that use 'rename_existing' are hidden"
 msgstr "макроси, які використовують 'rename_existing', приховані"
@@ -960,8 +996,8 @@ msgstr "макроси з назвою, що починається на '_', п
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "хвилина"
-msgstr[1] "хвилин"
-msgstr[2] "хвилини"
+msgstr[1] "хвилини"
+msgstr[2] "хвилин"
 
 msgid "mm"
 msgstr "мм"
@@ -975,11 +1011,29 @@ msgstr "мм/с²"
 msgid "mm³/s"
 msgstr "мм/с³"
 
+msgid "s"
+msgstr "с"
+
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "секунда"
+msgstr[1] "секунди"
+msgstr[2] "секунд"
+
+#~ msgid "Hide temp."
+#~ msgstr "Приховати темп."
+
+#~ msgid "PSK for"
+#~ msgstr "PSK для"
+
+#~ msgid "Are you sure you want to stop the calibration?"
+#~ msgstr "Ви впевнені, що хочете припинити калібрування?"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Калібрування сітки столу"
+
+#~ msgid "Uploaded"
+#~ msgstr "Завантажено"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Офіційна підтримка припинена в червні 2023 року"
@@ -1091,9 +1145,6 @@ msgstr[2] ""
 
 #~ msgid "Initializing"
 #~ msgstr "Ініціалізація"
-
-#~ msgid "Delete"
-#~ msgstr "Видалити"
 
 #~ msgid "Off"
 #~ msgstr "Вимк"

@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-04-13 16:48+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-07-06 14:10+0900\n"
+"Last-Translator: ElectricalBoy <15651807+ElectricalBoy@users.noreply.github."
+"com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/ko/>\n"
 "Language: ko\n"
@@ -12,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -64,9 +65,6 @@ msgstr "개체를 제외하시겠습니까?"
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "비상정지 시키겠습니까?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr ""
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "출력을 취소하시겠습니까?"
@@ -141,7 +139,7 @@ msgid "Changes how the interface looks"
 msgstr ""
 
 msgid "Changes how the time remaining is calculated"
-msgstr ""
+msgstr "남은 시간이 계산되는 방식을 변경합니다"
 
 msgid "Channel"
 msgstr "채널"
@@ -171,14 +169,14 @@ msgid "Connected"
 msgstr "연결됨"
 
 msgid "Connecting"
-msgstr ""
+msgstr "연결 중"
 
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s에 연결 중"
 
 msgid "Connection failed"
-msgstr ""
+msgstr "연결 실패"
 
 msgid "Console"
 msgstr "콘솔 제어"
@@ -187,6 +185,9 @@ msgid "Cooldown"
 msgstr "가열 중지"
 
 msgid "Couldn't add network"
+msgstr "네트워크를 추가할 수 없습니다"
+
+msgid "Current"
 msgstr ""
 
 msgid "Current percentage and graph line"
@@ -197,6 +198,9 @@ msgstr "DPMS가 비활성화 되었습니다"
 
 msgid "Date"
 msgstr "날짜"
+
+msgid "Delete"
+msgstr "삭제"
 
 msgid "Delete Directory?"
 msgstr "저장소를 삭제하시겠습니까?"
@@ -211,17 +215,14 @@ msgid "Disable for 12hs with am / pm"
 msgstr ""
 
 msgid "Disconnect"
-msgstr ""
+msgstr "연결 끊기"
 
 msgid "Distance (mm)"
 msgstr "거리 (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr ""
+msgstr "%s와의 연결을 해제하시겠습니까?"
 
 #, python-format
 msgid "Do you want to recover %s?"
@@ -234,7 +235,7 @@ msgid "Emergency Stop"
 msgstr "긴급 정지"
 
 msgid "Enable screen power management"
-msgstr ""
+msgstr "화면 전원 관리 활성화"
 
 msgid "Error"
 msgstr "오류"
@@ -255,10 +256,13 @@ msgid "Error: Couldn't get a position to probe"
 msgstr "오류: 측정할 위치를 가져올 수 없습니다"
 
 msgid "Estimated Time"
-msgstr ""
+msgstr "예상 시간"
 
 msgid "Estimated Time Method"
 msgstr "예상 시간 옵션"
+
+msgid "Example"
+msgstr "예시"
 
 msgid "Exclude Object"
 msgstr "개체 제외"
@@ -279,10 +283,10 @@ msgid "Extrusion -"
 msgstr "압출 -"
 
 msgid "Failed to delete connection"
-msgstr ""
+msgstr "연결 삭제 실패"
 
 msgid "Failed to initialize"
-msgstr ""
+msgstr "초기화 실패"
 
 msgid "Failed, adjust position first"
 msgstr "실패, 먼저 위치를 조정해 주세요"
@@ -291,7 +295,7 @@ msgid "Fan"
 msgstr "쿨링 팬"
 
 msgid "Filament"
-msgstr ""
+msgstr "필라멘트"
 
 msgid "Filament Used"
 msgstr "사용된 필라멘트"
@@ -335,6 +339,9 @@ msgstr "유량 비율:"
 msgid "Font Size"
 msgstr "글꼴 크기"
 
+msgid "For mouse control or to verify touchscreen accuracy"
+msgstr ""
+
 msgid "Forget"
 msgstr ""
 
@@ -342,10 +349,10 @@ msgid "Full Update"
 msgstr "전체 업데이트"
 
 msgid "Gcodes"
-msgstr ""
+msgstr "G코드"
 
 msgid "Getting IP address"
-msgstr ""
+msgstr "IP 주소를 가져오는 중"
 
 msgid "Go Back"
 msgstr "뒤로"
@@ -358,9 +365,6 @@ msgstr "가리기"
 
 msgid "Hide sensors in Temp."
 msgstr "온도 섹션에서 센서 항목 숨김."
-
-msgid "Hide temp."
-msgstr "온도 숨김"
 
 msgid "Home"
 msgstr "원점 이동"
@@ -401,11 +405,8 @@ msgstr "PID 보정 대상:"
 msgid "Input Shaper"
 msgstr "인풋 쉐이퍼"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
-msgstr ""
+msgstr "권한 부족"
 
 msgid "Interface"
 msgstr "인터페이스"
@@ -415,6 +416,11 @@ msgstr "존재하지 않음"
 
 msgid "Invalid password"
 msgstr "잘못된 패스워드"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "온도"
 
 msgid "Inversely affects the icon size"
 msgstr ""
@@ -433,6 +439,9 @@ msgstr "히터에 따라 5분 이상 걸릴 수 있습니다."
 
 msgid "It's possible that the configuration is not correct"
 msgstr ""
+
+msgid "Job Status"
+msgstr "작업 상태"
 
 msgid "Klipper Restart"
 msgstr "클리퍼 재시작"
@@ -463,11 +472,14 @@ msgstr "언어"
 msgid "Large"
 msgstr "크게"
 
+msgid "Last Duration"
+msgstr ""
+
 msgid "Last Used"
 msgstr "마지막으로 사용"
 
 msgid "Layer Height"
-msgstr ""
+msgstr "레이어 높이"
 
 msgid "Layer:"
 msgstr "레이어:"
@@ -515,7 +527,7 @@ msgid "Max Velocity"
 msgstr "최대 출력 속도"
 
 msgid "Max:"
-msgstr ""
+msgstr "최대:"
 
 msgid "Maximum"
 msgstr "최대"
@@ -533,19 +545,16 @@ msgid "Medium"
 msgstr "중간"
 
 msgid "Memory"
-msgstr ""
+msgstr "메모리"
 
 msgid "Menu"
 msgstr "메뉴"
-
-msgid "Mesh calibrate"
-msgstr "메쉬 보정"
 
 msgid "Minimum Cruise Ratio"
 msgstr "최소 순항 비율"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "최소:"
 
 msgid "Modified"
 msgstr "수정됨"
@@ -569,13 +578,13 @@ msgid "Network"
 msgstr "네트워크"
 
 msgid "Network connected"
-msgstr ""
+msgstr "네트워크 연결됨"
 
 msgid "Network disconnected"
-msgstr ""
+msgstr "네트워크 연결 끊김"
 
 msgid "Network not found"
-msgstr ""
+msgstr "네트워크를 찾을 수 없음"
 
 msgid "Never"
 msgstr "결코"
@@ -585,6 +594,9 @@ msgstr "신규"
 
 msgid "No elegible macros:"
 msgstr "적절한 매크로 없음:"
+
+msgid "No info available"
+msgstr ""
 
 msgid "No mesh has been loaded"
 msgstr "메쉬가 로드되지 않았습니다"
@@ -607,6 +619,9 @@ msgstr "알림 로그가 비어 있음"
 msgid "Notifications"
 msgstr "공지"
 
+msgid "Nozzle diameter"
+msgstr "노즐 구경"
+
 msgid "Only for the move panel"
 msgstr ""
 
@@ -614,15 +629,17 @@ msgstr ""
 msgid "Outdated by %d"
 msgstr "%d 보다 오래됨"
 
-msgid "PSK for"
-msgstr "PSK 키 값(비밀번호)"
-
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "패키지가 업데이트 됩니다"
 
 msgid "Part Fan"
 msgstr "파트 쿨링 팬"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "비밀번호 저장됨"
 
 msgid "Password saved"
 msgstr "비밀번호 저장됨"
@@ -643,7 +660,7 @@ msgid "Please recompile and flash the micro-controller."
 msgstr "MCU 펌웨어를 다시 컴파일 한 다음 플래싱 해주세요."
 
 msgid "Please wait"
-msgstr ""
+msgstr "잠시 기다려 주십시오"
 
 msgid "Power"
 msgstr "전원"
@@ -651,11 +668,14 @@ msgstr "전원"
 msgid "Power On Printer"
 msgstr "프린터 전원 켜기"
 
+msgid "Pressure Advance"
+msgstr "모서리 압출 제어 수치"
+
 msgid "Pressure Advance:"
 msgstr "모서리 압출 제어 수치:"
 
-msgid "Pressure Advance"
-msgstr "모서리 압출 제어 수치"
+msgid "Pressure advance"
+msgstr "프레셔 어드밴스"
 
 msgid "Print"
 msgstr "출력"
@@ -682,7 +702,7 @@ msgid "Profile Name:"
 msgstr "프로필 이름:"
 
 msgid "Provide KlipperScreen.log when asking for help.\n"
-msgstr "도움을 요청하면 KlipperScreen.log를 제공합니다.\n"
+msgstr "도움을 요청할 때 KlipperScreen.log를 제공하십시오.\n"
 
 msgid "Quad Gantry Level"
 msgstr "쿼드 갠트리 레벨링"
@@ -706,7 +726,7 @@ msgid "Refresh"
 msgstr "새로고침"
 
 msgid "Remove network"
-msgstr ""
+msgstr "네트워크 제거"
 
 msgid "Rename/Move:"
 msgstr "이름 변경/이동:"
@@ -736,7 +756,7 @@ msgid "Retrying"
 msgstr "재시도 중"
 
 msgid "Rotation invalid"
-msgstr ""
+msgstr "유효하지 않은 회전"
 
 msgid "Save"
 msgstr "저장"
@@ -787,6 +807,9 @@ msgstr "히터 전원 보기"
 msgid "Show Scrollbars Buttons"
 msgstr "스크롤바 버튼 보기"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr ""
 
@@ -804,6 +827,9 @@ msgstr "슬라이서:"
 
 msgid "Small"
 msgstr "작게"
+
+msgid "Smooth time"
+msgstr ""
 
 msgid "Speed (mm/s)"
 msgstr "속도 (mm/s)"
@@ -845,7 +871,7 @@ msgid "System Shutdown"
 msgstr "시스템 종료"
 
 msgid "System:"
-msgstr ""
+msgstr "시스템:"
 
 msgid "Temp (°C)"
 msgstr "온도 (°C)"
@@ -853,8 +879,11 @@ msgstr "온도 (°C)"
 msgid "Temperature"
 msgstr "온도"
 
-msgid "The system doesn't meet the minimum requirement"
+msgid "Temperature too low to extrude"
 msgstr ""
+
+msgid "The system doesn't meet the minimum requirement"
+msgstr "시스템이 최소 요구 조건을 충족하지 않습니다"
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr ""
@@ -875,7 +904,7 @@ msgid "Unknown Heater"
 msgstr "알 수 없는 히터"
 
 msgid "Unknown security type"
-msgstr ""
+msgstr "알 수 없는 보안 유형"
 
 msgid "Unload"
 msgstr "필라멘트 꺼내기"
@@ -895,14 +924,17 @@ msgstr "업데이트"
 msgid "Updating"
 msgstr "업데이트 중"
 
-msgid "Uploaded"
-msgstr "업로드됨"
-
 msgid "Useful for un-responsive touchscreens"
+msgstr "응답 없는 터치스크린에 유용함"
+
+msgid "User"
 msgstr ""
 
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC는 백엔드 trying Stream에서 지원되지 않습니다"
+
+msgid "Working"
+msgstr "작동중"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "XY 이동 속도 (mm/s)"
@@ -931,7 +963,10 @@ msgstr[0] "커밋"
 
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
+msgstr[0] "일"
+
+msgid "g"
+msgstr "g"
 
 msgid "hour"
 msgid_plural "hours"
@@ -959,9 +994,24 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr "초"
+
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] ""
+msgstr[0] "초"
+
+#~ msgid "Hide temp."
+#~ msgstr "온도 숨김."
+
+#~ msgid "PSK for"
+#~ msgstr "PSK 키 값(비밀번호)"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "메쉬 보정"
+
+#~ msgid "Uploaded"
+#~ msgstr "업로드됨"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "2023년 6월 이후 정식 지원이 중단됨"
@@ -1068,9 +1118,6 @@ msgstr[0] ""
 
 #~ msgid "Initializing"
 #~ msgstr "초기화 중.."
-
-#~ msgid "Delete"
-#~ msgstr "삭제"
 
 #~ msgid "Off"
 #~ msgstr "끄기"

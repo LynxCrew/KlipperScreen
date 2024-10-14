@@ -16,6 +16,7 @@
     color: @text ;
 }
 
+junction,
 list row,
 treeview.view,
 window {
@@ -30,6 +31,7 @@ button label{
     color: @text;
 }
 
+.active image,
 button:active {
     background-color: @active;
 }
@@ -119,6 +121,10 @@ switch {
 treeview.view check:checked,
 switch:checked {
     background-color: @color3;
+}
+
+treeview.view check:checked {
+    -gtk-icon-source: url("./styles/material-light/images/complete.svg");
 }
 
 treeview.view check,

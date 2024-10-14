@@ -29,6 +29,7 @@ class Printer:
         self.home_full = False
         self.temp_devices = self.sensors = None
         self.system_info = {}
+        self.warnings = []
 
     def reinit(self, printer_info, data):
         self.config = data['configfile']['config']
@@ -46,6 +47,7 @@ class Printer:
         self.temp_devices = self.sensors = None
         self.stop_tempstore_updates()
         self.system_info.clear()
+        self.warnings = []
 
         for x in self.config.keys():
             # Support for hiding devices by name
@@ -116,8 +118,11 @@ class Printer:
             return
 
         for x in data:
-            if x == "configfile" and 'config' in data[x]:
-                self.config.update(data[x]['config'])
+            if x == "configfile":
+                if 'config' in data[x]:
+                    self.config.update(data[x]['config'])
+                if 'warnings' in data[x]:
+                    self.warnings = data[x]['warnings']
             if x not in self.data:
                 self.data[x] = {}
             self.data[x].update(data[x])
@@ -242,7 +247,7 @@ class Printer:
         return self.sensors
 
     def get_probe(self):
-        probe_types = ["probe", "bltouch", "smart_effector", "dockable_probe", "beacon"]
+        probe_types = ["probe", "bltouch", "smart_effector", "probe_eddy_current", "dockable_probe", "beacon"]
         for probe_type in probe_types:
             if self.config_section_exists(probe_type):
                 logging.info(f"Probe type: {probe_type}")

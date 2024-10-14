@@ -14,7 +14,7 @@ class Panel(ScreenPanel):
     graph_update = None
     active_heater = None
 
-    def __init__(self, screen, title, extra=None):
+    def __init__(self, screen, title, **kwargs):
         title = title or _("Temperature")
         super().__init__(screen, title)
         self.left_panel = None
@@ -30,6 +30,7 @@ class Panel(ScreenPanel):
         self.preheat_options = self._screen._config.get_preheat_options()
         self.grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         self._gtk.reset_temp_color()
+        self.extra_selection = None
 
         if self._screen.vertical_mode:
             self.grid.attach(self.create_left_panel(), 0, 0, 1, 3)
@@ -37,24 +38,6 @@ class Panel(ScreenPanel):
         else:
             self.grid.attach(self.create_left_panel(), 0, 0, 1, 1)
             self.grid.attach(self.create_right_panel(), 1, 0, 1, 1)
-
-        # When printing start only select tools
-        selection = []
-        if self._printer.state not in ("printing", "paused"):
-            selection.extend(self._printer.get_temp_devices())
-        elif extra:
-            selection.append(extra)
-
-        # Select heaters
-        for h in selection:
-            if h.startswith("temperature_sensor "):
-                continue
-            name = h.split()[1] if len(h.split()) > 1 else h
-            # Support for hiding devices by name
-            if name.startswith("_"):
-                continue
-            if h not in self.active_heaters:
-                self.select_heater(None, h)
 
         self.content.add(self.grid)
 
@@ -224,6 +207,31 @@ class Panel(ScreenPanel):
         if not self._printer.tempstore:
             self._screen.init_tempstore()
         self.update_graph_visibility()
+        self.set_selection()
+
+    def set_extra(self, extra=None, **kwargs):
+        self.extra_selection = extra
+
+    def set_selection(self):
+        selection = []
+        if self.extra_selection:
+            selection.append(self.extra_selection)
+        elif self._printer.state not in ("printing", "paused"):
+            selection.extend(self._printer.get_temp_devices())
+        elif 'toolhead' in self._printer.data and 'extruder' in self._printer.data['toolhead']:
+            current_extruder = self._printer.data['toolhead']['extruder']
+            selection.append(current_extruder)
+
+        for heater in self.active_heaters:
+            if heater not in selection:
+                self.select_heater(None, heater)
+        for heater in selection:
+            if heater.startswith("temperature_sensor "):
+                continue
+            name = heater.split()[1] if len(heater.split()) > 1 else heater
+            if heater not in self.active_heaters:
+                self.select_heater(None, heater)
+        self.extra_selection = None
 
     def deactivate(self):
         if self.graph_update is not None:
@@ -497,14 +505,15 @@ class Panel(ScreenPanel):
         return max(temp, 0)
 
     def pid_calibrate(self, temp):
+        heater = self.active_heater.split(' ', maxsplit=1)[-1]
         if self.verify_max_temp(temp):
             script = {
-                "script": f"PID_CALIBRATE HEATER={self.active_heater} TARGET={temp}"
+                "script": f"PID_CALIBRATE HEATER={heater} TARGET={temp}"
             }
             self._screen._confirm_send_action(
                 None,
                 _("Initiate a PID calibration for:")
-                + f" {self.active_heater} @ {temp} ºC"
+                + f" {heater} @ {temp} ºC"
                 + "\n\n"
                 + _("It may take more than 5 minutes depending on the heater power."),
                 "printer.gcode.script",
@@ -518,10 +527,6 @@ class Panel(ScreenPanel):
 
         name = Gtk.Label()
         temp = Gtk.Label(_("Temp (°C)"))
-        if self._show_heater_power:
-            temp.get_style_context().add_class("heater-grid-temp-power")
-        else:
-            temp.get_style_context().add_class("heater-grid-temp")
 
         self.labels["devices"].attach(name, 0, 0, 1, 1)
         self.labels["devices"].attach(temp, 1, 0, 1, 1)

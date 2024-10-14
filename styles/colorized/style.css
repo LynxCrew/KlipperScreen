@@ -21,6 +21,7 @@
     color: @solarized-base3;
 }
 
+junction,
 list row,
 treeview.view,
 window {
@@ -31,6 +32,7 @@ button {
     background-color: @solarized-base03;
 }
 
+.active image,
 button:active {
     background-color: @solarized-orange;
 }
@@ -108,14 +110,23 @@ popover button {
     border-color: @solarized-base03;
 }
 
-treeview.view check,
 switch {
     background-color: @solarized-base02;
 }
-
-treeview.view check:checked,
 switch:checked {
     background-color: @solarized-green;
+}
+
+treeview.view check {
+    background-image: none;
+    background-color: @solarized-base02;
+    border-radius: .51em;
+}
+
+treeview.view check:checked {
+    background-image: none;
+    background-color: @solarized-base02;
+    -gtk-icon-source: url("./styles/colorized/images/complete.svg");
 }
 
 entry {
@@ -252,7 +263,7 @@ textview .time {
 }
 
 .dialog-warning {
-    border-bottom-color: @olarized-yellow;
+    border-bottom-color: @solarized-orange;
 }
 
 .dialog-info {
@@ -260,7 +271,7 @@ textview .time {
 }
 
 .dialog-default {
-    border-bottom-color: @solarized-green;
+    border-bottom-color: @solarized-blue;
 }
 
 .dialog-secondary {
@@ -268,5 +279,5 @@ textview .time {
 }
 
 .dialog-primary {
-     border-bottom-color: @solarized-orange;
+     border-bottom-color: @solarized-green;
 }

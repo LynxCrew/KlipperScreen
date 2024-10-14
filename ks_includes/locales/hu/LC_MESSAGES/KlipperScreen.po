@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-06-01 12:09+0000\n"
-"Last-Translator: \"Zs.Antal\" <zsikaiantal@icloud.com>\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-07-06 18:04+0000\n"
+"Last-Translator: \"Zs.Antal\" <antonio092130@icloud.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/hu/>\n"
 "Language: hu\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -64,9 +64,6 @@ msgstr "Biztosan kizárod az objektumot?"
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Biztosan vészleállítást szeretnél?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr "Biztos, hogy leállítod a kalibrálást?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Biztosan megszakítod ezt a nyomtatást?"
@@ -171,14 +168,14 @@ msgid "Connected"
 msgstr "Csatlakoztatva"
 
 msgid "Connecting"
-msgstr ""
+msgstr "Csatlakozás"
 
 #, python-format
 msgid "Connecting to %s"
 msgstr "Csatlakozás %s"
 
 msgid "Connection failed"
-msgstr ""
+msgstr "Kapcsolat sikertelen"
 
 msgid "Console"
 msgstr "Konzol"
@@ -187,7 +184,10 @@ msgid "Cooldown"
 msgstr "Lehűtés"
 
 msgid "Couldn't add network"
-msgstr ""
+msgstr "Nem tudtam hozzáadni a hálózatot"
+
+msgid "Current"
+msgstr "Aktuális"
 
 msgid "Current percentage and graph line"
 msgstr "Aktuális százalék és grafikonvonal"
@@ -197,6 +197,9 @@ msgstr "A DPMS betöltése nem sikerült, ezért le van tiltva"
 
 msgid "Date"
 msgstr "Dátum"
+
+msgid "Delete"
+msgstr "Törlés"
 
 msgid "Delete Directory?"
 msgstr "Törlöd a könyvtárat?"
@@ -211,17 +214,14 @@ msgid "Disable for 12hs with am / pm"
 msgstr "Letiltás 12 órára am / pm"
 
 msgid "Disconnect"
-msgstr ""
+msgstr "Leválasztás"
 
 msgid "Distance (mm)"
 msgstr "Távolság (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr ""
+msgstr "Szeretnéd elfelejteni vagy leválasztani a %s-t?"
 
 #, python-format
 msgid "Do you want to recover %s?"
@@ -255,10 +255,13 @@ msgid "Error: Couldn't get a position to probe"
 msgstr "Hiba: Nem sikerült beállítani a mérni kívánt pozíciót"
 
 msgid "Estimated Time"
-msgstr ""
+msgstr "Becsült idő"
 
 msgid "Estimated Time Method"
 msgstr "Becsült idő módszer"
+
+msgid "Example"
+msgstr "Példa"
 
 msgid "Exclude Object"
 msgstr "Objektum kizárása"
@@ -279,10 +282,10 @@ msgid "Extrusion -"
 msgstr "Adagolás -"
 
 msgid "Failed to delete connection"
-msgstr ""
+msgstr "Nem sikerült törölni a kapcsolatot"
 
 msgid "Failed to initialize"
-msgstr ""
+msgstr "Sikertelen inicializálás"
 
 msgid "Failed, adjust position first"
 msgstr "Sikertelen! Előbb állítsd be a pozíciót"
@@ -291,7 +294,7 @@ msgid "Fan"
 msgstr "Hűtés"
 
 msgid "Filament"
-msgstr ""
+msgstr "Nyomtatószál"
 
 msgid "Filament Used"
 msgstr "Használt nyomtatószál"
@@ -335,17 +338,20 @@ msgstr "Áramlás:"
 msgid "Font Size"
 msgstr "Betűméret"
 
-msgid "Forget"
+msgid "For mouse control or to verify touchscreen accuracy"
 msgstr ""
+
+msgid "Forget"
+msgstr "Elfelejtés"
 
 msgid "Full Update"
 msgstr "Teljes frissítés"
 
 msgid "Gcodes"
-msgstr ""
+msgstr "G-Kódok"
 
 msgid "Getting IP address"
-msgstr ""
+msgstr "IP-cím beszerzése"
 
 msgid "Go Back"
 msgstr "Visszalépés"
@@ -358,9 +364,6 @@ msgstr "Elrejt"
 
 msgid "Hide sensors in Temp."
 msgstr "Hőfok szenzorok elrejtése"
-
-msgid "Hide temp."
-msgstr "Hőfok elrejtése"
 
 msgid "Home"
 msgstr "Kezdőpontok"
@@ -401,11 +404,8 @@ msgstr "PID-kalibráció kezdeményezése:"
 msgid "Input Shaper"
 msgstr "Bemeneti alakító"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
-msgstr ""
+msgstr "Elégtelen jogosultságok"
 
 msgid "Interface"
 msgstr "Felület"
@@ -415,6 +415,11 @@ msgstr "Érvénytelen"
 
 msgid "Invalid password"
 msgstr "Érvénytelen jelszó"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Hőfok"
 
 msgid "Inversely affects the icon size"
 msgstr "Fordítottan befolyásolja az ikon méretét"
@@ -433,6 +438,9 @@ msgstr "A fűtés teljesítményétől függően több mint 5 percig tarthat."
 
 msgid "It's possible that the configuration is not correct"
 msgstr "Lehetséges, hogy a konfiguráció nem megfelelő"
+
+msgid "Job Status"
+msgstr "Állás státusz"
 
 msgid "Klipper Restart"
 msgstr "A Klipper újraindítása"
@@ -463,11 +471,14 @@ msgstr "Nyelv"
 msgid "Large"
 msgstr "Nagy"
 
+msgid "Last Duration"
+msgstr "Utolsó időtartam"
+
 msgid "Last Used"
 msgstr "Utoljára használt"
 
 msgid "Layer Height"
-msgstr ""
+msgstr "Rétegmagasság"
 
 msgid "Layer:"
 msgstr "Réteg:"
@@ -515,7 +526,7 @@ msgid "Max Velocity"
 msgstr "Max sebesség"
 
 msgid "Max:"
-msgstr ""
+msgstr "Max:"
 
 msgid "Maximum"
 msgstr "Maximum"
@@ -538,14 +549,11 @@ msgstr "Memória"
 msgid "Menu"
 msgstr "Menü"
 
-msgid "Mesh calibrate"
-msgstr "Háló kalibrálása"
-
 msgid "Minimum Cruise Ratio"
 msgstr "Minimális utazási arány"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimum:"
 
 msgid "Modified"
 msgstr "Módosított"
@@ -569,13 +577,13 @@ msgid "Network"
 msgstr "Hálózat"
 
 msgid "Network connected"
-msgstr ""
+msgstr "Hálózat csatlakoztatva"
 
 msgid "Network disconnected"
-msgstr ""
+msgstr "A hálózat szétkapcsolt"
 
 msgid "Network not found"
-msgstr ""
+msgstr "Nem található hálózat"
 
 msgid "Never"
 msgstr "Soha"
@@ -585,6 +593,9 @@ msgstr "Új"
 
 msgid "No elegible macros:"
 msgstr "Nincs választható makró:"
+
+msgid "No info available"
+msgstr "Nincs információ"
 
 msgid "No mesh has been loaded"
 msgstr "Nincs háló betöltve"
@@ -607,15 +618,15 @@ msgstr "Értesítési napló üres"
 msgid "Notifications"
 msgstr "Értesítések"
 
+msgid "Nozzle diameter"
+msgstr "Fúvóka átmérő"
+
 msgid "Only for the move panel"
 msgstr "Csak a mozgatópanelhez"
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "%d által elavult"
-
-msgid "PSK for"
-msgstr "PSK-nak"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -624,6 +635,11 @@ msgstr[1] "Csomag frissül"
 
 msgid "Part Fan"
 msgstr "Tárgyhűtő"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Jelszó mentve"
 
 msgid "Password saved"
 msgstr "Jelszó mentve"
@@ -652,11 +668,14 @@ msgstr "Bekapcsolás"
 msgid "Power On Printer"
 msgstr "Nyomtató bekapcsolása"
 
+msgid "Pressure Advance"
+msgstr "Nyomás előtolás"
+
 msgid "Pressure Advance:"
 msgstr "Nyomás előtolás:"
 
-msgid "Pressure Advance"
-msgstr "Nyomás előtolás"
+msgid "Pressure advance"
+msgstr "Nyomáselőtolás"
 
 msgid "Print"
 msgstr "Nyomtatás"
@@ -707,7 +726,7 @@ msgid "Refresh"
 msgstr "Frissítés"
 
 msgid "Remove network"
-msgstr ""
+msgstr "Hálózat eltávolítása"
 
 msgid "Rename/Move:"
 msgstr "Átnevez/Áthelyez:"
@@ -788,6 +807,9 @@ msgstr "A fűtésteljesítmény megjelenítése"
 msgid "Show Scrollbars Buttons"
 msgstr "Görgetősáv gombok megjelenítése"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr "Csak a beállítható eszközök megjelenítése"
 
@@ -805,6 +827,9 @@ msgstr "Szeletelő:"
 
 msgid "Small"
 msgstr "Kicsi"
+
+msgid "Smooth time"
+msgstr "Simítási idő"
 
 msgid "Speed (mm/s)"
 msgstr "Sebesség (mm/s)"
@@ -847,7 +872,7 @@ msgid "System Shutdown"
 msgstr "Rendszer leállitás"
 
 msgid "System:"
-msgstr ""
+msgstr "Rendszer:"
 
 msgid "Temp (°C)"
 msgstr "Hőfok (°C)"
@@ -855,8 +880,11 @@ msgstr "Hőfok (°C)"
 msgid "Temperature"
 msgstr "Hőfok"
 
-msgid "The system doesn't meet the minimum requirement"
+msgid "Temperature too low to extrude"
 msgstr ""
+
+msgid "The system doesn't meet the minimum requirement"
+msgstr "A rendszer nem felel meg a minimális követelményeknek"
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Ez a panel akár 9 csavart is elbír egy 3x3-as rácsban"
@@ -878,7 +906,7 @@ msgid "Unknown Heater"
 msgstr "Ismeretlen melegítő"
 
 msgid "Unknown security type"
-msgstr ""
+msgstr "Ismeretlen biztonsági típus"
 
 msgid "Unload"
 msgstr "Kiadás"
@@ -898,14 +926,17 @@ msgstr "Frissítés"
 msgid "Updating"
 msgstr "Frissítés"
 
-msgid "Uploaded"
-msgstr "Feltöltve"
-
 msgid "Useful for un-responsive touchscreens"
 msgstr "Hasznos a nem reagáló érintőképernyőknél"
 
+msgid "User"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "A WebRTC-t a Streamet próbáló háttérrendszer nem támogatja"
+
+msgid "Working"
+msgstr "Munkavégzés"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "XY Mozgási seb. (mm/s)"
@@ -938,6 +969,9 @@ msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "napok"
 
+msgid "g"
+msgstr "g"
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "óra"
@@ -966,10 +1000,34 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr "s"
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "másodperc"
 msgstr[1] "másodperc"
+
+#~ msgid "Hide temp."
+#~ msgstr "Hőfok elrejtése"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK-nak"
+
+#~ msgid "Are you sure you want to stop the calibration?"
+#~ msgstr "Biztos, hogy leállítod a kalibrálást?"
+
+#~ msgid "Do you want to let KlipperScreen try to solve the issue?"
+#~ msgstr "Szeretnéd, ha a KlipperScreen megpróbálná megoldani a problémát?"
+
+#~ msgid "Insufficient priviledges detected"
+#~ msgstr "Elégtelen jogosultságok észlelése"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Háló kalibrálása"
+
+#~ msgid "Uploaded"
+#~ msgstr "Feltöltve"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "A hivatalos támogatás 2023 júniusában véget ért"

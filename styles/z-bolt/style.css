@@ -17,6 +17,7 @@
     color: @text;
 }
 
+junction,
 list row,
 treeview.view,
 combobox arrow,
@@ -57,6 +58,7 @@ button.active {
     background-color: @active;
 }
 
+.active image,
 button.update {
     background: @color3;
     border-color: @color3;
@@ -75,9 +77,14 @@ treeview.view check,
 switch {
     background-color: @active;
 }
+
 treeview.view check:checked,
 switch:checked {
     background-color: @switch-scale-bg;
+}
+
+treeview.view check:checked {
+    -gtk-icon-source: url("./styles/z-bolt/images/complete.svg");
 }
 
 entry {

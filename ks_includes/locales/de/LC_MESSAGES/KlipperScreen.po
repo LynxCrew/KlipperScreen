@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-06-01 12:09+0000\n"
-"Last-Translator: Niklas Tecklenborg <niklas.tecklenborg@gmail.com>\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-09-07 00:09+0000\n"
+"Last-Translator: Leart Dukaj <premtimdukaj@hotmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/de/>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -69,9 +69,6 @@ msgstr "Möchtest du das Objekt wirklich ausschließen?"
 
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Bist du sicher, dass du den Not-Aus ausführen möchtest?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr "Kalibrierung wirklich abbrechen?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Möchtest du diesen Druck wirklich abbrechen?"
@@ -176,14 +173,14 @@ msgid "Connected"
 msgstr "Verbunden"
 
 msgid "Connecting"
-msgstr ""
+msgstr "Verbinden"
 
 #, python-format
 msgid "Connecting to %s"
 msgstr "Verbinden zu %s"
 
 msgid "Connection failed"
-msgstr ""
+msgstr "Verbindung fehlgeschlagen"
 
 msgid "Console"
 msgstr "Konsole"
@@ -192,7 +189,10 @@ msgid "Cooldown"
 msgstr "Abkühlen"
 
 msgid "Couldn't add network"
-msgstr ""
+msgstr "Netzwerk konnte nicht hinzugefügt werden"
+
+msgid "Current"
+msgstr "Aktuell"
 
 msgid "Current percentage and graph line"
 msgstr "Momentane Prozent und Diagramm Linie"
@@ -202,6 +202,9 @@ msgstr "DPMS konnte nicht geladen werden und wurde deaktiviert"
 
 msgid "Date"
 msgstr "Datum"
+
+msgid "Delete"
+msgstr "Löschen"
 
 msgid "Delete Directory?"
 msgstr "Ordner löschen?"
@@ -223,10 +226,7 @@ msgstr "Entfernung (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr ""
+msgstr "Wollen Sie %s vergessen oder trennen?"
 
 #, python-format
 msgid "Do you want to recover %s?"
@@ -260,10 +260,13 @@ msgid "Error: Couldn't get a position to probe"
 msgstr "Fehler: Es konnte keine Position zum Abtasten ermittelt werden"
 
 msgid "Estimated Time"
-msgstr ""
+msgstr "Geschätzte Zeit"
 
 msgid "Estimated Time Method"
 msgstr "Verbleibende Zeit"
+
+msgid "Example"
+msgstr "Beispiel"
 
 msgid "Exclude Object"
 msgstr "Objekt ausschließen"
@@ -284,10 +287,10 @@ msgid "Extrusion -"
 msgstr "Extrudieren -"
 
 msgid "Failed to delete connection"
-msgstr ""
+msgstr "Löschen der Verbindung fehlgeschlagen"
 
 msgid "Failed to initialize"
-msgstr ""
+msgstr "Initialisierung fehlgeschlagen"
 
 msgid "Failed, adjust position first"
 msgstr "Fehlgeschlagen, Position zuerst anpassen"
@@ -296,7 +299,7 @@ msgid "Fan"
 msgstr "Lüfter"
 
 msgid "Filament"
-msgstr ""
+msgstr "Filament"
 
 msgid "Filament Used"
 msgstr "Filament verbraucht"
@@ -340,17 +343,20 @@ msgstr "Flussrate:"
 msgid "Font Size"
 msgstr "Schriftgröße"
 
-msgid "Forget"
+msgid "For mouse control or to verify touchscreen accuracy"
 msgstr ""
+
+msgid "Forget"
+msgstr "Vergessen"
 
 msgid "Full Update"
 msgstr "Vollständige Aktualisierung"
 
 msgid "Gcodes"
-msgstr ""
+msgstr "Gcodes"
 
 msgid "Getting IP address"
-msgstr ""
+msgstr "Rufe IP Adresse ab"
 
 msgid "Go Back"
 msgstr "Zurück"
@@ -363,9 +369,6 @@ msgstr "Verstecken"
 
 msgid "Hide sensors in Temp."
 msgstr "Sensoren in Temp ausblenden."
-
-msgid "Hide temp."
-msgstr "Temp. ausblenden"
 
 msgid "Home"
 msgstr "Grundposition"
@@ -406,11 +409,8 @@ msgstr "Initiieren einer PID-Kalibrierung für:"
 msgid "Input Shaper"
 msgstr "Input Shaper"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
-msgstr ""
+msgstr "Unzureichende Rechte"
 
 msgid "Interface"
 msgstr "Oberfläche"
@@ -420,6 +420,11 @@ msgstr "Ungültig"
 
 msgid "Invalid password"
 msgstr "Ungültiges Passwort"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Temperatur"
 
 msgid "Inversely affects the icon size"
 msgstr "Beeinflusst die Symbolgröße umgekehrt"
@@ -438,6 +443,9 @@ msgstr "Je nach Leistung der Heizung kann dies mehr als 5 Minuten dauern."
 
 msgid "It's possible that the configuration is not correct"
 msgstr "Es ist möglich das die Konfiguration nicht korrekt ist"
+
+msgid "Job Status"
+msgstr "Auftragsstatus"
 
 msgid "Klipper Restart"
 msgstr "Klipper Neustart"
@@ -469,11 +477,14 @@ msgstr "Sprache"
 msgid "Large"
 msgstr "Groß"
 
+msgid "Last Duration"
+msgstr "Letze Dauer"
+
 msgid "Last Used"
 msgstr "Zuletzt verwendet"
 
 msgid "Layer Height"
-msgstr ""
+msgstr "Schichthöhe"
 
 msgid "Layer:"
 msgstr "Schicht:"
@@ -521,7 +532,7 @@ msgid "Max Velocity"
 msgstr "Max Geschwindigkeit"
 
 msgid "Max:"
-msgstr ""
+msgstr "Max:"
 
 msgid "Maximum"
 msgstr "Maximal"
@@ -544,14 +555,11 @@ msgstr "Speicher"
 msgid "Menu"
 msgstr "Menü"
 
-msgid "Mesh calibrate"
-msgstr "Mesh kalibrieren"
-
 msgid "Minimum Cruise Ratio"
 msgstr "Minimale Cruise Ratio"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimum:"
 
 msgid "Modified"
 msgstr "Modifiziert"
@@ -575,13 +583,13 @@ msgid "Network"
 msgstr "Netzwerk"
 
 msgid "Network connected"
-msgstr ""
+msgstr "Netzwerk verbunden"
 
 msgid "Network disconnected"
-msgstr ""
+msgstr "Netzwerk getrennt"
 
 msgid "Network not found"
-msgstr ""
+msgstr "Netzwerk nicht gefunden"
 
 msgid "Never"
 msgstr "Niemals"
@@ -591,6 +599,9 @@ msgstr "Neu"
 
 msgid "No elegible macros:"
 msgstr "Keine wählbaren Makros:"
+
+msgid "No info available"
+msgstr "Keine Informationen verfügbar"
 
 msgid "No mesh has been loaded"
 msgstr "Es wurde kein Netz geladen"
@@ -613,15 +624,15 @@ msgstr "Benachrichtigungslog leer"
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
+msgid "Nozzle diameter"
+msgstr "Düsendurchmesser"
+
 msgid "Only for the move panel"
 msgstr "Nur für das Bewegungspanel"
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Veraltet von %d"
-
-msgid "PSK for"
-msgstr "PSK für"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -630,6 +641,11 @@ msgstr[1] "Pakete werden aktualisiert"
 
 msgid "Part Fan"
 msgstr "Bauteil Lüfter"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Passwort gespeichert"
 
 msgid "Password saved"
 msgstr "Passwort gespeichert"
@@ -658,11 +674,14 @@ msgstr "Ein"
 msgid "Power On Printer"
 msgstr "Drucker einschalten"
 
+msgid "Pressure Advance"
+msgstr "Druckvorlauf"
+
 msgid "Pressure Advance:"
 msgstr "Druckvorlauf:"
 
-msgid "Pressure Advance"
-msgstr "Druckvorlauf"
+msgid "Pressure advance"
+msgstr "Druckvorschub"
 
 msgid "Print"
 msgstr "Druck"
@@ -713,7 +732,7 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 msgid "Remove network"
-msgstr ""
+msgstr "Netzwerk entfernen"
 
 msgid "Rename/Move:"
 msgstr "Umbenennen/Bewegen:"
@@ -794,6 +813,9 @@ msgstr "Heizleistung anzeigen"
 msgid "Show Scrollbars Buttons"
 msgstr "Zeige Scrollbar Schaltfläche"
 
+msgid "Show cursor"
+msgstr ""
+
 msgid "Show only devices that are able to be set"
 msgstr "Zeige nur Geräte die eingestellt werden können"
 
@@ -811,6 +833,9 @@ msgstr "Slicer:"
 
 msgid "Small"
 msgstr "Klein"
+
+msgid "Smooth time"
+msgstr "Erweichungsdauer"
 
 msgid "Speed (mm/s)"
 msgstr "Geschwindigkeit (mm/s)"
@@ -854,7 +879,7 @@ msgid "System Shutdown"
 msgstr "System herunterfahren"
 
 msgid "System:"
-msgstr ""
+msgstr "System:"
 
 msgid "Temp (°C)"
 msgstr "Temp (°C)"
@@ -862,8 +887,11 @@ msgstr "Temp (°C)"
 msgid "Temperature"
 msgstr "Temperatur"
 
-msgid "The system doesn't meet the minimum requirement"
+msgid "Temperature too low to extrude"
 msgstr ""
+
+msgid "The system doesn't meet the minimum requirement"
+msgstr "Das System erfüllt die minimalen Anforderungen nicht"
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
 msgstr "Dieses Panel unterstützt bis zu 9 Schrauben in einem 3x3 Raster"
@@ -884,7 +912,7 @@ msgid "Unknown Heater"
 msgstr "Unbekannte Heizung"
 
 msgid "Unknown security type"
-msgstr ""
+msgstr "Unbekannter Sicherheitstyp"
 
 msgid "Unload"
 msgstr "Entladen"
@@ -906,14 +934,17 @@ msgstr "Aktualsieren"
 msgid "Updating"
 msgstr "Aktualisiere"
 
-msgid "Uploaded"
-msgstr "Hochgeladen"
-
 msgid "Useful for un-responsive touchscreens"
 msgstr "Nützlich für nicht reagierende Touchscreens"
 
+msgid "User"
+msgstr ""
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC wird vom Backend nicht unterstützt"
+
+msgid "Working"
+msgstr "Arbeitet"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "XY Bewegungsgeschwindigkeit (mm/s)"
@@ -946,6 +977,9 @@ msgid_plural "days"
 msgstr[0] "Tag"
 msgstr[1] "Tage"
 
+msgid "g"
+msgstr "g"
+
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "Stunde"
@@ -974,10 +1008,28 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr "s"
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekunde"
 msgstr[1] "sekunden"
+
+#~ msgid "Hide temp."
+#~ msgstr "Temp. ausblenden"
+
+#~ msgid "PSK for"
+#~ msgstr "PSK für"
+
+#~ msgid "Are you sure you want to stop the calibration?"
+#~ msgstr "Kalibrierung wirklich abbrechen?"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Mesh kalibrieren"
+
+#~ msgid "Uploaded"
+#~ msgstr "Hochgeladen"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Offizieller Support wurde im Juni 2023 eingestellt"
@@ -1090,9 +1142,6 @@ msgstr[1] "sekunden"
 #~ msgid "Initializing"
 #~ msgstr "Initialisierung"
 
-#~ msgid "Delete"
-#~ msgstr "Löschen"
-
 #~ msgid "Off"
 #~ msgstr "Aus"
 
@@ -1129,9 +1178,6 @@ msgstr[1] "sekunden"
 
 #~ msgid "IPv6"
 #~ msgstr "IPv6"
-
-#~ msgid "Duration Only"
-#~ msgstr "Reine Druckzeit"
 
 #~ msgid "Klipper Version"
 #~ msgstr "Klipper Version"

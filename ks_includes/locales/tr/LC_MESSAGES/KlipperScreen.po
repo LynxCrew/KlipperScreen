@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-06-03 19:09+0000\n"
-"Last-Translator: Selim <selim_guner2000@hotmail.com>\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-10-11 06:01+0000\n"
+"Last-Translator: Selim <technical50@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/tr/>\n"
 "Language: tr\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
-msgstr "%s sürüme güncellenecektir"
+msgstr "%s şu sürüme güncellenecektir:"
 
 msgid "(default)"
 msgstr "(varsayılan)"
 
 msgid "24 Hour Time"
-msgstr "24 Saat Zaman"
+msgstr "24 Saatlik Zaman"
 
 msgid "A FIRMWARE_RESTART may fix the issue."
 msgstr "Bir FIRMWARE_RESTART sorunu çözebilir."
@@ -55,11 +55,11 @@ msgstr "Uygula"
 
 #, python-format
 msgid "Apply %s%.3f offset to Endstop?"
-msgstr "Endstop'a %s%.3f ofset uygulansın mı?"
+msgstr "Endstop'a %s%.3f telafi uygulansın mı?"
 
 #, python-format
 msgid "Apply %s%.3f offset to Probe?"
-msgstr "İnceleyici'ye %s%.3f telafi uygulansın mı?"
+msgstr "Ölçme Çubuğu'na %s%.3f telafi uygulansın mı?"
 
 msgid "Archived"
 msgstr "Arşivlenen"
@@ -68,10 +68,7 @@ msgid "Are you sure do you want to exclude the object?"
 msgstr "Nesneyi hariç tutmak istediğinizden emin misiniz?"
 
 msgid "Are you sure you want to run Emergency Stop?"
-msgstr "Acil Durdurma'yı çalıştırmak istediğinizden emin misiniz?"
-
-msgid "Are you sure you want to stop the calibration?"
-msgstr "Kalibrasyonu durdurmak istediğinizden emin misiniz?"
+msgstr "Acil Durdurmak istediğinizden emin misiniz?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Bu baskıyı iptal etmek istediğinizden emin misiniz?"
@@ -98,7 +95,7 @@ msgid "Auto-close notifications"
 msgstr "Bildirimleri otomatik kapat"
 
 msgid "Auto-open Extrude On Pause"
-msgstr "Duraklatıldığında Ekstrüzyonu Otomatik-Aç"
+msgstr "Duraklatıldığında Ekstrüzyonu Otomatik Aç"
 
 msgid "Auto-scroll"
 msgstr "Otomatik-kaydırma"
@@ -107,10 +104,10 @@ msgid "Bed Level"
 msgstr "Tabla Ayarı"
 
 msgid "Bed Mesh"
-msgstr "Tabla Örgüsü"
+msgstr "Tabla Haritası"
 
 msgid "Both"
-msgstr "ikisi de"
+msgstr "İkisi de"
 
 msgid "Calibrate"
 msgstr "Kalibre et"
@@ -128,7 +125,7 @@ msgid "Can't set above the maximum:"
 msgstr "Maksimumun üzerine ayarlanamıyor:"
 
 msgid "Cancel"
-msgstr "İptal"
+msgstr "İptal et"
 
 msgid "Cancel Print"
 msgstr "Baskıyı iptal et"
@@ -146,7 +143,7 @@ msgid "Changes how the interface looks"
 msgstr "Arayüzün nasıl göründüğünü değiştirir"
 
 msgid "Changes how the time remaining is calculated"
-msgstr "Kalan sürenin hesaplanma şeklini değiştirir"
+msgstr "Kalan sürenin nasıl hesaplandığını değiştirir"
 
 msgid "Channel"
 msgstr "Kanal"
@@ -194,6 +191,9 @@ msgstr "Soğutma"
 msgid "Couldn't add network"
 msgstr "Ağ eklenemedi"
 
+msgid "Current"
+msgstr "Mevcut"
+
 msgid "Current percentage and graph line"
 msgstr "Mevcut yüzde ve grafik çizgisi"
 
@@ -202,6 +202,9 @@ msgstr "DPMS yüklenemedi ve devre dışı bırakıldı"
 
 msgid "Date"
 msgstr "Tarih"
+
+msgid "Delete"
+msgstr "Sil"
 
 msgid "Delete Directory?"
 msgstr "Dizini Sil?"
@@ -225,9 +228,6 @@ msgstr "Uzaklık (mm)"
 msgid "Do you want to forget or disconnect %s?"
 msgstr "%s'i unutmak mı yoksa bağlantısını kesmek mi istiyorsunuz?"
 
-msgid "Do you want to let KlipperScreen try to solve the issue?"
-msgstr "KlipperScreen'in sorunu çözmeye çalışmasına izin vermek ister misiniz?"
-
 #, python-format
 msgid "Do you want to recover %s?"
 msgstr "%s Kurtarmak istiyor musunuz?"
@@ -248,13 +248,13 @@ msgid "Error clearing active spool"
 msgstr "Aktif makara temizleme hatası"
 
 msgid "Error getting active spool"
-msgstr "Erkin makara hatalı"
+msgstr "Aktif makara hata veriyor"
 
 msgid "Error setting active spool"
 msgstr "Etkin makara ayar hatası"
 
 msgid "Error trying to fetch spools"
-msgstr "Makaraları getirmeye çalışırken hata oluştu"
+msgstr "Makaraları çekmeye çalışırken hata oluştu"
 
 msgid "Error: Couldn't get a position to probe"
 msgstr "Hata: İnceleyici için bir konum alınamadı"
@@ -264,6 +264,9 @@ msgstr "Tahmini Süre"
 
 msgid "Estimated Time Method"
 msgstr "Tahmini Zaman Metodu"
+
+msgid "Example"
+msgstr "Örnek"
 
 msgid "Exclude Object"
 msgstr "Nesneyi Hariç Tut"
@@ -320,7 +323,7 @@ msgid "Filter"
 msgstr "Filtre"
 
 msgid "Finding ADXL"
-msgstr "ADXL Bulunuyor"
+msgstr "ADXL Aranıyor"
 
 msgid "Fine Tuning"
 msgstr "İnce Ayar"
@@ -329,7 +332,7 @@ msgid "Finish"
 msgstr "Bitir"
 
 msgid "Firmware Restart"
-msgstr "Firmware Yeniden Başlat"
+msgstr "Firmware'i Yeniden Başlat"
 
 msgid "Flow:"
 msgstr "Akış:"
@@ -339,6 +342,9 @@ msgstr "Akış oranı:"
 
 msgid "Font Size"
 msgstr "Yazı boyutu"
+
+msgid "For mouse control or to verify touchscreen accuracy"
+msgstr "Fare yada dokunmatik ekranın kesinliğini doğrulamak için"
 
 msgid "Forget"
 msgstr "Unut"
@@ -364,11 +370,8 @@ msgstr "Gizle"
 msgid "Hide sensors in Temp."
 msgstr "Sıcaklıktaki sensörleri gizleyin."
 
-msgid "Hide temp."
-msgstr "Sıcaklığı gizle."
-
 msgid "Home"
-msgstr "Ana Ekran"
+msgstr "Ana Konum"
 
 msgid "Home All"
 msgstr "Eksenleri Sıfırla"
@@ -406,11 +409,8 @@ msgstr "PID kalibrasyonu başlatın:"
 msgid "Input Shaper"
 msgstr "İvme Düzenleyicisi"
 
-msgid "Insufficient priviledges detected"
-msgstr "Yetersiz ayrıcalık algılandı"
-
 msgid "Insufficient privileges"
-msgstr "Yetersiz ayrıcalıklar"
+msgstr "Yetersiz yetkilendirmeler"
 
 msgid "Interface"
 msgstr "Arayüz"
@@ -420,6 +420,9 @@ msgstr "Geçersiz"
 
 msgid "Invalid password"
 msgstr "Geçersiz şifre"
+
+msgid "Invalid temperature"
+msgstr "Geçersiz Sıcaklık"
 
 msgid "Inversely affects the icon size"
 msgstr "Simge boyutunu ters yönde etkiler"
@@ -437,10 +440,13 @@ msgid "It may take more than 5 minutes depending on the heater power."
 msgstr "Isıtıcı gücüne bağlı olarak 5 dakikadan fazla sürebilir."
 
 msgid "It's possible that the configuration is not correct"
-msgstr "Bu yapılandırmanın doğru olmama olasılığı var"
+msgstr "Bu yapılandırma doğru olmayabilir"
+
+msgid "Job Status"
+msgstr "İş Durumu"
 
 msgid "Klipper Restart"
-msgstr "Klipper Yeniden başlat"
+msgstr "Klipper'ı Yeniden başlat"
 
 msgid "Klipper has disconnected"
 msgstr "Klipper bağlantısı kesildi"
@@ -466,6 +472,9 @@ msgstr "Dil"
 
 msgid "Large"
 msgstr "Büyük"
+
+msgid "Last Duration"
+msgstr "Son Süre"
 
 msgid "Last Used"
 msgstr "Son kullanılan"
@@ -495,7 +504,7 @@ msgid "Lost Connection to Moonraker"
 msgstr "Moonraker ile Bağlantı Koptu"
 
 msgid "Lower Nozzle"
-msgstr "Nozzle düşür"
+msgstr "Nozzle indir"
 
 msgid "Macro shortcut on sidebar"
 msgstr "Kenar çubuğunda makro kısayolu"
@@ -542,9 +551,6 @@ msgstr "Hafıza"
 msgid "Menu"
 msgstr "Menü"
 
-msgid "Mesh calibrate"
-msgstr "Mesh Kalibre et"
-
 msgid "Minimum Cruise Ratio"
 msgstr "Minimum Gezinme Oranı"
 
@@ -590,8 +596,11 @@ msgstr "Yeni"
 msgid "No elegible macros:"
 msgstr "Uygun makro yok:"
 
+msgid "No info available"
+msgstr "Bilgi yok"
+
 msgid "No mesh has been loaded"
-msgstr "Herhangi bir mesh yüklenmedi"
+msgstr "Herhangi bir haritalandırma yüklenmedi"
 
 msgid "No wireless interface has been found"
 msgstr "Herhangi bir kablosuz cihazı bulunamadı"
@@ -606,10 +615,13 @@ msgid "Nothing selected"
 msgstr "Hiçbir şey seçilmedi"
 
 msgid "Notification log empty"
-msgstr "Bildirim geçmişi boş"
+msgstr "Geçmiş bildirim yok"
 
 msgid "Notifications"
 msgstr "Bildirimler"
+
+msgid "Nozzle diameter"
+msgstr "Nozzle ölçüsü"
 
 msgid "Only for the move panel"
 msgstr "Sadece paneli taşımak için"
@@ -618,16 +630,16 @@ msgstr "Sadece paneli taşımak için"
 msgid "Outdated by %d"
 msgstr "Güncelliğini yitiren %d"
 
-msgid "PSK for"
-msgstr "PSK için"
-
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
 msgstr[0] "Paket yükseltilecek"
 msgstr[1] "Paketler yükseltilecek"
 
 msgid "Part Fan"
-msgstr "Parça Fan"
+msgstr "Parça Fanı"
+
+msgid "Password"
+msgstr "Şifre"
 
 msgid "Password saved"
 msgstr "Şifre kaydedildi"
@@ -654,13 +666,16 @@ msgid "Power"
 msgstr "Güç"
 
 msgid "Power On Printer"
-msgstr "Yazıcıya Güç Ver (aç)"
+msgstr "Yazıcıyı aç"
+
+msgid "Pressure Advance"
+msgstr "Akış Dengeleme"
 
 msgid "Pressure Advance:"
 msgstr "Akış Dengeleme:"
 
-msgid "Pressure Advance"
-msgstr "Akış Dengeleme"
+msgid "Pressure advance"
+msgstr "Basınç avansı"
 
 msgid "Print"
 msgstr "Yazdır"
@@ -693,7 +708,7 @@ msgid "Quad Gantry Level"
 msgstr "Dörtlü Köprü Seviyesi"
 
 msgid "Raise Nozzle"
-msgstr "Nozzle yükselt"
+msgstr "Nozulu kaldır"
 
 msgid "Recover"
 msgstr "Kurtar"
@@ -760,7 +775,7 @@ msgstr "Kaydedildi"
 
 #, python-format
 msgid "Saved offset: %s"
-msgstr "Kaydedilen ofset: %s"
+msgstr "Kaydedilen telafi mesafesi: %s"
 
 msgid "Screen DPMS"
 msgstr "Ekran DPMS"
@@ -769,10 +784,10 @@ msgid "Screen Power Off Time"
 msgstr "Ekran kapatma zamanı"
 
 msgid "Screws Adjust"
-msgstr "Vida Ayarı"
+msgstr "Pin Ayarı"
 
 msgid "Screws not used:"
-msgstr "Kullanılmayan vidalar:"
+msgstr "Kullanılmayan pinler:"
 
 msgid "Send"
 msgstr "Gönder"
@@ -792,6 +807,9 @@ msgstr "Isıtıcı Gücünü Göster"
 msgid "Show Scrollbars Buttons"
 msgstr "Kaydırma çubuklarında düğmeleri göster"
 
+msgid "Show cursor"
+msgstr "İmleci göster"
+
 msgid "Show only devices that are able to be set"
 msgstr "Yalnızca ayarlanabilecek cihazları göster"
 
@@ -809,6 +827,9 @@ msgstr "Dilimleyici:"
 
 msgid "Small"
 msgstr "Küçük"
+
+msgid "Smooth time"
+msgstr "Pürüzsüzleştirme süresi"
 
 msgid "Speed (mm/s)"
 msgstr "Hız (mm/s)"
@@ -844,7 +865,7 @@ msgid "System"
 msgstr "Sistem"
 
 msgid "System Restart"
-msgstr "Sistem Yeniden Başlat"
+msgstr "Sistemi Yeniden Başlat"
 
 msgid "System Shutdown"
 msgstr "Sistem Kapat"
@@ -858,14 +879,17 @@ msgstr "Sıcaklık (°C)"
 msgid "Temperature"
 msgstr "Sıcaklık"
 
+msgid "Temperature too low to extrude"
+msgstr "Sıcaklık ekstrüzyon için çok düşük"
+
 msgid "The system doesn't meet the minimum requirement"
 msgstr "Sistem minimum gereksinimi karşılamıyor"
 
 msgid "This panel supports up-to 9 screws in a 3x3 Grid"
-msgstr "Bu panel 3x3 Izgarada en fazla 9 vidayı destekler"
+msgstr "Bu panel 3x3 Izgarada en fazla 9 pin destekler"
 
 msgid "This will affect screw positions and mesh graph"
-msgstr "Bu, vida konumlarını ve Örgü grafiğini etkileyecektir"
+msgstr "Bu, pin konumlarını ve haritalandırma grafiğini etkileyecektir"
 
 msgid "Timeout for screen black-out or power-off"
 msgstr "Ekranın kararması veya kapanması için zaman aşımı"
@@ -883,7 +907,7 @@ msgid "Unknown security type"
 msgstr "Bilinmeyen güvenlik türü"
 
 msgid "Unload"
-msgstr "Boşalt"
+msgstr "Çıkart"
 
 msgid "Unretract Extra Length"
 msgstr "İleri İtme Ekstra Uzunluk"
@@ -900,14 +924,17 @@ msgstr "Güncelle"
 msgid "Updating"
 msgstr "Güncelleniyor"
 
-msgid "Uploaded"
-msgstr "Yüklendi"
-
 msgid "Useful for un-responsive touchscreens"
 msgstr "Yanıt vermeyen dokunmatik ekranlar için kullanışlıdır"
 
+msgid "User"
+msgstr "Kullanıcı"
+
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC, Stream deneyin tarafından desteklenmez"
+
+msgid "Working"
+msgstr "Çalışıyor"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "XY Hareket hızı (mm/s)"
@@ -928,7 +955,7 @@ msgid "Z Tilt"
 msgstr "Z Eğim"
 
 msgid "Z offset:"
-msgstr "Z ofset:"
+msgstr "Z telafi mesafesi:"
 
 msgid "commit"
 msgid_plural "commits"
@@ -939,6 +966,9 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "gün"
 msgstr[1] "günler"
+
+msgid "g"
+msgstr "g"
 
 msgid "hour"
 msgid_plural "hours"
@@ -968,10 +998,35 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr "s"
+
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "saniye"
 msgstr[1] "saniyeler"
+
+#~ msgid "Hide temp."
+#~ msgstr "Sıcaklığı gizle."
+
+#~ msgid "PSK for"
+#~ msgstr "PSK için"
+
+#~ msgid "Are you sure you want to stop the calibration?"
+#~ msgstr "Kalibrasyonu durdurmak istediğinizden emin misiniz?"
+
+#~ msgid "Do you want to let KlipperScreen try to solve the issue?"
+#~ msgstr ""
+#~ "KlipperScreen'in sorunu çözmeye çalışmasına izin vermek ister misiniz?"
+
+#~ msgid "Insufficient priviledges detected"
+#~ msgstr "Yetersiz ayrıcalık algılandı"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Tabla haritası Kalibre et"
+
+#~ msgid "Uploaded"
+#~ msgstr "Yüklendi"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Resmi destek Haziran 2023 tarihinde sona ermiştir"
@@ -1083,9 +1138,6 @@ msgstr[1] "saniyeler"
 
 #~ msgid "Initializing"
 #~ msgstr "Başlatılıyor"
-
-#~ msgid "Delete"
-#~ msgstr "Sil"
 
 #~ msgid "Off"
 #~ msgstr "Kapa"

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 08:38-0300\n"
-"PO-Revision-Date: 2024-04-19 23:07+0000\n"
-"Last-Translator: Matheus Mösken Diegues <dmosken2015@gmail.com>\n"
+"POT-Creation-Date: 2024-10-09 18:08-0300\n"
+"PO-Revision-Date: 2024-10-05 13:15+0000\n"
+"Last-Translator: Paulo Henrique <pauloh.programador@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/pt/>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -70,9 +70,6 @@ msgstr "Tem certeza de que deseja excluir o objeto?"
 msgid "Are you sure you want to run Emergency Stop?"
 msgstr "Executar Parada de Emergência ?"
 
-msgid "Are you sure you want to stop the calibration?"
-msgstr ""
-
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Cancelar a impressão ?"
 
@@ -86,7 +83,7 @@ msgid "Are you sure you wish to shutdown the system?"
 msgstr "Desligar o sistema ?"
 
 msgid "Asks for confirmation before stopping"
-msgstr ""
+msgstr "Pergunta por confirmação antes de parar"
 
 msgid "Auto"
 msgstr "Automatico"
@@ -95,13 +92,13 @@ msgid "Auto-calibrate"
 msgstr "Calibrar automaticamente"
 
 msgid "Auto-close notifications"
-msgstr "Fechar notificações autom."
+msgstr "Fechamento Automático das Notificações"
 
 msgid "Auto-open Extrude On Pause"
 msgstr "Abrir Ext. automaticamente em Pausa"
 
 msgid "Auto-scroll"
-msgstr "Acompanhar Conteúdo"
+msgstr "Rolar Automaticamente"
 
 msgid "Bed Level"
 msgstr "Nível da Mesa"
@@ -143,10 +140,10 @@ msgid "Cannot connect to Moonraker"
 msgstr "Não foi possível conectar ao Moonraker"
 
 msgid "Changes how the interface looks"
-msgstr ""
+msgstr "Muda como a interface parece"
 
 msgid "Changes how the time remaining is calculated"
-msgstr ""
+msgstr "Altera como o tempo restante é calculado"
 
 msgid "Channel"
 msgstr "Canal"
@@ -164,7 +161,7 @@ msgid "Close"
 msgstr "Fechar"
 
 msgid "Close messages after a timeout"
-msgstr ""
+msgstr "Fecha as mensagens depois do tempo esgotado"
 
 msgid "Complete"
 msgstr "Completado"
@@ -176,14 +173,14 @@ msgid "Connected"
 msgstr "Conectado"
 
 msgid "Connecting"
-msgstr ""
+msgstr "Conectando"
 
 #, python-format
 msgid "Connecting to %s"
 msgstr "Conectando %s"
 
 msgid "Connection failed"
-msgstr ""
+msgstr "Falha na Conexão"
 
 msgid "Console"
 msgstr "Terminal"
@@ -192,16 +189,22 @@ msgid "Cooldown"
 msgstr "Resfriar"
 
 msgid "Couldn't add network"
-msgstr ""
+msgstr "Não foi possível adicionar a rede"
+
+msgid "Current"
+msgstr "Atual"
 
 msgid "Current percentage and graph line"
-msgstr ""
+msgstr "Porcentagem e gráficos atuais"
 
 msgid "DPMS has failed to load and has been disabled"
 msgstr "Gerenciador de economia de energia não disponível"
 
 msgid "Date"
 msgstr "Data"
+
+msgid "Delete"
+msgstr "Apagar"
 
 msgid "Delete Directory?"
 msgstr "Deletar diretório?"
@@ -216,16 +219,13 @@ msgid "Disable for 12hs with am / pm"
 msgstr ""
 
 msgid "Disconnect"
-msgstr ""
+msgstr "Desconectar"
 
 msgid "Distance (mm)"
 msgstr "Distancia (mm)"
 
 #, python-format
 msgid "Do you want to forget or disconnect %s?"
-msgstr ""
-
-msgid "Do you want to let KlipperScreen try to solve the issue?"
 msgstr ""
 
 #, python-format
@@ -260,10 +260,13 @@ msgid "Error: Couldn't get a position to probe"
 msgstr "Erro: Não foi possível obter uma posição para a sonda"
 
 msgid "Estimated Time"
-msgstr ""
+msgstr "Tempo estimado"
 
 msgid "Estimated Time Method"
 msgstr "Método de Tempo Estimado"
+
+msgid "Example"
+msgstr "Exemplo"
 
 msgid "Exclude Object"
 msgstr "Excluir Objeto"
@@ -287,7 +290,7 @@ msgid "Failed to delete connection"
 msgstr ""
 
 msgid "Failed to initialize"
-msgstr ""
+msgstr "Falha ao inicializar"
 
 msgid "Failed, adjust position first"
 msgstr "Falhou, ajuste a posição primeiro"
@@ -340,17 +343,20 @@ msgstr "Flow:"
 msgid "Font Size"
 msgstr "Tamanho da fonte"
 
-msgid "Forget"
+msgid "For mouse control or to verify touchscreen accuracy"
 msgstr ""
+
+msgid "Forget"
+msgstr "Esquecer"
 
 msgid "Full Update"
 msgstr "Atualizar Tudo"
 
 msgid "Gcodes"
-msgstr ""
+msgstr "Gcodes"
 
 msgid "Getting IP address"
-msgstr ""
+msgstr "Obter Endereço IP"
 
 msgid "Go Back"
 msgstr "Voltar"
@@ -363,9 +369,6 @@ msgstr "Ocultar"
 
 msgid "Hide sensors in Temp."
 msgstr "Ocultar sensores na Temperatura."
-
-msgid "Hide temp."
-msgstr "Ocultar Temp."
 
 msgid "Home"
 msgstr "Zerar"
@@ -406,11 +409,8 @@ msgstr "Iniciar calibração do PID para:"
 msgid "Input Shaper"
 msgstr "Moldagem Assistiva"
 
-msgid "Insufficient priviledges detected"
-msgstr ""
-
 msgid "Insufficient privileges"
-msgstr ""
+msgstr "Privilégios insuficientes"
 
 msgid "Interface"
 msgstr "Interface"
@@ -420,6 +420,11 @@ msgstr "Inválido"
 
 msgid "Invalid password"
 msgstr "Senha Inválida"
+
+#, fuzzy
+#| msgid "Temperature"
+msgid "Invalid temperature"
+msgstr "Temperatura"
 
 msgid "Inversely affects the icon size"
 msgstr ""
@@ -438,6 +443,9 @@ msgstr ""
 "Isso pode levar mais que 5 minutos dependendo da potencia do aquecedor."
 
 msgid "It's possible that the configuration is not correct"
+msgstr ""
+
+msgid "Job Status"
 msgstr ""
 
 msgid "Klipper Restart"
@@ -470,11 +478,14 @@ msgstr "Idioma"
 msgid "Large"
 msgstr "Grande"
 
+msgid "Last Duration"
+msgstr ""
+
 msgid "Last Used"
 msgstr "Último Usado"
 
 msgid "Layer Height"
-msgstr ""
+msgstr "Altura da Camada"
 
 msgid "Layer:"
 msgstr "Camada:"
@@ -522,7 +533,7 @@ msgid "Max Velocity"
 msgstr "Velocidade máxima"
 
 msgid "Max:"
-msgstr ""
+msgstr "Max:"
 
 msgid "Maximum"
 msgstr "Máximo"
@@ -540,19 +551,16 @@ msgid "Medium"
 msgstr "Médio"
 
 msgid "Memory"
-msgstr ""
+msgstr "Memória"
 
 msgid "Menu"
 msgstr "Menu"
-
-msgid "Mesh calibrate"
-msgstr "Calibrar Malha"
 
 msgid "Minimum Cruise Ratio"
 msgstr ""
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimo:"
 
 msgid "Modified"
 msgstr "Modificado"
@@ -576,13 +584,13 @@ msgid "Network"
 msgstr "Rede"
 
 msgid "Network connected"
-msgstr ""
+msgstr "Conectado à rede"
 
 msgid "Network disconnected"
-msgstr ""
+msgstr "desconectado da rede"
 
 msgid "Network not found"
-msgstr ""
+msgstr "Rede não encontrada"
 
 msgid "Never"
 msgstr "Nunca"
@@ -592,6 +600,9 @@ msgstr "Novo"
 
 msgid "No elegible macros:"
 msgstr "Sem macros elegíveis:"
+
+msgid "No info available"
+msgstr "Sem informações disponíveis"
 
 msgid "No mesh has been loaded"
 msgstr "Nenhuma malha foi carregada"
@@ -614,15 +625,15 @@ msgstr "Log de notificação vazio"
 msgid "Notifications"
 msgstr "Notificações"
 
+msgid "Nozzle diameter"
+msgstr "Diâmetro do Bico"
+
 msgid "Only for the move panel"
 msgstr ""
 
 #, python-format
 msgid "Outdated by %d"
 msgstr "Desatualizado por %d"
-
-msgid "PSK for"
-msgstr "PSK por"
 
 msgid "Package will be updated"
 msgid_plural "Packages will be updated"
@@ -631,6 +642,11 @@ msgstr[1] "Os pacotes serão atualizados"
 
 msgid "Part Fan"
 msgstr "Controle da Ventoinha"
+
+#, fuzzy
+#| msgid "Password saved"
+msgid "Password"
+msgstr "Senha Salva"
 
 msgid "Password saved"
 msgstr "Senha Salva"
@@ -651,7 +667,7 @@ msgid "Please recompile and flash the micro-controller."
 msgstr "Por favor, recompile e atualize o microcontrolador."
 
 msgid "Please wait"
-msgstr ""
+msgstr "Por favor, aguarde"
 
 msgid "Power"
 msgstr "Ligar"
@@ -659,11 +675,14 @@ msgstr "Ligar"
 msgid "Power On Printer"
 msgstr "Ligar a impressora"
 
+msgid "Pressure Advance"
+msgstr "Avanço de Pressão"
+
 msgid "Pressure Advance:"
 msgstr "Avanço de Pressão:"
 
-msgid "Pressure Advance"
-msgstr "Avanço de Pressão"
+msgid "Pressure advance"
+msgstr ""
 
 msgid "Print"
 msgstr "Imprimir"
@@ -714,7 +733,7 @@ msgid "Refresh"
 msgstr "Recarregar"
 
 msgid "Remove network"
-msgstr ""
+msgstr "Remover Rede"
 
 msgid "Rename/Move:"
 msgstr "Renomear/Mover:"
@@ -750,7 +769,7 @@ msgid "Save"
 msgstr "Salvar"
 
 msgid "Save Config"
-msgstr "Salvar Config."
+msgstr "Salvar Configurações"
 
 msgid "Save Z"
 msgstr "Salvar Eixo Z"
@@ -784,7 +803,7 @@ msgid "Set Temp"
 msgstr "Definir Temperatura"
 
 msgid "Settings"
-msgstr "Definições"
+msgstr "Configurações"
 
 msgid "Show"
 msgstr "Mostrar"
@@ -794,6 +813,9 @@ msgstr "Exibir Potência do Aquecedor"
 
 msgid "Show Scrollbars Buttons"
 msgstr "Botões auxiliares de Rolagem"
+
+msgid "Show cursor"
+msgstr ""
 
 msgid "Show only devices that are able to be set"
 msgstr ""
@@ -812,6 +834,9 @@ msgstr "Fatiador:"
 
 msgid "Small"
 msgstr "Pequeno"
+
+msgid "Smooth time"
+msgstr ""
 
 msgid "Speed (mm/s)"
 msgstr "Velocidade (mm/s)"
@@ -853,13 +878,16 @@ msgid "System Shutdown"
 msgstr "Desligar Sistema"
 
 msgid "System:"
-msgstr ""
+msgstr "Sistema:"
 
 msgid "Temp (°C)"
-msgstr "Temp (°C)"
+msgstr "Temperatura (°C)"
 
 msgid "Temperature"
 msgstr "Temperatura"
+
+msgid "Temperature too low to extrude"
+msgstr ""
 
 msgid "The system doesn't meet the minimum requirement"
 msgstr ""
@@ -903,14 +931,17 @@ msgstr "Atualizar"
 msgid "Updating"
 msgstr "Atualizando"
 
-msgid "Uploaded"
-msgstr "Carregado"
-
 msgid "Useful for un-responsive touchscreens"
+msgstr ""
+
+msgid "User"
 msgstr ""
 
 msgid "WebRTC is not supported by the backend trying Stream"
 msgstr "WebRTC não é suportado pela tentativa de Stream do backend"
+
+msgid "Working"
+msgstr ""
 
 msgid "XY Move Speed (mm/s)"
 msgstr "Velocidade de Movimento XY (mm/s)"
@@ -940,8 +971,11 @@ msgstr[1] "compromete"
 
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Dia"
+msgstr[1] "Dias"
+
+msgid "g"
+msgstr ""
 
 msgid "hour"
 msgid_plural "hours"
@@ -971,10 +1005,25 @@ msgstr "mm/s²"
 msgid "mm³/s"
 msgstr "mm³/s"
 
+msgid "s"
+msgstr ""
+
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Segundo"
+msgstr[1] "Segundos"
+
+#~ msgid "Hide temp."
+#~ msgstr "Ocultar Temp."
+
+#~ msgid "PSK for"
+#~ msgstr "PSK por"
+
+#~ msgid "Mesh calibrate"
+#~ msgstr "Calibrar Malha"
+
+#~ msgid "Uploaded"
+#~ msgstr "Carregado"
 
 #~ msgid "Ended official support in June 2023"
 #~ msgstr "Suporte oficial encerrado em Junho de 2023"

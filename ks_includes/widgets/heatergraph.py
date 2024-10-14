@@ -30,6 +30,11 @@ class HeaterGraph(Gtk.DrawingArea):
         if fullscreen:
             GLib.timeout_add_seconds(1, self.update_graph)
         self.fs_graph = None
+        self.max_temp = 0
+        for section in self.printer.config:
+            if "max_temp" in self.printer.get_config_section(section):
+                self.max_temp = max(float(self.printer.get_config_section(section)["max_temp"]), self.max_temp)
+        self.max_temp = min(self.max_temp, 999)
 
     def update_graph(self):
         self.queue_draw()
@@ -150,6 +155,7 @@ class HeaterGraph(Gtk.DrawingArea):
             ctx.stroke()
 
     def graph_lines(self, ctx: cairoContext, gsize, max_num):
+        max_num = min(max_num, self.max_temp)
         if (self.config.get_config()["main"].getboolean("auto_scale_temp_chart", True)
                 or self.config.get_config()["main"].getboolean("auto_adjust_temp_chart_indices", True)):
             nscale = 10
@@ -157,7 +163,6 @@ class HeaterGraph(Gtk.DrawingArea):
                 nscale += 10
         else:
             nscale = 50
-        max_num = min(max_num, 999)
         r = int(max_num / nscale) + 1
         hscale = (gsize[1][1] - gsize[0][1]) / (r * nscale)
         ctx.set_font_size(self.font_size)
