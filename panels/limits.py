@@ -74,10 +74,7 @@ class Panel(ScreenPanel):
 
         if self.limits[option]['scale'].has_grab():
             return
-        if option == "minimum_cruise_ratio" and value < 1:
-            self.values[option] = int(value * 100)
-        else:
-            self.values[option] = int(value)
+        self.values[option] = int(value)
         for opt in self.options:
             if opt["option"] == option and 'max' not in opt:
                 if self.values[option] > opt["value"]:
@@ -99,10 +96,10 @@ class Panel(ScreenPanel):
         name.set_markup(f"<big><b>{option['name']}</b></big> ({option['units']})")
 
         # adj (value, lower, upper, step_increment, page_increment, page_size)
-        inscrement = 0.01 if option['option'] == "minimum_cruise_ratio" else 1
+        increment = 0.01 if option['option'] == "minimum_cruise_ratio" else 1
         min_value = option["min"] if 'min' in option else 1
         max_value = option['max'] if 'max' in option else option['value'] * 1.5
-        adj = Gtk.Adjustment(option['value'], min_value, max_value, 1, 5, 0)
+        adj = Gtk.Adjustment(option['value'], min_value, max_value, increment, 5, 0)
         scale = Gtk.Scale(adjustment=adj, digits=0, hexpand=True, has_origin=True)
         scale.get_style_context().add_class("option_slider")
         scale.connect("button-release-event", self.set_opt_value, option)
