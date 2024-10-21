@@ -100,7 +100,7 @@ class Panel(ScreenPanel):
         min_value = option["min"] if 'min' in option else 1
         max_value = option['max'] if 'max' in option else option['value'] * 1.5
         adj = Gtk.Adjustment(option['value'], min_value, max_value, increment, 5, 0)
-        scale = Gtk.Scale(adjustment=adj, digits=0, hexpand=True, has_origin=True)
+        scale = Gtk.Scale(adjustment=adj, digits=2, hexpand=True, has_origin=True)
         scale.get_style_context().add_class("option_slider")
         scale.connect("button-release-event", self.set_opt_value, option)
         self.values[option['option']] = option['value']
