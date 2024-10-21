@@ -72,7 +72,10 @@ class Panel(ScreenPanel):
 
         if self.limits[option]['scale'].has_grab():
             return
-        self.values[option] = int(value)
+        if option == "minimum_cruise_ratio" and value < 1:
+            self.values[option] = value
+        else:
+            self.values[option] = int(value)
         for opt in self.options:
             if opt["option"] == option and 'max' not in opt:
                 if self.values[option] > opt["value"]:
