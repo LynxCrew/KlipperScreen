@@ -94,7 +94,11 @@ class Panel(ScreenPanel):
 
         name = Gtk.Label(hexpand=True, vexpand=True, halign=Gtk.Align.START, valign=Gtk.Align.CENTER,
                          wrap=True, wrap_mode=Pango.WrapMode.WORD_CHAR)
-        name.set_markup(f"<big><b>{option['name']}</b></big> ({option['units']})")
+
+        label = f"<big><b>{option['name']}</b></big>"
+        if 'units' in option:
+            label += f" ({option['units']})"
+        name.set_markup(label)
 
         # adj (value, lower, upper, step_increment, page_increment, page_size)
         increment = 0.01 if option['option'] == "minimum_cruise_ratio" else 1
