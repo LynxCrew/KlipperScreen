@@ -95,7 +95,7 @@ class Panel(ScreenPanel):
         name.set_markup(f"<big><b>{option['name']}</b></big> ({option['units']})")
 
         # adj (value, lower, upper, step_increment, page_increment, page_size)
-        if option == "minimum_cruise_ratio":
+        if option["option"] == "minimum_cruise_ratio":
             min_value = 0
             max_value = 99
         else:
