@@ -28,8 +28,12 @@ class Panel(ScreenPanel):
                 "name": _("Minimum Cruise Ratio"),
                 "option": "minimum_cruise_ratio",
                 "units": "%",
-                "value": (int(float(conf['minimum_cruise_ratio']) * 100) if float(conf['minimum_cruise_ratio']) > 0 else 0) if 'minimum_cruise_ratio' in conf else 50,
-                "max": 100
+                "value": ((int(float(conf['minimum_cruise_ratio']) * 100)
+                          if float(conf['minimum_cruise_ratio']) > 0
+                          else 0)
+                          if 'minimum_cruise_ratio' in conf else 50),
+                "min": 0,
+                "max": 0.99
             },
             {
                 "name": _("Max Velocity"),
@@ -95,12 +99,9 @@ class Panel(ScreenPanel):
         name.set_markup(f"<big><b>{option['name']}</b></big> ({option['units']})")
 
         # adj (value, lower, upper, step_increment, page_increment, page_size)
-        if option["option"] == "minimum_cruise_ratio":
-            min_value = 0
-            max_value = 99
-        else:
-            min_value = 1
-            max_value = option['max'] if 'max' in option else option['value'] * 1.5
+        inscrement = 0.01 if option['option'] == "minimum_cruise_ratio" else 1
+        min_value = option["min"] if 'min' in option else 1
+        max_value = option['max'] if 'max' in option else option['value'] * 1.5
         adj = Gtk.Adjustment(option['value'], min_value, max_value, 1, 5, 0)
         scale = Gtk.Scale(adjustment=adj, digits=0, hexpand=True, has_origin=True)
         scale.get_style_context().add_class("option_slider")
