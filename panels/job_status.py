@@ -668,7 +668,7 @@ class Panel(ScreenPanel):
                 estimated = self.estimate_time(
                     progress, print_duration, file_time, filament_time, slicer_time, last_time
                 )
-             if estimated > 1:
+            if estimated > 1:
                 progress = min(max(print_duration / estimated, 0), 1)
                 remaining = estimated - print_duration
 
