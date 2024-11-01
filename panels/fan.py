@@ -20,6 +20,7 @@ class Panel(ScreenPanel):
         # Create a grid for all devices
         self.labels['devices'] = Gtk.Grid(valign=Gtk.Align.CENTER)
 
+        self.fans = []
         self.load_fans()
 
         scroll = self._gtk.ScrolledWindow()
@@ -52,7 +53,7 @@ class Panel(ScreenPanel):
         if widget is not None:
             self.set_fan_speed(None, None, fan)
 
-    def add_fan(self, fan, fans):
+    def add_fan(self, fan):
 
         logging.info(f"Adding fan: {fan}")
         changeable = any(fan.startswith(x) or fan == x for x in CHANGEABLE_FANS)
@@ -97,7 +98,7 @@ class Panel(ScreenPanel):
             "speed": speed,
         }
 
-        fans = list(fans)
+        fans = list(self.fans)
         logging.info(fans)
         if fan == "fan":
             pos = 0
@@ -113,15 +114,14 @@ class Panel(ScreenPanel):
         self.labels['devices'].show_all()
 
     def load_fans(self):
-        fans = self._printer.get_fans()
-        logging.info(fans)
-        for fan in fans:
+        self.fans = self._printer.get_fans()
+        for fan in self.fans:
             # Support for hiding devices by name
             name = fan.split()[1] if len(fan.split()) > 1 else fan
             logging.info(name)
             if name.startswith("_"):
                 continue
-            self.add_fan(fan, fans)
+            self.add_fan(fan)
 
     def set_fan_speed(self, widget, event, fan):
         value = self.devices[fan]['scale'].get_value()
