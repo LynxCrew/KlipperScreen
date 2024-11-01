@@ -106,6 +106,7 @@ class Panel(ScreenPanel):
             pos = fans.index(fan) + 1
         else:
             pos = fans.index(fan)
+        logging.info(pos)
 
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(fan_row, 0, pos, 1, 1)
