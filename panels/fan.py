@@ -98,6 +98,7 @@ class Panel(ScreenPanel):
         }
 
         devices = sorted(self.devices)
+        logging.info(fans)
         if fan == "fan":
             pos = 0
         elif "fan" in fans:
