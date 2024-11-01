@@ -198,10 +198,8 @@ class Printer:
         fans = []
         if self.config_section_exists("fan"):
             fans.append("fan")
-        fans.extend(iter(self.get_config_section_list("heater_fan")))
-        for fan_type in ["fan_generic", "controller_temperature_fan", "controller_fan"]:
+        for fan_type in ["fan_generic", "heater_fan", "controller_temperature_fan", "controller_fan"]:
             fans.extend(iter(self.get_config_section_list(f"{fan_type} ")))
-        logging.info(fans)
         return fans
 
     def get_pwm_tools(self):
