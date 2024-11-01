@@ -99,7 +99,6 @@ class Panel(ScreenPanel):
         }
 
         fans = list(self.fans)
-        logging.info(fans)
         if fan == "fan":
             pos = 0
         elif "fan" in fans:
@@ -107,7 +106,6 @@ class Panel(ScreenPanel):
             pos = fans.index(fan) + 1
         else:
             pos = fans.index(fan)
-        logging.info(pos)
 
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(fan_row, 0, pos, 1, 1)
@@ -118,7 +116,6 @@ class Panel(ScreenPanel):
         for fan in self.fans:
             # Support for hiding devices by name
             name = fan.split()[1] if len(fan.split()) > 1 else fan
-            logging.info(name)
             if name.startswith("_"):
                 continue
             self.add_fan(fan)
