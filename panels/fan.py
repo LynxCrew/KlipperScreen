@@ -97,7 +97,7 @@ class Panel(ScreenPanel):
             "speed": speed,
         }
 
-        devices = sorted(self.devices)
+        fans = list(fans)
         logging.info(fans)
         if fan == "fan":
             pos = 0
