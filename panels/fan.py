@@ -118,6 +118,7 @@ class Panel(ScreenPanel):
         for fan in fans:
             # Support for hiding devices by name
             name = fan.split()[1] if len(fan.split()) > 1 else fan
+            logging.info(name)
             if name.startswith("_"):
                 continue
             self.add_fan(fan, fans)
