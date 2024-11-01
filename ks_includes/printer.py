@@ -201,6 +201,7 @@ class Printer:
         fans.extend(iter(self.get_config_section_list("heater_fan")))
         for fan_type in ["fan_generic", "controller_temperature_fan", "controller_fan"]:
             fans.extend(iter(self.get_config_section_list(f"{fan_type} ")))
+        logging.info(fans)
         return fans
 
     def get_pwm_tools(self):
