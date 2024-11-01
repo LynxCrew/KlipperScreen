@@ -52,7 +52,7 @@ class Panel(ScreenPanel):
         if widget is not None:
             self.set_fan_speed(None, None, fan)
 
-    def add_fan(self, fan):
+    def add_fan(self, fan, fans):
 
         logging.info(f"Adding fan: {fan}")
         changeable = any(fan.startswith(x) or fan == x for x in CHANGEABLE_FANS)
@@ -100,11 +100,11 @@ class Panel(ScreenPanel):
         devices = sorted(self.devices)
         if fan == "fan":
             pos = 0
-        elif "fan" in devices:
-            devices.pop(devices.index("fan"))
-            pos = devices.index(fan) + 1
+        elif "fan" in fans:
+            fans.pop(fans.index("fan"))
+            pos = fans.index(fan) + 1
         else:
-            pos = devices.index(fan)
+            pos = fans.index(fan)
 
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(fan_row, 0, pos, 1, 1)
@@ -117,7 +117,7 @@ class Panel(ScreenPanel):
             name = fan.split()[1] if len(fan.split()) > 1 else fan
             if name.startswith("_"):
                 continue
-            self.add_fan(fan)
+            self.add_fan(fan, fans)
 
     def set_fan_speed(self, widget, event, fan):
         value = self.devices[fan]['scale'].get_value()
