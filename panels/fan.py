@@ -114,6 +114,7 @@ class Panel(ScreenPanel):
 
     def load_fans(self):
         fans = self._printer.get_fans()
+        logging.info(fans)
         for fan in fans:
             # Support for hiding devices by name
             name = fan.split()[1] if len(fan.split()) > 1 else fan
