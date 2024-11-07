@@ -210,7 +210,7 @@ textview .time {
 }
 
 .dialog-error {
-    border-bottom-color: @error;
+    border-bottom-color: @warning;
 }
 
 .dialog-primary {
