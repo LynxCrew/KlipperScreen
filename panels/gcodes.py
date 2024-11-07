@@ -318,8 +318,8 @@ class Panel(ScreenPanel):
         action = _("Print") if self._printer.extrudercount > 0 else _("Start")
 
         buttons = [
-            {"name": _("Delete"), "response": Gtk.ResponseType.REJECT, "style": 'dialog-error'},
             {"name": action, "response": Gtk.ResponseType.OK, "style": 'dialog-primary'},
+            {"name": _("Delete"), "response": Gtk.ResponseType.REJECT, "style": 'dialog-error'},
             {"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": 'dialog-secondary'}
         ]
 
