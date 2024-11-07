@@ -208,3 +208,11 @@ textview .time {
 .keyboard_pad {
     background-color: #090909; /*base02*/
 }
+
+.dialog-error {
+    border-bottom-color: @error;
+}
+
+.dialog-primary {
+     border-bottom-color: @color1;
+}
