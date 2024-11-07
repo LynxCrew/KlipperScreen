@@ -150,7 +150,7 @@ class Panel(ScreenPanel):
             info.get_style_context().add_class("print-info")
             info.set_markup(self.get_info_str(item, path))
             delete = Gtk.Button(hexpand=False, vexpand=False, can_focus=False, always_show_image=True)
-            delete.get_style_context().add_class("color1")
+            delete.get_style_context().add_class("color3")
             delete.set_image(self._gtk.Image("delete", self.list_button_size, self.list_button_size))
             rename = Gtk.Button(hexpand=False, vexpand=False, can_focus=False, always_show_image=True)
             rename.get_style_context().add_class("color2")
@@ -173,7 +173,7 @@ class Panel(ScreenPanel):
                 delete.connect("clicked", self.confirm_delete_file, f"gcodes/{path}")
                 rename.connect("clicked", self.show_rename, f"gcodes/{path}")
                 action_icon = "printer" if self._printer.extrudercount > 0 else "load"
-                action = self._gtk.Button(action_icon, style="color3")
+                action = self._gtk.Button(action_icon, style="color1")
                 action.connect("clicked", self.confirm_print, path)
                 action.set_hexpand(False)
                 action.set_vexpand(False)
