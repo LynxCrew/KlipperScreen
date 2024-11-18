@@ -272,6 +272,9 @@ class Printer:
                 "leds": {"count": self.ledcount},
                 "home_full": self.home_full,
                 "config_sections": list(self.config.keys()),
+                "homed_axes": self.get_stat("toolhead", "homed_axes"),
+                "quad_gantry_level": self.get_stat("quad_gantry_level"),
+                "z_tilt": self.get_stat("z_tilt"),
             }
         }
 
