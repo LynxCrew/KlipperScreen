@@ -239,7 +239,7 @@ class Panel(ScreenPanel):
         if self._printer.get_stat("toolhead", "homed_axes") != "xyz":
             self._screen._ws.klippy.gcode_script("G28")
             # do Z_TILT_CALIBRATE if applicable.
-            if self._printer.config_section_exists("z_tilt"):
+            if self._printer.config_section_exists("z_tilt") or self._printer.config_section_exists("z_tilt_ng"):
                 self._screen._ws.klippy.gcode_script("Z_TILT_ADJUST")
 
     def go_to_position(self, widget, position):

@@ -244,6 +244,7 @@ class Panel(ScreenPanel):
         if (
             "Z_TILT_ADJUST" in self._printer.available_commands
             and not bool(self._printer.get_stat("z_tilt", "applied"))
+            and not bool(self._printer.get_stat("z_tilt_ng", "applied"))
         ):
             self._screen._ws.klippy.gcode_script("Z_TILT_ADJUST")
         if (
