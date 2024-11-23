@@ -202,12 +202,12 @@ class KlipperScreenConfig:
                     'invert_x', 'invert_y', 'invert_z', '24htime', 'only_heaters', 'show_cursor', 'confirm_estop',
                     'autoclose_popups', 'use_dpms', 'use_default_menu', 'use_default_move_menu', 'side_macro_shortcut',
                     'use-matchbox-keyboard', 'show_heater_power', "show_scroll_steppers", "auto_open_extrude",
-                    "auto_scale_temp_chart", "auto_adjust_temp_chart_indices"
+                    "auto_scale_temp_chart", "auto_adjust_temp_chart_indices", "enable_lock",
                 )
                 strs = (
                     'default_printer', 'language', 'print_sort_dir', 'theme', 'screen_blanking_printing', 'font_size',
                     'print_estimate_method', 'screen_blanking', "screen_on_devices", "screen_off_devices", 'print_view',
-                    "lock_password"
+                    "lock_password",
                 )
                 numbers = (
                     'job_complete_timeout', 'job_error_timeout', 'move_speed_xy', 'move_speed_z',
