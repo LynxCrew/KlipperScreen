@@ -27,7 +27,7 @@ class Panel(ScreenPanel):
         self.main = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         self.main.attach(restart_ks, 1, 0, 1, 1)
 
-        if screen._config.get_main_config().getboolean("enable_lock", True):
+        if screen._config.get_main_config().getboolean("enable_lock", False):
             lock_screen = self._gtk.Button("lock", _("Lock"), "color3")
             lock_screen.connect("clicked", self._screen.lock_screen.lock)
 

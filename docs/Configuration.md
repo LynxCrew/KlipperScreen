@@ -44,6 +44,9 @@ The options listed here are not editable from within the user interface.
 # it will be redacted from the logs.
 # default is no password
 # lock_password: example_password
+
+# enable_lock:
+# Enable or disable the lockscreen feature
 ```
 
 !!! tip
