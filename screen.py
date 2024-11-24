@@ -301,10 +301,10 @@ class KlipperScreen(Gtk.Window):
                 "motion_report": ["live_position", "live_velocity", "live_extruder_velocity"],
                 "exclude_object": ["current_object", "objects", "excluded_objects"],
                 "manual_probe": ['is_active'],
-                "axis_twist_compensation": ['is_active'],
-                "screws_tilt_adjust": ['results', 'error'],
-                "quad_gantry_level": ['applied'],
-                "z_tilt": ["applied"],
+                # "axis_twist_compensation": ['is_active'],
+                # "screws_tilt_adjust": ['results', 'error'],
+                # "quad_gantry_level": ['applied'],
+                # "z_tilt": ["applied"],
                 "z_tilt_ng": ["applied"],
             }
         }
