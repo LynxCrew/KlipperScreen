@@ -304,8 +304,8 @@ class KlipperScreen(Gtk.Window):
                 "axis_twist_compensation": ['is_active'],
                 "screws_tilt_adjust": ['results', 'error'],
                 "quad_gantry_level": ['applied'],
-                "z_tilt": ['applied'],
-                "z_tilt_ng": ['applied'],
+                "z_tilt": ["applied"],
+                "z_tilt_ng": ["applied"],
             }
         }
         for extruder in self.printer.get_tools():
