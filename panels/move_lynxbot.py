@@ -233,7 +233,7 @@ class Panel(ScreenPanel):
         name = "homing"
         disname = self._screen._config.get_menu_name("move", name)
         menuitems = self._screen._config.get_menu_items("move", name)
-        logging.info(self._printer.get_stat("z_tilt_ng"))
+        logging.info(self._printer.data)
         self._screen.show_panel("menu", disname, items=menuitems, panel_name="Homing")
 
     def motors_off(self, widget):
