@@ -27,7 +27,7 @@ button:active {
 .button_active {
     border-color: #424242;
     border-style: solid;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0.75);
 }
 
 button.color1, button.color2, button.color3, button.color4 {

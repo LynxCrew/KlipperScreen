@@ -308,7 +308,6 @@ class Panel(MenuPanel):
                     )
 
     def show_numpad(self, widget, device):
-
         if self.active_heater is not None:
             self.devices[self.active_heater]['name'].get_style_context().remove_class("button_active")
         self.active_heater = device
