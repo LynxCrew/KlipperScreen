@@ -57,6 +57,11 @@ button.invalid {
     border-width: .1em;
 }
 
+.graph_label {
+    border-bottom-left-radius: 0.25em;
+    border-top-left-radius: 0.25em;
+}
+
 combobox box button {
     background-color: #121212;
     border-color: #121212;
