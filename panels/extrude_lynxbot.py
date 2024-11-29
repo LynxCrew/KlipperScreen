@@ -123,7 +123,7 @@ class Panel(ScreenPanel):
             for s, x in enumerate(filament_sensors):
                 if s > limit:
                     break
-                name = x[23:].strip()
+                name = x.split(" ", 1)[1].strip()
                 self.labels[x] = {
                     'label': Gtk.Label(label=self.prettify(name), hexpand=True, halign=Gtk.Align.CENTER,
                                        ellipsize=Pango.EllipsizeMode.END),
@@ -222,7 +222,6 @@ class Panel(ScreenPanel):
                     else:
                         self.labels[x]['box'].get_style_context().remove_class("filament_sensor_detected")
                         self.labels[x]['box'].get_style_context().add_class("filament_sensor_empty")
-                logging.info(f"{x}: {self._printer.get_stat(x)}")
 
     def change_distance(self, widget, distance):
         logging.info(f"### Distance {distance}")
