@@ -78,11 +78,10 @@ class HeaterGraph(Gtk.DrawingArea):
                     target = self.printer.get_temp_store(device, "targets", data_points)
                     if isinstance(target, list):
                         mnum.append(max(target))
-            return max(mnum)
         else:
             for device in self.printer.get_temp_devices():
                 mnum.append(float(self.printer.get_config_section(device)["max_temp"]))
-            return max(mnum) + 10
+        return max(mnum) + 10
 
     def draw_graph(self, da: Gtk.DrawingArea, ctx: cairoContext):
         if not self.printer.tempstore:
