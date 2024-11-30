@@ -78,7 +78,7 @@ class HeaterGraph(Gtk.DrawingArea):
                     target = self.printer.get_temp_store(device, "targets", data_points)
                     if isinstance(target, list):
                         mnum.append(max(target))
-            return math.ceil(max(mnum) * 1.1 / 10) * 10
+            return max(mnum)
         else:
             for device in self.printer.get_temp_devices():
                 mnum.append(float(self.printer.get_config_section(device)["max_temp"]))
