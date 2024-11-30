@@ -72,12 +72,11 @@ class HeaterGraph(Gtk.DrawingArea):
         if self.config.get_config()["main"].getboolean("auto_scale_temp_chart", True):
             for device in self.store:
                 if self.store[device]['show']:
-                    if temp := self.printer.get_temp_store(device,
-                                                           "temperatures",
-                                                           data_points):
+                    temp = self.printer.get_temp_store(device, "temperatures", data_points)
+                    if isinstance(temp, list):
                         mnum.append(max(temp))
-                    if target := self.printer.get_temp_store(device, "targets",
-                                                             data_points):
+                    target = self.printer.get_temp_store(device, "targets", data_points)
+                    if isinstance(target, list):
                         mnum.append(max(target))
             return math.ceil(max(mnum) * 1.1 / 10) * 10
         else:

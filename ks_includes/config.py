@@ -6,10 +6,11 @@ import logging
 import json
 import re
 import copy
-import pathlib
+import gettext
+import json
 import locale
 import sys
-
+import pathlib
 from io import StringIO
 
 SCREEN_BLANKING_OPTIONS = [

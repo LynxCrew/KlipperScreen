@@ -1,4 +1,5 @@
 import logging
+
 import gi
 
 from ks_includes import KlippyGtk
