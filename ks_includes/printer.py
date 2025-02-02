@@ -124,7 +124,7 @@ class Printer:
             logging.info(i)
         for i in result['result']['status']:
             logging.info(f"Results: {i}")
-        # self.process_update(result["result"])
+        self.process_update(result["result"]["status"])
         pass
 
     def process_update(self, data):
