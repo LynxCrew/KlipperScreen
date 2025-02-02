@@ -805,6 +805,8 @@ class KlipperScreen(Gtk.Window):
             self.show_panel(home)
 
     def _websocket_callback(self, action, data):
+        if "output_pin _BEEPER" in data:
+            logging.info(f"Output pin in data: {'pwm_tool LED-Bars' in data}")
         if self.connecting:
             logging.debug("Not connected")
             return
