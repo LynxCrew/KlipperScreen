@@ -29,14 +29,16 @@ class Panel(ScreenPanel):
         self.content.add(scroll)
 
     def load_pins(self):
-        output_pins = self._printer.get_output_pins()
-        output_pins.extend(self._printer.get_pwm_tools())
-        output_pins.extend(self._printer.get_pwm_cycle_times())
-        for pin in output_pins:
+        for pin in self._printer.get_output_pins():
             name = pin.split()[1]
             if name not in self.screen.lighting_output_pins:
                 continue
             self.add_pin(pin)
+        for pin in self._printer.get_pwm_tools() + self._printer.get_pwm_cycle_times():
+            name = pin.split()[1]
+            if name not in self.screen.lighting_output_pins:
+                continue
+            self.add_pin(pin, pwm=True)
 
     def add_pin(self, pin, pwm=None):
         logging.info(f"Adding pin: {pin}")

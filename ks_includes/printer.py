@@ -21,6 +21,7 @@ class Printer:
         self.ledcount = 0
         self.pwm_tools_count = 0
         self.output_pin_count = 0
+        self.pwm_cycle_times_count = 0
         self.store_timeout = None
         self.tempstore = {}
         self.tempstore_size = 1200
@@ -42,6 +43,7 @@ class Printer:
         self.ledcount = 0
         self.output_pin_count = 0
         self.pwm_tools_count = 0
+        self.pwm_cycle_times_count = 0
         self.tempstore.clear()
         self.tempstore_size = 1200
         self.available_commands.clear()
@@ -87,6 +89,8 @@ class Printer:
                 self.output_pin_count += 1
             elif section == "pwm_tool":
                 self.pwm_tools_count += 1
+            elif section == "pwm_cycle_time":
+                self.pwm_cycle_times_count += 1
             elif section in (
                 "led",
                 "neopixel",
@@ -269,6 +273,7 @@ class Printer:
                 "fans": {"count": self.fancount},
                 "output_pins": {"count": self.output_pin_count},
                 "pwm_tools": {"count": self.pwm_tools_count},
+                "pwm_cycle_times": {"count": self.pwm_cycle_times_count},
                 "gcode_macros": {"count": len(self.get_gcode_macros()), "list": self.get_gcode_macros()},
                 "leds": {"count": self.ledcount},
                 "home_full": self.home_full,
