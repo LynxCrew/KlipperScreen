@@ -111,6 +111,7 @@ class Printer:
         logging.info(f"# Fans: {self.fancount}")
         logging.info(f"# Output pins: {self.output_pin_count}")
         logging.info(f"# PWM tools: {self.pwm_tools_count}")
+        logging.info(f"# PWM cycle_times: {self.pwm_cycle_times_count}")
         logging.info(f"# Leds: {self.ledcount}")
 
     def stop_tempstore_updates(self):
@@ -123,8 +124,6 @@ class Printer:
             return
 
         for x in data:
-            if x.startswith("pwm_tool"):
-                logging.info(x)
             if x == "configfile":
                 if 'config' in data[x]:
                     self.config.update(data[x]['config'])
@@ -360,18 +359,15 @@ class Printer:
         return speed
 
     def get_pin_value(self, pin):
-        for x in self.data:
-            logging.info(x)
         if pin in self.data:
-            logging.info("Pin in data")
+            logging.info(f"Pin {pin} in data")
             return self.data[pin]["value"]
         elif pin in self.config and 'value' in self.config[pin]:
-            logging.info("Pin in config")
+            logging.info(f"Pin {pin} in data")
             return self.config[pin]["value"]
         return 0
 
     def get_pin_scale(self, pin):
-        logging.info(pin)
         if pin in self.config and 'scale' in self.config[pin]:
             return float(self.config[pin]['scale'])
         return 1.0

@@ -98,7 +98,6 @@ class Panel(ScreenPanel):
         GLib.timeout_add_seconds(1, self.check_pin_value, pin, widget)
 
     def check_pin_value(self, pin, widget=None):
-        logging.info(f"PIN: {pin}")
         self.update_pin_value(None, pin, self._printer.get_pin_value(pin))
         if widget and isinstance(widget, Gtk.Switch):
             widget.set_sensitive(True)
