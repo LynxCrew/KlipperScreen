@@ -120,7 +120,8 @@ class Printer:
             self.store_timeout = None
 
     def process_force_query(self, result, method, params):
-        self.process_update(result["result"])
+        # self.process_update(result["result"])
+        pass
 
     def process_update(self, data):
         if self.data is None:
