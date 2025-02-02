@@ -354,8 +354,10 @@ class Printer:
 
     def get_pin_value(self, pin):
         if pin in self.data:
+            logging.info("Pin in data")
             return self.data[pin]["value"]
         elif pin in self.config and 'value' in self.config[pin]:
+            logging.info("Pin in config")
             return self.config[pin]["value"]
         return 0
 
