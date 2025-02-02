@@ -75,19 +75,14 @@ class Panel(ScreenPanel):
                            self.update_pin_value,
                            pin,
                            float(self.screen.lighting_output_pins[pin.split()[1]] / self._printer.get_pin_scale(pin)))
-            pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+            pin_col = Gtk.Box(spacing=5)
             pin_col.add(min_btn)
             pin_col.add(scale)
             pin_col.add(on_btn)
-
-            pin_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-            pin_row.add(name)
-            pin_row.add(pin_col)
-
-            self.devices[pin] = {
-                "row": pin_row,
-                "scale": scale,
-            }
+            self.devices[pin]["row"] = Gtk.Box(
+                orientation=Gtk.Orientation.VERTICAL)
+            self.devices[pin]["row"].add(name)
+            self.devices[pin]["row"].add(pin_col)
         else:
             self.devices[pin]['switch'] = Gtk.Switch()
             self.devices[pin]['switch'].connect("notify::active",
