@@ -93,14 +93,18 @@ class Panel(ScreenPanel):
         self.labels['devices'].show_all()
 
     def set_output_pin(self, widget, event, pin):
+        if isinstance(widget, Gtk.Switch):
+            widget.set_sensitive(False)
         value = (self.devices[pin]["scale"].get_value() * self._printer.get_pin_scale(pin)) / 100
         self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} '
                                              f'VALUE={value}')
         # Check the speed in case it wasn't applied
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 
-    def check_pin_value(self, pin):
+    def check_pin_value(self, pin, widget=None):
         self.update_pin_value(None, pin, self._printer.get_pin_value(pin))
+        if widget and isinstance(widget, Gtk.Switch):
+            widget.set_sensitive(True)
         return False
 
     def process_update(self, action, data):
@@ -120,4 +124,4 @@ class Panel(ScreenPanel):
         self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
 
         if widget is not None:
-            self.set_output_pin(None, None, pin)
+            self.set_output_pin(widget, None, pin)
