@@ -330,6 +330,7 @@ class KlipperScreen(Gtk.Window):
             requested_updates['objects'][led] = ["color_data"]
 
         self._ws.klippy.object_subscription(requested_updates)
+        self._we.klippy.force_query(requested_updates)
 
     @staticmethod
     def _load_panel(panel):
