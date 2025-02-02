@@ -119,6 +119,9 @@ class Printer:
             GLib.source_remove(self.store_timeout)
             self.store_timeout = None
 
+    def process_force_query(self, result, method, params):
+        self.process_update(result["result"])
+
     def process_update(self, data):
         if self.data is None:
             return

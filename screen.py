@@ -331,12 +331,7 @@ class KlipperScreen(Gtk.Window):
 
         logging.info(f"Requested Updates: {requested_updates}")
         self._ws.klippy.object_subscription(requested_updates)
-        self._ws.klippy.force_query(requested_updates, self.force_query_result)
-
-    def force_query_result(self, result, method, params):
-        logging.info(f"result: {result}")
-        logging.info(f"method: {method}")
-        logging.info(f"params: {params}")
+        self._ws.klippy.force_query(requested_updates, self.printer.process_force_query)
 
     @staticmethod
     def _load_panel(panel):
