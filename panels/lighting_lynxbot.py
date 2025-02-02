@@ -101,8 +101,7 @@ class Panel(ScreenPanel):
         if isinstance(widget, Gtk.Switch):
             widget.set_sensitive(False)
         value = (self.devices[pin]["scale"].get_value() * self._printer.get_pin_scale(pin)) / 100
-        self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} '
-                                             f'VALUE={value}')
+        self._screen._ws.klippy.gcode_script(f'SET_PIN PIN={" ".join(pin.split(" ")[1:])} VALUE={value}')
         # Check the speed in case it wasn't applied
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 
