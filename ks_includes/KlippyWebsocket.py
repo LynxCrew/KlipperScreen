@@ -221,10 +221,11 @@ class MoonrakerApi:
             updates
         )
 
-    def force_query(self, updates):
+    def force_query(self, updates, callback):
         return self._ws.send_method(
             "printer.objects.force_query",
-            updates
+            updates,
+            callback
         )
 
     def power_device_off(self, device, callback=None, *args):
