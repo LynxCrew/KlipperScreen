@@ -123,6 +123,8 @@ class Printer:
             return
 
         for x in data:
+            if x.startswith("pwm_tool"):
+                logging.info(x)
             if x == "configfile":
                 if 'config' in data[x]:
                     self.config.update(data[x]['config'])
