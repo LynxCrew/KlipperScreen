@@ -287,7 +287,6 @@ class KlipperScreen(Gtk.Window):
                 "bed_mesh": ["profile_name", "mesh_max", "mesh_min", "probed_matrix", "profiles"],
                 "configfile": ["config", "warnings"],
                 "display_status": ["progress", "message", "remaining"],
-                "fan": ["speed", "pwm_value"],
                 "gcode_move": ["extrude_factor", "gcode_position", "homing_origin", "speed_factor", "speed"],
                 "idle_timeout": ["state"],
                 "pause_resume": ["is_paused"],
@@ -315,12 +314,12 @@ class KlipperScreen(Gtk.Window):
             requested_updates['objects'][h] = ["target", "temperature", "power"]
         for t in self.printer.get_temp_sensors():
             requested_updates['objects'][t] = ["temperature"]
-        for f in self.printer.get_temp_fans():
-            requested_updates['objects'][f] = ["target", "temperature"]
-        for f in self.printer.get_temp_controller_fans():
-            requested_updates['objects'][f] = ["temperature"]
         for f in self.printer.get_fans():
             requested_updates['objects'][f] = ["speed", "pwm_value"]
+        for f in self.printer.get_temp_fans():
+            requested_updates['objects'][f] = ["speed", "pwm_value", "target", "temperature"]
+        for f in self.printer.get_temp_controller_fans():
+            requested_updates['objects'][f] = ["speed", "pwm_value", "temperature"]
         for f in self.printer.get_filament_sensors():
             requested_updates['objects'][f] = ["enabled", "filament_detected"]
         for p in (self.printer.get_pwm_tools()

@@ -52,7 +52,7 @@ class Panel(ScreenPanel):
                                          min=0,
                                          max=100,
                                          step=1)
-        scale.set_value(self.check_pin_value(pin))
+        scale.set_value(round(float(self._printer.get_pin_value(pin)) * 100))
         scale.set_digits(0)
         scale.set_hexpand(True)
         scale.set_has_origin(True)
@@ -69,7 +69,6 @@ class Panel(ScreenPanel):
                        self.update_pin_value,
                        pin,
                        float(self.screen.lighting_output_pins[pin.split()[1]] / self._printer.get_pin_scale(pin)))
-        logging.info(self._printer.get_pin_scale(pin))
 
         pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
         pin_col.add(min_btn)
@@ -102,8 +101,6 @@ class Panel(ScreenPanel):
         GLib.timeout_add_seconds(1, self.check_pin_value, pin)
 
     def check_pin_value(self, pin, widget=None):
-        logging.info("Check Pin Value")
-        logging.info(self._printer.get_pin_value(pin))
         self.update_pin_value(None, pin, self._printer.get_pin_value(pin))
         if widget and isinstance(widget, Gtk.Switch):
             widget.set_sensitive(True)
