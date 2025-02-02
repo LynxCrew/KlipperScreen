@@ -362,8 +362,11 @@ class Printer:
         if pin in self.data:
             logging.info(f"Pin {pin} in data")
             return self.data[pin]["value"]
+        elif pin.lower() in self.data:
+            logging.info(f"Pin {pin.lower()} in data")
+            return self.data[pin.lower()]["value"]
         elif pin in self.config and 'value' in self.config[pin]:
-            logging.info(f"Pin {pin} in data")
+            logging.info(f"Pin {pin} in config")
             return self.config[pin]["value"]
         return 0
 
