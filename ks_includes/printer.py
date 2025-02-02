@@ -358,7 +358,8 @@ class Printer:
         return speed
 
     def get_pin_value(self, pin):
-        logging.info(self.data)
+        for x in self.data:
+            logging.info(x)
         if pin in self.data:
             logging.info("Pin in data")
             return self.data[pin]["value"]
