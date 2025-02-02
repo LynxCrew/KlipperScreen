@@ -122,9 +122,11 @@ class Panel(ScreenPanel):
         if pin not in self.devices:
             return
 
-        self.devices[pin]['scale'].disconnect_by_func(self.set_output_pin)
-        self.devices[pin]['scale'].set_value(round(float(value) * 100))
-        self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
-
+        if 'scale' in self.devices[pin]:
+            self.devices[pin]['scale'].disconnect_by_func(self.set_output_pin)
+            self.devices[pin]['scale'].set_value(round(float(value) * 100))
+            self.devices[pin]['scale'].connect("button-release-event", self.set_output_pin, pin)
+        elif 'switch' in self.devices[pin]:
+            self.devices[pin]['switch'].set_active(value == 1)
         if widget is not None:
             self.set_output_pin(widget, None, pin)
