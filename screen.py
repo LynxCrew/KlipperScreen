@@ -323,7 +323,9 @@ class KlipperScreen(Gtk.Window):
             requested_updates['objects'][f] = ["speed", "pwm_value"]
         for f in self.printer.get_filament_sensors():
             requested_updates['objects'][f] = ["enabled", "filament_detected"]
-        for p in self.printer.get_pwm_tools() + self.printer.get_output_pins():
+        for p in (self.printer.get_pwm_tools()
+                  + self.printer.get_output_pins()
+                  + self.printer.get_pwm_cycle_times()):
             requested_updates['objects'][p] = ["value"]
         for led in self.printer.get_leds():
             requested_updates['objects'][led] = ["color_data"]
