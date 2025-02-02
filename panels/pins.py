@@ -27,15 +27,20 @@ class Panel(ScreenPanel):
         self.content.add(scroll)
 
     def load_pins(self):
-        output_pins = self._printer.get_pwm_tools() + self._printer.get_output_pins() + self._printer.get_pwm_cycle_times()
-        for pin in output_pins:
+        for pin in self._printer.get_output_pins():
             # Support for hiding devices by name
             name = pin.split()[1]
             if name.startswith("_"):
                 continue
             self.add_pin(pin)
+        for pin in self._printer.get_pwm_tools() + self._printer.get_pwm_cycle_times():
+            # Support for hiding devices by name
+            name = pin.split()[1]
+            if name.startswith("_"):
+                continue
+            self.add_pin(pin, pwm=True)
 
-    def add_pin(self, pin):
+    def add_pin(self, pin, pwm=None):
         logging.info(f"Adding pin: {pin}")
 
         name = Gtk.Label(
@@ -45,7 +50,9 @@ class Panel(ScreenPanel):
 
         self.devices[pin] = {}
         section = self._printer.get_config_section(pin)
-        if parse_bool(section.get('pwm', 'false')) or parse_bool(section.get('hardware_pwm', 'false')):
+        if pwm is None:
+            pwm = parse_bool(section.get('pwm', 'false')) or parse_bool(section.get('hardware_pwm', 'false'))
+        if pwm:
             scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min=0, max=100, step=1)
             scale.set_value(self.check_pin_value(pin))
             scale.set_digits(0)
