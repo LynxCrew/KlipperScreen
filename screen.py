@@ -329,7 +329,6 @@ class KlipperScreen(Gtk.Window):
         for led in self.printer.get_leds():
             requested_updates['objects'][led] = ["color_data"]
 
-        logging.info(f"Requested Updates: {requested_updates}")
         self._ws.klippy.object_subscription(requested_updates)
         self._ws.klippy.force_query(requested_updates, self.printer.process_force_query)
 

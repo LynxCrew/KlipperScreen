@@ -122,11 +122,12 @@ class Printer:
     def process_force_query(self, result, method, params):
         for i in result:
             logging.info(i)
-        logging.info(result["result"])
+        logging.info(f"Results: {result['result']}")
         # self.process_update(result["result"])
         pass
 
     def process_update(self, data):
+        logging.info(f"Data: {data}")
         if self.data is None:
             return
 
