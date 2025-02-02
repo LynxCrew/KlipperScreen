@@ -52,7 +52,9 @@ class Panel(ScreenPanel):
                                          min=0,
                                          max=100,
                                          step=1)
-        scale.set_value(round(float(self._printer.get_pin_value(pin)) * 100))
+        value = round(float(self._printer.get_pin_value(pin)) * 100)
+        logging.info(f"Startup value: {value}")
+        scale.set_value(value)
         scale.set_digits(0)
         scale.set_hexpand(True)
         scale.set_has_origin(True)
