@@ -3,6 +3,7 @@ import logging
 import gi
 
 from ks_includes import KlippyGtk
+from ks_includes.functions import parse_bool
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib, Pango
@@ -37,58 +38,59 @@ class Panel(ScreenPanel):
                 continue
             self.add_pin(pin)
 
-    def add_pin(self, pin):
+    def add_pin(self, pin, pwm=None):
         logging.info(f"Adding pin: {pin}")
-        name = Gtk.Label()
+
+        name = Gtk.Label(
+            hexpand=True, vexpand=True, halign=Gtk.Align.START,
+            valign=Gtk.Align.CENTER,
+            wrap=True, wrap_mode=Pango.WrapMode.WORD_CHAR)
         name.set_markup(f'\n<big><b>{" ".join(pin.split(" ")[1:])}</b></big>\n')
-        name.set_hexpand(True)
-        name.set_vexpand(True)
-        name.set_halign(Gtk.Align.START)
-        name.set_valign(Gtk.Align.CENTER)
-        name.set_line_wrap(True)
-        name.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
-        scale = Gtk.Scale.new_with_range(orientation=Gtk.Orientation.HORIZONTAL,
-                                         min=0,
-                                         max=100,
-                                         step=1)
-        value = round(float(self._printer.get_pin_value(pin)) * 100)
-        logging.info(f"Startup value: {value}")
-        scale.set_value(value)
-        scale.set_digits(0)
-        scale.set_hexpand(True)
-        scale.set_has_origin(True)
-        scale.get_style_context().add_class("fan_slider")
-        scale.connect("button-release-event", self.set_output_pin, pin)
-        scale.connect("format-value", KlippyGtk.format_scale_value_percent)
+        self.devices[pin] = {}
+        section = self._printer.get_config_section(pin)
+        if pwm is None:
+            pwm = parse_bool(section.get('pwm', 'false')) or parse_bool(
+                section.get('hardware_pwm', 'false'))
+        if pwm:
+            scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min=0,
+                                             max=100, step=1)
+            scale.set_value(self.check_pin_value(pin))
+            scale.set_digits(0)
+            scale.set_hexpand(True)
+            scale.set_has_origin(True)
+            scale.get_style_context().add_class("fan_slider")
+            self.devices[pin]['scale'] = scale
+            scale.connect("button-release-event", self.set_output_pin, pin)
+            scale.connect("format-value", KlippyGtk.format_scale_value_percent)
 
-        min_btn = self._gtk.Button("cancel", None, "color1", 1)
-        min_btn.set_hexpand(False)
-        min_btn.connect("clicked", self.update_pin_value, pin, 0)
-        on_btn = self._gtk.Button("light", _("On"), "color2")
-        on_btn.set_hexpand(False)
-        on_btn.connect("clicked",
-                       self.update_pin_value,
-                       pin,
-                       float(self.screen.lighting_output_pins[pin.split()[1]] / self._printer.get_pin_scale(pin)))
+            min_btn = self._gtk.Button("cancel", None, "color1", 1)
+            min_btn.set_hexpand(False)
+            min_btn.connect("clicked", self.update_pin_value, pin, 0)
+            on_btn = self._gtk.Button("light", _("On"), "color2")
+            on_btn.set_hexpand(False)
+            on_btn.connect("clicked",
+                           self.update_pin_value,
+                           pin,
+                           float(self.screen.lighting_output_pins[pin.split()[1]] / self._printer.get_pin_scale(pin)))
+            pin_col = Gtk.Box(spacing=5)
+            pin_col.add(min_btn)
+            pin_col.add(scale)
+            pin_col.add(on_btn)
+            self.devices[pin]["row"] = Gtk.Box(
+                orientation=Gtk.Orientation.VERTICAL)
+            self.devices[pin]["row"].add(name)
+            self.devices[pin]["row"].add(pin_col)
+        else:
+            self.devices[pin]['switch'] = Gtk.Switch()
+            self.devices[pin]['switch'].connect("notify::active",
+                                                self.set_output_pin, pin)
+            self.devices[pin]["row"] = Gtk.Box(
+                orientation=Gtk.Orientation.HORIZONTAL)
+            self.devices[pin]["row"].add(name)
+            self.devices[pin]["row"].add(self.devices[pin]['switch'])
 
-        pin_col = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
-        pin_col.add(min_btn)
-        pin_col.add(scale)
-        pin_col.add(on_btn)
-
-        pin_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        pin_row.add(name)
-        pin_row.add(pin_col)
-
-        self.devices[pin] = {
-            "row": pin_row,
-            "scale": scale,
-        }
-
-        devices = sorted(self.devices)
-        pos = devices.index(pin)
-
+        pos = sorted(self.devices).index(pin)
         self.labels['devices'].insert_row(pos)
         self.labels['devices'].attach(self.devices[pin]['row'], 0, pos, 1, 1)
         self.labels['devices'].show_all()
