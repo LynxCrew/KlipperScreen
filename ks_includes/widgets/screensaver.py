@@ -54,15 +54,15 @@ class ScreenSaver:
             halign=Gtk.Align.CENTER, width_request=self.screen.width, height_request=self.screen.height)
         box.pack_start(close, True, True, 0)
         box.get_style_context().add_class("screensaver")
-        self.blackbox = box
         for child in self.screen.overlay.get_children():
             child.hide()
-        self.screen.overlay.add(self.blackbox)
+        self.screen.overlay.add_overlay(box)
 
         # Avoid leaving a cursor-handle
         close.grab_focus()
         self.screen.gtk.set_cursor(False, window=self.screen.get_window())
 
+        self.blackbox = box
         self.blackbox.show_all()
         self.screen.power_devices(None, self.config.get_main_config().get("screen_off_devices", ""), on=False)
         return False
