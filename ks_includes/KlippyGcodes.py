@@ -45,5 +45,5 @@ class KlippyGcodes:
         return (
             f'SET_LED LED="{led}" '
             f'RED={color[0]} GREEN={color[1]} BLUE={color[2]} WHITE={color[3]} '
-            f'SYNC=0 TRANSMIT=1'
+            f'SYNC=0 DISABLE_TEMPLATE=1 TRANSMIT=1'
         )
